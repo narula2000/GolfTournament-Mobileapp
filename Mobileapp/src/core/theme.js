@@ -4,9 +4,11 @@ export default {
 	...DefaultTheme,
 	colors: {
 		...DefaultTheme.colors,
-		primary: "#CFECC5",
-		secondary: "#7FD661",
-		buttoncolor: "#80D2F1",
+		white:"white",
+		primary: "#80D2F1", //light blue for button
+		secondary: "#7FD661", // the dark green
 		error: "#f13a59",
+		background:"#CFECC5", //the background green
+		
 	},
 };
