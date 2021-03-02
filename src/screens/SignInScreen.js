@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-// import { useNavigation } from "@react-navigation/native";
 import { Button, TextInput } from 'react-native-paper';
 import Logo from '../components/Logo';
 import Background from '../components/Background';
@@ -31,7 +30,7 @@ const SignInScreen = () => {
   // const { navigate } = useNavigation();
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const _onEnterPressed = () => {
+  const onEnterPressed = () => {
     console.log('button pressed');
   };
   return (
@@ -46,7 +45,7 @@ const SignInScreen = () => {
           label="Username"
           value={username}
           mode="outlined"
-          onChangeText={(username) => setUsername(username)}
+          onChangeText={(_username) => setUsername(_username)}
           style={styles.textinput}
           returnKeyType="next"
         />
@@ -54,7 +53,7 @@ const SignInScreen = () => {
           label="Password"
           value={password}
           mode="outlined"
-          onChangeText={(password) => setPassword(password)}
+          onChangeText={(_password) => setPassword(_password)}
           style={styles.textinput}
           secureTextEntry
           returnKeyType="done"
@@ -63,7 +62,7 @@ const SignInScreen = () => {
           style={styles.button}
           labelStyle={styles.buttontext}
           mode="contained"
-          onPress={_onEnterPressed}
+          onPress={onEnterPressed}
         >
           {' '}
           Enter Tournament{' '}
