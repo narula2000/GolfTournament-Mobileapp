@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import RankingScreen from './screens/SignInScreen';
+import RankingScreen from './screens/RankingScreen';
 import SignInScreen from './screens/SignInScreen';
 
 const Stack = createStackNavigator();
