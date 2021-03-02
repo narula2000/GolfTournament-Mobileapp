@@ -6,7 +6,7 @@
         "jsx": true
       },
       "ecmaVersion": 12,
-      "sourceType": "module",
+      "sourceType": "module"
     },
     "rules": {
       "prettier/prettier": "error",
