@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import theme from '../core/theme';
 
-export default StyleSheet.create({
+const styles = StyleSheet.create({
   background: {
     backgroundColor: theme.colors.background,
     flex: 1,
@@ -17,3 +17,5 @@ export default StyleSheet.create({
     width: '100%',
   },
 });
+
+export default styles;
