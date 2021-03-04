@@ -1,7 +1,14 @@
-import React from 'react';
-import { View, StyleSheet, Image, TextInput, Dimensions } from 'react-native';
+import React, { useEffect } from 'react';
+import {
+  View,
+  StyleSheet,
+  Image,
+  Dimensions,
+  LogBox,
+  TouchableOpacity,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-// import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
 import {
   Appbar,
   Button,
@@ -11,8 +18,6 @@ import {
   Title,
   Paragraph,
 } from 'react-native-paper';
-import Logo from '../components/Logo';
-import Background from '../components/Background';
 import theme from '../core/theme';
 
 const screenWidth = Dimensions.get('screen').width;
@@ -63,8 +68,9 @@ const styles = StyleSheet.create({
   sec_view: {
     height: screenHeight - 130,
     justifyContent: 'space-evenly',
+    width: screenWidth,
   },
-  info_view: {
+  info_view1: {
     flexDirection: 'row',
     marginTop: 25,
     width: screenWidth,
@@ -73,16 +79,72 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 20,
   },
-  counter_button: {
+  info_view2: {
+    flexDirection: 'row',
+    marginTop: 25,
+    width: screenWidth,
+  },
+  info_view3: {
+    flexDirection: 'row',
+    marginTop: 25,
+    width: screenWidth,
+  },
+  info_view4: {
+    flexDirection: 'row',
+    marginTop: 25,
+    width: screenWidth,
+  },
+  info_view5: {
+    flexDirection: 'row',
+    marginTop: 25,
+    width: screenWidth,
+  },
+
+  //   counter_button: {
+  //     backgroundColor: theme.colors.ourgreen,
+  //     height: 1,
+  //     borderRadius: 10,
+  //     marginLeft: screenWidth - 200,
+  //     borderColor: theme.colors.primary,
+  //     width: 2,
+  //   },
+  nBtn: {
+    width: 30,
+    elevation: 8,
     backgroundColor: theme.colors.white,
     borderRadius: 10,
-    marginLeft: screenWidth - 200,
+    borderWidth: 2,
     borderColor: theme.colors.button_border,
-    width: 10,
+    marginLeft: screenWidth - 310,
+    height: 30,
   },
-  //   cbtn_icon: {
+  nBtnText: {
+    paddingTop: 5,
+    alignSelf: 'center',
+  },
+  nBtn2: {
+    width: 30,
+    elevation: 8,
+    backgroundColor: theme.colors.white,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: theme.colors.button_border,
+    marginLeft: screenWidth - 310,
+    height: 30,
+  },
+  //   buttons: {
+  //     backgroundColor: theme.colors.white,
+  //     borderRadius: 20,
+  //     borderColor: theme.colors.button_border,
+  //     height: 50,
+  //     marginLeft: screenWidth - 200,
+  //     justifyContent: 'center',
+  //     width: 10,
+  //   },
+  //   cbtn_text: {
   //     color: 'black',
   //     justifyContent: 'center',
+  //     fontSize: 15,
   //   },
   btn_view_info: {
     flexDirection: 'row',
@@ -108,13 +170,34 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     justifyContent: 'center',
   },
+  btn_disabled: {
+    backgroundColor: '#bbb',
+  },
 });
 
 const AddInfoScreen = () => {
-  // const { navigate } = useNavigation();
+  const navigation = useNavigation();
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  }, []);
+
+  const onSubmitPressed = () => {
+    console.log('button pressed');
+    navigation.navigate('RankingScreen');
+  };
+  const onBackPressed = () => {
+    console.log('button pressed');
+    navigation.navigate('SignInScreen');
+  };
   const onEnterPressed = () => {
     console.log('button pressed');
   };
+  const [stroke, setStroke] = React.useState(0);
+
+  const onCountPress = () => {
+    setStroke(stroke + 1);
+  };
+
   return (
     <View style={styles.view}>
       <Appbar.Header style={styles.appbar}>
@@ -137,62 +220,51 @@ const AddInfoScreen = () => {
       </Appbar.Header>
       <Divider style={styles.divider} />
       <View style={styles.sec_view}>
-        <View style={styles.info_view}>
+        <View style={styles.info_view1}>
           <Text style={styles.info_text}> Total Stroke</Text>
-          <Button
-            style={styles.counter_button}
-            mode="outlined"
-            labelStyle={styles.cbtn_icon}
+          {/* <Button
+            style={styles.buttons}
+            labelStyle={styles.cbtn_text}
+            mode="contained"
             onPress={onEnterPressed}
             title="press me"
           >
-            {' '}
-          </Button>
+            <Text> + </Text>
+          </Button> */}
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+          >
+            <TouchableOpacity style={styles.nBtn} onPress={onEnterPressed}>
+              <Text style={styles.nBtnText}> {stroke} </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.nBtn} onPress={onCountPress}>
+              <Text style={styles.nBtnText}> + </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.info_view}>
+        <View style={styles.info_view2}>
           <Text style={styles.info_text}> Putts </Text>
-          <Button
-            style={styles.counter_button}
-            mode="outlined"
-            labelStyle={styles.cbtn_icon}
-            onPress={onEnterPressed}
-          >
-            {' '}
-          </Button>
-          <Divider style={styles.divider} />
+          <TouchableOpacity style={styles.nBtn} onPress={onEnterPressed}>
+            <Text style={styles.nBtnText}> + </Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.info_view}>
+        <View style={styles.info_view3}>
           <Text style={styles.info_text}> Sand Shots</Text>
-          <Button
-            style={styles.counter_button}
-            mode="outlined"
-            labelStyle={styles.cbtn_icon}
-            onPress={onEnterPressed}
-          >
-            {' '}
-          </Button>
+          <TouchableOpacity style={styles.nBtn} onPress={onEnterPressed}>
+            <Text style={styles.nBtnText}> + </Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.info_view}>
+        <View style={styles.info_view4}>
           <Text style={styles.info_text}> Penalties </Text>
-          <Button
-            style={styles.counter_button}
-            mode="outlined"
-            labelStyle={styles.cbtn_icon}
-            onPress={onEnterPressed}
-          >
-            {' '}
-          </Button>
+          <TouchableOpacity style={styles.nBtn} onPress={onEnterPressed}>
+            <Text style={styles.nBtnText}> + </Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.info_view}>
+        <View style={styles.info_view5}>
           <Text style={styles.info_text}> Fairways </Text>
-          <Button
-            style={styles.counter_button}
-            mode="outlined"
-            labelStyle={styles.cbtn_icon}
-            onPress={onEnterPressed}
-          >
-            {' '}
-          </Button>
+          <TouchableOpacity style={styles.nBtn} onPress={onEnterPressed}>
+            <Text style={styles.nBtnText}> + </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.btn_view_info}>
           <Button
@@ -221,7 +293,7 @@ const AddInfoScreen = () => {
           style={styles.button}
           labelStyle={styles.buttontext}
           mode="contained"
-          onPress={onEnterPressed}
+          onPress={onSubmitPressed}
         >
           Submit
         </Button>
@@ -229,7 +301,7 @@ const AddInfoScreen = () => {
           style={styles.button}
           labelStyle={styles.buttontext}
           mode="contained"
-          onPress={onEnterPressed}
+          onPress={onBackPressed}
         >
           Back to Score Page
         </Button>
