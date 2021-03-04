@@ -170,9 +170,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     justifyContent: 'center',
   },
-  btn_disabled: {
-    backgroundColor: '#bbb',
-  },
+//   btn_disabled: {
+//     backgroundColor: '#bbb',
+//   },
+// //   card: {
+//     height: 60,
+//     width: 60,
+//     marginLeft: 20,
+//     backgroundColor: theme.colors.ourgreen,
+//   },
+//   big_btn: {
+//     flexDirection: 'row',
+//   },
 });
 
 const AddInfoScreen = () => {
@@ -305,6 +314,16 @@ const AddInfoScreen = () => {
         >
           Back to Score Page
         </Button>
+        {/* <Card style={styles.card}>
+        <Card.Actions>
+          <TouchableOpacity style={styles.nBtn}>
+            <Text style={styles.nBtnText}> + </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.nBtn}>
+            <Text style={styles.nBtnText}> + </Text>
+          </TouchableOpacity>
+        </Card.Actions>
+      </Card> */}
       </View>
     </View>
   );

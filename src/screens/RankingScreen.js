@@ -50,27 +50,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     justifyContent: 'center',
   },
-  nBtn: {
-    width: 30,
-    elevation: 8,
-    backgroundColor: theme.colors.white,
-    borderRadius: 10,
-    borderColor: theme.colors.button_border,
-    height: 30,
-  },
-  nBtnText: {
-    paddingTop: 5,
-    alignSelf: 'center',
-  },
-  card: {
-    height: 60,
-    width: 60,
-    marginLeft: 20,
-    backgroundColor: theme.colors.ourgreen,
-  },
-  big_btn: {
-    flexDirection: 'row',
-  },
 });
 
 const RankingScreen = () => {
@@ -106,16 +85,6 @@ const RankingScreen = () => {
       >
         Back to Home Page
       </Button>
-      <Card style={styles.card}>
-        <Card.Actions>
-          <TouchableOpacity style={styles.nBtn}>
-            <Text style={styles.nBtnText}> + </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.nBtn}>
-            <Text style={styles.nBtnText}> + </Text>
-          </TouchableOpacity>
-        </Card.Actions>
-      </Card>
     </View>
   );
 };
