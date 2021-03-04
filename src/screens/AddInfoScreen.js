@@ -87,6 +87,7 @@ const AddInfoScreen = () => {
     <View style={styles.view}>
       <Appbar.Header style={styles.appbar}>
         <Image
+          // eslint-disable-next-line global-require
           source={require('../assets/golf-logo-small.png')}
           style={styles.image}
         />

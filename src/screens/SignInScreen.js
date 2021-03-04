@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     backgroundColor: theme.colors.white,
-    width: screenWidth - 150, // width of device and subtract
+    width: screenWidth - 150,
     padding: 12,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -50,6 +50,7 @@ const SignInScreen = () => {
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   }, []);
+
   const items = [
     // name key is must.It is to show the text in front.It is the syntax!!!
     { id: 1, name: 'chakeera' },
@@ -57,14 +58,6 @@ const SignInScreen = () => {
     { id: 3, name: 'tasfia' },
     { id: 4, name: 'near' },
     { id: 5, name: 'vicky' },
-    { id: 6, name: 'aj boy' },
-    { id: 7, name: 'max' },
-    { id: 8, name: 'harvey' },
-    { id: 9, name: 'parm' },
-    { id: 10, name: 'cha' },
-    { id: 11, name: 'fatimah' },
-    { id: 12, name: 'venus' },
-    { id: 13, name: 'wawa' },
   ];
   const [data, setData] = React.useState('');
   const onEnterPressed = () => {
