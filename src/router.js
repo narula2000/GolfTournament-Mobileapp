@@ -1,16 +1,32 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import RankingScreen from './screens/RankingScreen';
+import AddInfoScreen from './screens/AddInfoScreen';
 import SignInScreen from './screens/SignInScreen';
 
 const Stack = createStackNavigator();
 
 const Routes = () => (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName="SignInScreen">
+    <Stack.Navigator initialRouteName="AddInfoScreen">
       <Stack.Screen
         name="SignInScreen"
         component={SignInScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="RankingScreen"
+        component={RankingScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="AddInfoScreen"
+        component={AddInfoScreen}
         options={{
           headerShown: false,
         }}

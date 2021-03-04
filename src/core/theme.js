@@ -10,6 +10,7 @@ const theme = {
     secondary: '#80D2F1',
     error: '#f13a59',
     background: '#CFECC5',
+    button_border: '#CCCCCC',
   },
 };
 
