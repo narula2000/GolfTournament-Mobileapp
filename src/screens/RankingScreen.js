@@ -2,8 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 // import { useNavigation } from "@react-navigation/native";
-import { Button, Appbar, Text, DataTable } from 'react-native-paper';
-import Logo from '../components/Logo';
+import { Button, Appbar, DataTable } from 'react-native-paper';
 import Background from '../components/Background';
 import theme from '../core/theme';
 
@@ -11,6 +10,7 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     width: '100%',
+    justifyContent: 'center',
   },
   appbar: {
     backgroundColor: theme.colors.background,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   button: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.secondary,
     borderRadius: 20,
     height: 45,
     justifyContent: 'center',
@@ -59,7 +59,7 @@ const RankingScreen = () => {
     console.log('button pressed');
   };
   return (
-    <View style={styles.view}>
+    <View>
       <Appbar.Header style={styles.appbar}>
         <Image
           source={require('../assets/golf-logo-small.png')}
