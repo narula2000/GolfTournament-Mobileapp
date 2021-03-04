@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   info_view: {
     flexDirection: 'row',
     marginTop: 25,
+    width: screenWidth,
   },
   info_text: {
     fontSize: 20,
@@ -75,14 +76,14 @@ const styles = StyleSheet.create({
   counter_button: {
     backgroundColor: theme.colors.white,
     borderRadius: 10,
-    marginLeft: 20,
+    marginLeft: screenWidth - 200,
     borderColor: theme.colors.button_border,
-    width: 'auto',
+    width: 10,
   },
-  cbtn_icon: {
-    color: 'black',
-    justifyContent: 'center',
-  },
+  //   cbtn_icon: {
+  //     color: 'black',
+  //     justifyContent: 'center',
+  //   },
   btn_view_info: {
     flexDirection: 'row',
     marginLeft: 10,
@@ -138,11 +139,11 @@ const AddInfoScreen = () => {
         <View style={styles.info_view}>
           <Text style={styles.info_text}> Total Stroke</Text>
           <Button
-            icon="minus"
             style={styles.counter_button}
             mode="outlined"
             labelStyle={styles.cbtn_icon}
             onPress={onEnterPressed}
+            title="press me"
           >
             {' '}
           </Button>
@@ -150,7 +151,6 @@ const AddInfoScreen = () => {
         <View style={styles.info_view}>
           <Text style={styles.info_text}> Putts </Text>
           <Button
-            icon="minus"
             style={styles.counter_button}
             mode="outlined"
             labelStyle={styles.cbtn_icon}
@@ -163,7 +163,6 @@ const AddInfoScreen = () => {
         <View style={styles.info_view}>
           <Text style={styles.info_text}> Sand Shots</Text>
           <Button
-            icon="minus"
             style={styles.counter_button}
             mode="outlined"
             labelStyle={styles.cbtn_icon}
@@ -175,7 +174,6 @@ const AddInfoScreen = () => {
         <View style={styles.info_view}>
           <Text style={styles.info_text}> Penalties </Text>
           <Button
-            icon="minus"
             style={styles.counter_button}
             mode="outlined"
             labelStyle={styles.cbtn_icon}
@@ -187,7 +185,6 @@ const AddInfoScreen = () => {
         <View style={styles.info_view}>
           <Text style={styles.info_text}> Fairways </Text>
           <Button
-            icon="minus"
             style={styles.counter_button}
             mode="outlined"
             labelStyle={styles.cbtn_icon}
