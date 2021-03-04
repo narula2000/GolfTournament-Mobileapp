@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, LogBox, Text } from 'react-native';
+import { View, StyleSheet, LogBox, Text, Dimensions } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import SearchableDropdown from 'react-native-searchable-dropdown';
+import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
 import Logo from '../components/Logo';
 import Background from '../components/Background';
 import theme from '../core/theme';
+
+const screenWidth = Dimensions.get('screen').width;
+const screenHeight = Dimensions.get('screen').height;
 
 const styles = StyleSheet.create({
   button: {
@@ -25,7 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     backgroundColor: theme.colors.white,
-    width: 300, // width of device and subtract
+    width: screenWidth - 150, // width of device and subtract
     padding: 12,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -42,6 +46,7 @@ const styles = StyleSheet.create({
 });
 
 const SignInScreen = () => {
+  const navigation = useNavigation();
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   }, []);
@@ -61,11 +66,11 @@ const SignInScreen = () => {
     { id: 12, name: 'venus' },
     { id: 13, name: 'wawa' },
   ];
-  // const { navigate } = useNavigation();
   const [data, setData] = React.useState('');
   const onEnterPressed = () => {
     console.log('button pressed');
     console.log(data);
+    navigation.navigate('AddInfoScreen');
   };
   return (
     <View style={Background.background}>

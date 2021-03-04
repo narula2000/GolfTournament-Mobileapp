@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 
 const Routes = () => (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName="AddInfoScreen">
+    <Stack.Navigator initialRouteName="SignInScreen">
       <Stack.Screen
         name="SignInScreen"
         component={SignInScreen}

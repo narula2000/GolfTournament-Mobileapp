@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   appbar: {
     backgroundColor: theme.colors.background,
     height: 110,
+    width: 'auto',
   },
   image: {
     height: 120,
