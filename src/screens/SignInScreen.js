@@ -57,9 +57,9 @@ const SignInScreen = () => {
     { id: 8, name: 'harvey' },
     { id: 9, name: 'parm' },
     { id: 10, name: 'cha' },
-    { id: 10, name: 'fatimah' },
-    { id: 11, name: 'venus' },
-    { id: 12, name: 'wawa' },
+    { id: 11, name: 'fatimah' },
+    { id: 12, name: 'venus' },
+    { id: 13, name: 'wawa' },
   ];
   // const { navigate } = useNavigation();
   const [data, setData] = React.useState('');
