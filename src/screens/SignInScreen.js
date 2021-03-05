@@ -6,7 +6,7 @@ import { Button, TextInput } from 'react-native-paper';
 import styles from '../components/SignInScreenStyle';
 
 const SignInScreen = () => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   }, []);
@@ -16,7 +16,7 @@ const SignInScreen = () => {
     console.log('button pressed');
     console.log('number setted');
     console.log(number);
-    // navigation.navigate('AddInfoScreen');
+    navigation.navigate('HomeScreen');
   };
   return (
     <View style={styles.maincontainer}>
