@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
 
 const SignInScreen = () => {
   const navigation = useNavigation();
-  useEffect(() => {
-    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-  }, []);
+  // useEffect(() => {
+  //   LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  // }, []);
 
   const items = [
     // name key is must.It is to show the text in front.It is the syntax!!!
