@@ -142,6 +142,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   btn_change: {
+    backgroundColor: theme.colors.button_border,
+    borderRadius: 10,
+  },
+  btn_changeP: {
     backgroundColor: theme.colors.ourgreen,
     borderRadius: 10,
   },
@@ -225,6 +229,9 @@ const AddInfoScreen = () => {
   const [isPress2, setPressed2] = React.useState(false);
   const [isPress3, setPressed3] = React.useState(false);
   const [isPress4, setPressed4] = React.useState(false);
+  const [isGIRActive, setGIRActive] = React.useState(false);
+  const [isSSActive, setSSActive] = React.useState(false);
+  const [isUDActive, setUDActive] = React.useState(false);
 
   const onCountPress = () => {
     setStroke(stroke + 1);
@@ -261,6 +268,37 @@ const AddInfoScreen = () => {
     setPressed2(false);
     setPressed3(false);
     setPressed4(true);
+  };
+
+  const changeGIR = () => {
+    if (isGIRActive === true) {
+      setGIRActive(false);
+      console.log('gir set not active');
+    }
+    if (isGIRActive === false) {
+      setGIRActive(true);
+      console.log('gir set active');
+    }
+  };
+  const changeSS = () => {
+    if (isSSActive === true) {
+      setSSActive(false);
+      console.log('ss set not active');
+    }
+    if (isSSActive === false) {
+      setSSActive(true);
+      console.log('ss set active');
+    }
+  };
+  const changeUD = () => {
+    if (isUDActive === true) {
+      setUDActive(false);
+      console.log('up & down set not active');
+    }
+    if (isUDActive === false) {
+      setUDActive(true);
+      console.log('up & down set active');
+    }
   };
 
   return (
@@ -392,24 +430,24 @@ const AddInfoScreen = () => {
         <View style={styles.btn_view_info}>
           <Button
             mode="contained"
-            onPress={onEnterPressed}
-            style={styles.btn_change}
+            onPress={changeGIR}
+            style={isGIRActive ? styles.btn_changeP : styles.btn_change}
           >
             GIR
           </Button>
           <Button
             mode="contained"
-            onPress={onEnterPressed}
-            style={styles.btn_change}
+            onPress={changeSS}
+            style={isSSActive ? styles.btn_changeP : styles.btn_change}
           >
             Sand Saves
           </Button>
           <Button
             mode="contained"
-            onPress={onEnterPressed}
-            style={styles.btn_change}
+            onPress={changeUD}
+            style={isUDActive ? styles.btn_changeP : styles.btn_change}
           >
-            Up & DOwn
+            Up & Down
           </Button>
         </View>
         <Button
