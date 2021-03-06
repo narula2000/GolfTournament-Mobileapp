@@ -10,6 +10,7 @@ const renameUserId = (userId, _phonenumber, _adminId, _tournamentId) => {
       const dummyIds = Object.keys(users);
       dummyIds.forEach((dummyId) => {
         if (
+          dummyId.length < 4 && // Eliminate valid userId
           users.dummyId.phonenumber !== undefined &&
           users.dummyId.phonenumber === _phonenumber
         ) {
@@ -63,7 +64,7 @@ const fetchValidUserId = async (_adminId, _tournamentId) => {
   const database = firebase.database();
   const usersSnap = await database.ref(path).once('value');
   Object.keys(usersSnap.val()).forEach((userId) => {
-    if (userId.length() > 3) validUsers.push(userId);
+    if (userId.length > 3) validUsers.push(userId);
   });
   return validUsers;
 };
