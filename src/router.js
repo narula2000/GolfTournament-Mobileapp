@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import RankingScreen from './screens/RankingScreen';
 import InfoScreen from './screens/InfoScreen';
 import SignInScreen from './screens/SignInScreen';
+import HomeScreen from './screens/HomeScreen';
 import firebaseConfig from './firebase';
 
 if (!firebase.apps.length) {
@@ -19,6 +20,13 @@ const Routes = () => (
       <Stack.Screen
         name="SignInScreen"
         component={SignInScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+       <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
         options={{
           headerShown: false,
         }}
