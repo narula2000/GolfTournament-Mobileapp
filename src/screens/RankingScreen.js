@@ -72,6 +72,7 @@ const RankingScreen = () => {
     <View>
       <Appbar.Header style={styles.appbar}>
         <Image
+          // eslint-disable-next-line global-require
           source={require('../assets/golf-logo-small.png')}
           style={styles.image}
         />
@@ -95,6 +96,16 @@ const RankingScreen = () => {
       >
         Back to Home Page
       </Button>
+      {/* <Card style={styles.card}>
+        <Card.Actions>
+          <TouchableOpacity style={styles.nBtn}>
+            <Text style={styles.nBtnText}> + </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.nBtn}>
+            <Text style={styles.nBtnText}> + </Text>
+          </TouchableOpacity>
+        </Card.Actions>
+      </Card> */}
     </View>
   );
 };

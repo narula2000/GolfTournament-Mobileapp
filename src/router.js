@@ -3,7 +3,7 @@ import firebase from 'firebase/app';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import RankingScreen from './screens/RankingScreen';
-import AddInfoScreen from './screens/AddInfoScreen';
+import InfoScreen from './screens/InfoScreen';
 import SignInScreen from './screens/SignInScreen';
 import firebaseConfig from './firebase';
 
@@ -32,7 +32,7 @@ const Routes = () => (
       />
       <Stack.Screen
         name="AddInfoScreen"
-        component={AddInfoScreen}
+        component={InfoScreen}
         options={{
           headerShown: false,
         }}

@@ -19,6 +19,7 @@ import {
   Paragraph,
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Background from '../components/Background';
 import theme from '../core/theme';
 
 const screenWidth = Dimensions.get('screen').width;
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
   },
   info_view2: {
     flexDirection: 'row',
-    marginTop: 25,
+    marginTop: 40,
     width: screenWidth,
   },
   info_view3: {
@@ -98,15 +99,6 @@ const styles = StyleSheet.create({
     marginTop: 25,
     width: screenWidth,
   },
-
-  //   counter_button: {
-  //     backgroundColor: theme.colors.ourgreen,
-  //     height: 1,
-  //     borderRadius: 10,
-  //     marginLeft: screenWidth - 200,
-  //     borderColor: theme.colors.primary,
-  //     width: 2,
-  //   },
   nBtn: {
     width: 30,
     elevation: 8,
@@ -117,24 +109,24 @@ const styles = StyleSheet.create({
     marginLeft: screenWidth - 350,
     height: 30,
   },
+  nBtn2: {
+    width: 80,
+    elevation: 8,
+    backgroundColor: theme.colors.white,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: theme.colors.button_border,
+    marginLeft: screenWidth - 350,
+    height: 40,
+  },
+  nBtnText2: {
+    paddingTop: 10,
+    alignSelf: 'center',
+  },
   nBtnText: {
     paddingTop: 5,
     alignSelf: 'center',
   },
-  //   buttons: {
-  //     backgroundColor: theme.colors.white,
-  //     borderRadius: 20,
-  //     borderColor: theme.colors.button_border,
-  //     height: 50,
-  //     marginLeft: screenWidth - 200,
-  //     justifyContent: 'center',
-  //     width: 10,
-  //   },
-  //   cbtn_text: {
-  //     color: 'black',
-  //     justifyContent: 'center',
-  //     fontSize: 15,
-  //   },
   btn_view_info: {
     flexDirection: 'row',
     marginLeft: 10,
@@ -143,6 +135,10 @@ const styles = StyleSheet.create({
   },
   btn_change: {
     backgroundColor: theme.colors.button_border,
+    borderRadius: 10,
+  },
+  btn_changeE: {
+    backgroundColor: theme.colors.white,
     borderRadius: 10,
   },
   btn_changeP: {
@@ -189,21 +185,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
     shadowColor: theme.colors.white,
   },
-  //   btn_disabled: {
-  //     backgroundColor: '#bbb',
-  //   },
-  // //   card: {
-  //     height: 60,
-  //     width: 60,
-  //     marginLeft: 20,
-  //     backgroundColor: theme.colors.ourgreen,
-  //   },
-  //   big_btn: {
-  //     flexDirection: 'row',
-  //   },
 });
 
-const AddInfoScreen = () => {
+const InfoScreen = () => {
   const navigation = useNavigation();
   //   useEffect(() => {
   //     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
@@ -217,88 +201,117 @@ const AddInfoScreen = () => {
     console.log('button pressed');
     navigation.navigate('SignInScreen');
   };
-  const onEnterPressed = () => {
-    console.log('button pressed');
-  };
   const par = 2;
   const [stroke, setStroke] = React.useState(par);
-  const [putts, setPutts] = React.useState(par);
-  const [sandShots, setSandShots] = React.useState(par);
-  const [penalties, setPenalties] = React.useState(par);
-  const [isPress1, setPressed1] = React.useState(false);
-  const [isPress2, setPressed2] = React.useState(false);
-  const [isPress3, setPressed3] = React.useState(false);
-  const [isPress4, setPressed4] = React.useState(false);
-  const [isGIRActive, setGIRActive] = React.useState(false);
-  const [isSSActive, setSSActive] = React.useState(false);
-  const [isUDActive, setUDActive] = React.useState(false);
+  const [putts, setPutts] = React.useState(0);
+  const [sandShots, setSandShots] = React.useState(0);
+  const [penalties, setPenalties] = React.useState(0);
+  const [showStroke, setShowStroke] = React.useState(false);
+  const [showPutt, setShowPutt] = React.useState(false);
+  const [showSandShots, setShowSandShots] = React.useState(false);
+  const [showPenalty, setShowPenalty] = React.useState(false);
+  const [isLeft, setLeft] = React.useState(false);
+  const [isOn, setOn] = React.useState(false);
+  const [isRight, setRight] = React.useState(false);
+  const [isHazard, setHazard] = React.useState(false);
+  const [isGIRActive, setGIR] = React.useState(false);
+  const [isSSActive, setSandSaves] = React.useState(false);
+  const [enableSS, setEnabledSS] = React.useState(false);
+  const [isUDActive, setUpDown] = React.useState(false);
 
   const onCountPress = () => {
     setStroke(stroke + 1);
-    setPutts(putts + 1);
-    setSandShots(sandShots + 1);
-    setPenalties(penalties + 1);
+    setShowStroke(true);
   };
   const onMinusPress = () => {
     setStroke(stroke - 1);
-    setPutts(putts - 1);
-    setSandShots(sandShots - 1);
-    setPenalties(penalties - 1);
+    if (stroke - 1 <= 0) {
+      setShowStroke(false);
+    }
   };
-  const changeColor1 = () => {
-    setPressed1(true);
-    setPressed2(false);
-    setPressed3(false);
-    setPressed4(false);
+  const changeToLeft = () => {
+    setLeft(true);
+    setOn(false);
+    setRight(false);
+    setHazard(false);
   };
-  const changeColor2 = () => {
-    setPressed1(false);
-    setPressed2(true);
-    setPressed3(false);
-    setPressed4(false);
+  const changeToOn = () => {
+    setLeft(false);
+    setOn(true);
+    setRight(false);
+    setHazard(false);
   };
-  const changeColor3 = () => {
-    setPressed1(false);
-    setPressed2(false);
-    setPressed3(true);
-    setPressed4(false);
+  const changeToRight = () => {
+    setLeft(false);
+    setOn(false);
+    setRight(true);
+    setHazard(false);
   };
-  const changeColor4 = () => {
-    setPressed1(false);
-    setPressed2(false);
-    setPressed3(false);
-    setPressed4(true);
+  const changeToHazard = () => {
+    setLeft(false);
+    setOn(false);
+    setRight(false);
+    setHazard(true);
   };
 
   const changeGIR = () => {
-    if (isGIRActive === true) {
-      setGIRActive(false);
-      console.log('gir set not active');
-    }
-    if (isGIRActive === false) {
-      setGIRActive(true);
-      console.log('gir set active');
-    }
+    setGIR(!isGIRActive);
   };
   const changeSS = () => {
-    if (isSSActive === true) {
-      setSSActive(false);
-      console.log('ss set not active');
-    }
-    if (isSSActive === false) {
-      setSSActive(true);
-      console.log('ss set active');
+    if (sandShots > 0) {
+      setSandSaves(!isSSActive);
+    } else {
+      setSandSaves(false);
     }
   };
   const changeUD = () => {
-    if (isUDActive === true) {
-      setUDActive(false);
-      console.log('up & down set not active');
+    if (putts > 0) {
+      setUpDown(!isUDActive);
+    } else {
+      setUpDown(false);
     }
-    if (isUDActive === false) {
-      setUDActive(true);
-      console.log('up & down set active');
+  };
+  const checkPuttonMinus = () => {
+    setPutts(putts - 1);
+    if (putts - 1 === 1) {
+      setUpDown(true);
+    } else {
+      setUpDown(false);
     }
+    if (putts - 1 <= 0) {
+      setShowPutt(false);
+    }
+  };
+
+  const checkPuttonPlus = () => {
+    setShowPutt(true);
+    setPutts(putts + 1);
+    if (putts + 1 === 1) {
+      setUpDown(true);
+    } else {
+      setUpDown(false);
+    }
+  };
+  const sandShotOnMinus = () => {
+    setSandShots(sandShots - 1);
+    if (sandShots - 1 < 1) {
+      setSandSaves(false);
+    }
+  };
+  const sandShotOnPlus = () => {
+    setShowSandShots(true);
+    setEnabledSS(true);
+    setSandShots(sandShots + 1);
+    if (sandShots + 1 > 0) {
+      setSandSaves(true);
+    }
+  };
+  const penaltyOnMinus = () => {
+    setPenalties(penalties - 1);
+  };
+  const penaltyOnPlus = () => {
+    setShowPenalty(true);
+    setPenalties(penalties + 1);
   };
 
   return (
@@ -325,105 +338,112 @@ const AddInfoScreen = () => {
       <View style={styles.container}>
         <View style={styles.info_view1}>
           <Text style={styles.info_text}> Total Stroke</Text>
-          {/* <Button
-            style={styles.buttons}
-            labelStyle={styles.cbtn_text}
-            mode="contained"
-            onPress={onEnterPressed}
-            title="press me"
-          >
-            <Text> + </Text>
-          </Button> */}
-          <View
-            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
-          >
-            <TouchableOpacity style={styles.nBtn} onPress={onMinusPress}>
-              <Text style={styles.nBtnText}> - </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.nBtn}>
-              <Text style={styles.nBtnText}> {stroke} </Text>
-            </TouchableOpacity>
+          {showStroke ? (
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              <TouchableOpacity style={styles.nBtn} onPress={onMinusPress}>
+                <Text style={styles.nBtnText}> - </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.nBtn2} onPress={onCountPress}>
+                <Text style={styles.nBtnText2}> {stroke} | + </Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
             <TouchableOpacity style={styles.nBtn} onPress={onCountPress}>
               <Text style={styles.nBtnText}> + </Text>
             </TouchableOpacity>
-          </View>
+          )}
         </View>
         <View style={styles.info_view2}>
           <Text style={styles.info_text}> Putts </Text>
-          <TouchableOpacity style={styles.nBtn} onPress={onMinusPress}>
-            <Text style={styles.nBtnText}> - </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.nBtn}>
-            <Text style={styles.nBtnText}> {putts} </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.nBtn} onPress={onCountPress}>
-            <Text style={styles.nBtnText}> + </Text>
-          </TouchableOpacity>
+          {showPutt ? (
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              <TouchableOpacity style={styles.nBtn} onPress={checkPuttonMinus}>
+                <Text style={styles.nBtnText}> - </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.nBtn2} onPress={checkPuttonPlus}>
+                <Text style={styles.nBtnText2}> {putts} | + </Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <TouchableOpacity style={styles.nBtn} onPress={checkPuttonPlus}>
+              <Text style={styles.nBtnText}> + </Text>
+            </TouchableOpacity>
+          )}
         </View>
         <View style={styles.info_view3}>
           <Text style={styles.info_text}> Sand Shots</Text>
-          <TouchableOpacity style={styles.nBtn} onPress={onMinusPress}>
-            <Text style={styles.nBtnText}> - </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.nBtn}>
-            <Text style={styles.nBtnText}> {sandShots} </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.nBtn} onPress={onCountPress}>
-            <Text style={styles.nBtnText}> + </Text>
-          </TouchableOpacity>
+          {showSandShots ? (
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              <TouchableOpacity style={styles.nBtn} onPress={sandShotOnMinus}>
+                <Text style={styles.nBtnText}> - </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.nBtn2}>
+                <Text style={styles.nBtnText2}> {sandShots} | + </Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <TouchableOpacity style={styles.nBtn} onPress={sandShotOnPlus}>
+              <Text style={styles.nBtnText}> + </Text>
+            </TouchableOpacity>
+          )}
         </View>
         <View style={styles.info_view4}>
           <Text style={styles.info_text}> Penalties </Text>
-          <TouchableOpacity style={styles.nBtn} onPress={onMinusPress}>
-            <Text style={styles.nBtnText}> - </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.nBtn}>
-            <Text style={styles.nBtnText}> {penalties} </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.nBtn} onPress={onCountPress}>
-            <Text style={styles.nBtnText}> + </Text>
-          </TouchableOpacity>
+          {showPenalty ? (
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              <TouchableOpacity style={styles.nBtn} onPress={penaltyOnMinus}>
+                <Text style={styles.nBtnText}> - </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.nBtn2}>
+                <Text style={styles.nBtnText2}> {penalties} | + </Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <TouchableOpacity style={styles.nBtn} onPress={penaltyOnPlus}>
+              <Text style={styles.nBtnText}> + </Text>
+            </TouchableOpacity>
+          )}
         </View>
         <View style={styles.info_view5}>
           <Text style={styles.info_text}> Fairways </Text>
           <TouchableOpacity
-            style={isPress1 ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeColor1}
+            style={isLeft ? styles.roundButtonPressed : styles.roundButton}
+            onPress={changeToLeft}
           >
             <Icon
               name="arrow-top-left"
               size={15}
-              color={isPress1 ? 'white' : 'black'}
+              color={isLeft ? 'white' : 'black'}
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={isPress2 ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeColor2}
+            style={isOn ? styles.roundButtonPressed : styles.roundButton}
+            onPress={changeToOn}
           >
             <Icon
               name="circle-outline"
               size={15}
-              color={isPress2 ? 'white' : 'black'}
+              color={isOn ? 'white' : 'black'}
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={isPress3 ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeColor3}
+            style={isRight ? styles.roundButtonPressed : styles.roundButton}
+            onPress={changeToRight}
           >
             <Icon
               name="arrow-top-right"
               size={15}
-              color={isPress3 ? 'white' : 'black'}
+              color={isRight ? 'white' : 'black'}
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={isPress4 ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeColor4}
+            style={isHazard ? styles.roundButtonPressed : styles.roundButton}
+            onPress={changeToHazard}
           >
             <Icon
               name="arrow-down"
               size={15}
-              color={isPress4 ? 'white' : 'black'}
+              color={isHazard ? 'white' : 'black'}
             />
           </TouchableOpacity>
         </View>
@@ -435,13 +455,25 @@ const AddInfoScreen = () => {
           >
             GIR
           </Button>
-          <Button
-            mode="contained"
-            onPress={changeSS}
-            style={isSSActive ? styles.btn_changeP : styles.btn_change}
-          >
-            Sand Saves
-          </Button>
+          {enableSS ? (
+            <Button
+              mode="contained"
+              onPress={changeSS}
+              style={isSSActive ? styles.btn_changeP : styles.btn_changeE}
+              labelStyle={{ color: 'black' }}
+            >
+              Sand Saves
+            </Button>
+          ) : (
+            <Button
+              mode="contained"
+              onPress={changeSS}
+              style={styles.btn_change}
+            >
+              Sand Saves
+            </Button>
+          )}
+
           <Button
             mode="contained"
             onPress={changeUD}
@@ -481,4 +513,4 @@ const AddInfoScreen = () => {
   );
 };
 
-export default AddInfoScreen;
+export default InfoScreen;
