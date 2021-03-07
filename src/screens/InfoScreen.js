@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -11,7 +11,7 @@ import {
   Paragraph,
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import styles from '../components/InfoScreenStyle';
+import styles from '../styles/InfoScreenStyle';
 
 const InfoScreen = () => {
   const navigation = useNavigation();

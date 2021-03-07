@@ -7,9 +7,9 @@ import styles from '../styles/SignInScreenStyle';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
-  // useEffect(() => {
-  //   LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-  // }, []);
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  }, []);
 
   const [number, setNumber] = React.useState('');
   const onEnterPressed = () => {
