@@ -170,9 +170,7 @@ const InfoScreen = () => {
                 <Button style={styles.nBtn_2} onPress={onCountPress}>
                   <Text> {stroke} | + </Text>
                 </Button>
-                <Divider
-                  style={{ color: theme.colors.button_border, height: 3 }}
-                />
+                <Divider style={styles.carddivider} />
                 <Paragraph style={{ alignSelf: 'center' }}>
                   {' '}
                   {stroke}

@@ -54,6 +54,16 @@ const styles = StyleSheet.create({
     marginTop: 25,
     width: screenWidth,
   },
+  card: {
+    width: 80,
+    backgroundColor: theme.colors.white,
+    borderColor: theme.colors.button_border,
+    borderWidth: 2,
+  },
+  carddivider: {
+    color: theme.colors.button_border,
+    height: 3,
+  },
   info_text: {
     fontSize: 20,
     marginLeft: 20,

@@ -24,7 +24,7 @@ const Routes = () => (
           headerShown: false,
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
         options={{
