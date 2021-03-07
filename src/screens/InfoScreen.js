@@ -6,6 +6,7 @@ import {
   Dimensions,
   LogBox,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useNavigation } from '@react-navigation/native';
@@ -100,14 +101,14 @@ const styles = StyleSheet.create({
     width: screenWidth,
   },
   nBtn: {
-    width: 30,
+    width: 40,
     elevation: 8,
     backgroundColor: theme.colors.white,
     borderRadius: 10,
     borderWidth: 2,
     borderColor: theme.colors.button_border,
     marginLeft: screenWidth - 350,
-    height: 30,
+    height: 40,
   },
   nBtn2: {
     width: 80,
@@ -119,12 +120,18 @@ const styles = StyleSheet.create({
     marginLeft: screenWidth - 350,
     height: 40,
   },
+  card: {
+    width: 80,
+    backgroundColor: theme.colors.white,
+    borderColor: theme.colors.button_border,
+    borderWidth: 2,
+  },
   nBtnText2: {
     paddingTop: 10,
     alignSelf: 'center',
   },
   nBtnText: {
-    paddingTop: 5,
+    paddingTop: 10,
     alignSelf: 'center',
   },
   btn_view_info: {
@@ -339,13 +346,29 @@ const InfoScreen = () => {
         <View style={styles.info_view1}>
           <Text style={styles.info_text}> Total Stroke</Text>
           {showStroke ? (
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity style={styles.nBtn} onPress={onMinusPress}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.nBtn2} onPress={onCountPress}>
-                <Text style={styles.nBtnText2}> {stroke} | + </Text>
-              </TouchableOpacity>
+              <Card style={styles.card}>
+                <Button style={styles.nBtn_2} onPress={onCountPress}>
+                  <Text> {stroke} | + </Text>
+                </Button>
+                <Divider
+                  style={{ color: theme.colors.button_border, height: 3 }}
+                />
+                <Paragraph style={{ alignSelf: 'center' }}>
+                  {' '}
+                  {stroke} 
+                  Birdie{' '}
+                </Paragraph>
+                {/* <View>
+                <TouchableOpacity style={styles.nBtn2} onPress={onCountPress}>
+                  <Text style={styles.nBtnText2}> {stroke} | + </Text>
+                </TouchableOpacity>
+                <TextInput> </TextInput>
+              </View> */}
+              </Card>
             </View>
           ) : (
             <TouchableOpacity style={styles.nBtn} onPress={onCountPress}>
