@@ -4,8 +4,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
-import Logo from '../components/Logo';
-import Background from '../components/Background';
+import Logo from '../styles/Logo';
+import Background from '../styles/Background';
 import theme from '../core/theme';
 
 const screenWidth = Dimensions.get('screen').width;
