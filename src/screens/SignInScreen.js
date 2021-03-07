@@ -3,7 +3,7 @@ import { View, LogBox, Text, Image } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useNavigation } from '@react-navigation/native';
 import { Button, TextInput } from 'react-native-paper';
-import styles from '../components/SignInScreenStyle';
+import styles from '../styles/SignInScreenStyle';
 
 const SignInScreen = () => {
   const navigation = useNavigation();

@@ -9,13 +9,15 @@ const styles = StyleSheet.create({
     flex: 1,
     width: screenWidth,
     height: screenHeight,
+    flexDirection: 'column',
   },
   container: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     flexWrap: 'wrap',
-    padding: 3,
+    padding: 20,
+    width: screenWidth,
   },
   appbar: {
     backgroundColor: theme.colors.background,
@@ -40,11 +42,8 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: theme.colors.secondary,
-    borderRadius: 20,
     height: 59,
     justifyContent: 'center',
-    marginVertical: 20,
-    width: 'auto',
   },
   buttontext: {
     fontSize: 15,
