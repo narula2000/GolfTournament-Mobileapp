@@ -250,50 +250,50 @@ const InfoScreen = () => {
             </View>
           )}
           <Text style={styles.leftheadertext}>Fairways</Text>
-          <View style={styles.iconmoveright}>
-            <TouchableOpacity
-              style={isLeft ? styles.roundButtonPressed : styles.roundButton}
-              onPress={changeToLeft}
-            >
-              <Icon
-                name="arrow-top-left"
-                size={15}
-                color={isLeft ? 'white' : 'black'}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={isOn ? styles.roundButtonPressed : styles.roundButton}
-              onPress={changeToOn}
-            >
-              <Icon
-                name="circle-outline"
-                size={15}
-                color={isOn ? 'white' : 'black'}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={isRight ? styles.roundButtonPressed : styles.roundButton}
-              onPress={changeToRight}
-            >
-              <Icon
-                name="arrow-top-right"
-                size={15}
-                color={isRight ? 'white' : 'black'}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={isHazard ? styles.roundButtonPressed : styles.roundButton}
-              onPress={changeToHazard}
-            >
-              <Icon
-                name="arrow-down"
-                size={15}
-                color={isHazard ? 'white' : 'black'}
-              />
-            </TouchableOpacity>
-          </View>
+          {/* <View style={styles.iconmoveright}> */}
+          <TouchableOpacity
+            style={isLeft ? styles.roundButtonPressed : styles.roundButton}
+            onPress={changeToLeft}
+          >
+            <Icon
+              name="arrow-top-left"
+              size={15}
+              color={isLeft ? 'white' : 'black'}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={isOn ? styles.roundButtonPressed : styles.roundButton}
+            onPress={changeToOn}
+          >
+            <Icon
+              name="circle-outline"
+              size={15}
+              color={isOn ? 'white' : 'black'}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={isRight ? styles.roundButtonPressed : styles.roundButton}
+            onPress={changeToRight}
+          >
+            <Icon
+              name="arrow-top-right"
+              size={15}
+              color={isRight ? 'white' : 'black'}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={isHazard ? styles.roundButtonPressed : styles.roundButton}
+            onPress={changeToHazard}
+          >
+            <Icon
+              name="arrow-down"
+              size={15}
+              color={isHazard ? 'white' : 'black'}
+            />
+          </TouchableOpacity>
         </View>
       </View>
+      {/* </View> */}
       <View style={styles.btn_view_info}>
         <Button
           mode="contained"
