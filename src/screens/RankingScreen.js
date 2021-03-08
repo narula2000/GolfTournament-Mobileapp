@@ -8,7 +8,7 @@ const RankingScreen = () => {
   const navigation = useNavigation();
   const onBackPressed = () => {
     console.log('button pressed');
-    navigation.navigate('AddInfoScreen');
+    navigation.navigate('HomeScreen');
   };
   return (
     <View>

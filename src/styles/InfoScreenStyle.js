@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
+  divider: { backgroundColor: theme.colors.ourgreen, height: 6 },
   info_view1: {
     flexDirection: 'row',
     marginTop: 25,
