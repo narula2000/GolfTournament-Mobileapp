@@ -9,20 +9,25 @@ import {
   Text,
   Title,
   Paragraph,
+  Dialog,
+  Portal,
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import styles from '../styles/InfoScreenStyle';
 
 const InfoScreen = () => {
   const navigation = useNavigation();
 
+  const [visible, setVisible] = React.useState(false);
+
+  const hideDialog = () => setVisible(false);
+
+  const proceedDialog = () => navigation.navigate('HomeScreen');
+
   const onSubmitPressed = () => {
     console.log('button pressed');
-    navigation.navigate('RankingScreen');
-  };
-  const onBackPressed = () => {
-    console.log('button pressed');
-    navigation.navigate('HomeScreen');
+    setVisible(true);
   };
   const par = 2;
   const [stroke, setStroke] = React.useState(par);
@@ -136,7 +141,6 @@ const InfoScreen = () => {
     setShowPenalty(true);
     setPenalties(penalties + 1);
   };
-
   return (
     <View style={styles.maincontainer}>
       <Appbar.Header style={styles.appbar}>
@@ -152,17 +156,17 @@ const InfoScreen = () => {
         </View>
         <Card style={styles.appbar_card}>
           <Card.Content>
-            <Title style={styles.appbar_card_text}> Chakeera Cutie </Title>
+            <Title style={styles.appbar_card_text}> Chakeera </Title>
             <Paragraph style={styles.appbar_card_subtext}> To Par +4</Paragraph>
           </Card.Content>
         </Card>
       </Appbar.Header>
       <Divider style={styles.divider} />
       <View style={styles.container}>
-        <View style={styles.info_view1}>
-          <Text style={styles.info_text}> Total Stroke</Text>
+        <View style={styles.rightcontainer}>
+          <Text style={styles.leftheadertext}>Total Stroke</Text>
           {showStroke ? (
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ padding: 20, flexDirection: 'row' }}>
               <TouchableOpacity style={styles.nBtn} onPress={onMinusPress}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
@@ -179,167 +183,171 @@ const InfoScreen = () => {
               </Card>
             </View>
           ) : (
-            <TouchableOpacity style={styles.nBtn} onPress={onCountPress}>
-              <Text style={styles.nBtnText}> + </Text>
-            </TouchableOpacity>
+            <View style={styles.moveright}>
+              <TouchableOpacity style={styles.nBtn} onPress={onCountPress}>
+                <Text style={styles.nBtnText}> + </Text>
+              </TouchableOpacity>
+            </View>
           )}
-        </View>
-        <View style={styles.info_view2}>
-          <Text style={styles.info_text}> Putts </Text>
+          <Text style={styles.leftheadertext}>Putts</Text>
           {showPutt ? (
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ padding: 20, flexDirection: 'row' }}>
               <TouchableOpacity style={styles.nBtn} onPress={checkPuttonMinus}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.nBtn2} onPress={checkPuttonPlus}>
-                <Text style={styles.nBtnText2}> {putts} | + </Text>
-              </TouchableOpacity>
+              <View style={{ marginLeft: 20 }}>
+                <TouchableOpacity
+                  style={styles.nBtn2}
+                  onPress={checkPuttonPlus}
+                >
+                  <Text style={styles.nBtnText2}> {putts} | + </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           ) : (
-            <TouchableOpacity style={styles.nBtn} onPress={checkPuttonPlus}>
-              <Text style={styles.nBtnText}> + </Text>
-            </TouchableOpacity>
+            <View style={styles.moveright}>
+              <TouchableOpacity style={styles.nBtn} onPress={checkPuttonPlus}>
+                <Text style={styles.nBtnText}> + </Text>
+              </TouchableOpacity>
+            </View>
           )}
-        </View>
-        <View style={styles.info_view3}>
-          <Text style={styles.info_text}> Sand Shots</Text>
+          <Text style={styles.leftheadertext}>Sand Shots</Text>
           {showSandShots ? (
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ padding: 20, flexDirection: 'row' }}>
               <TouchableOpacity style={styles.nBtn} onPress={sandShotOnMinus}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.nBtn2}>
-                <Text style={styles.nBtnText2}> {sandShots} | + </Text>
-              </TouchableOpacity>
+              <View style={{ marginLeft: 20 }}>
+                <TouchableOpacity style={styles.nBtn2}>
+                  <Text style={styles.nBtnText2}> {sandShots} | + </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           ) : (
-            <TouchableOpacity style={styles.nBtn} onPress={sandShotOnPlus}>
-              <Text style={styles.nBtnText}> + </Text>
-            </TouchableOpacity>
+            <View style={styles.moveright}>
+              <TouchableOpacity style={styles.nBtn} onPress={sandShotOnPlus}>
+                <Text style={styles.nBtnText}> + </Text>
+              </TouchableOpacity>
+            </View>
           )}
-        </View>
-        <View style={styles.info_view4}>
-          <Text style={styles.info_text}> Penalties </Text>
+          <Text style={styles.leftheadertext}>Penalties</Text>
           {showPenalty ? (
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ padding: 20, flexDirection: 'row' }}>
               <TouchableOpacity style={styles.nBtn} onPress={penaltyOnMinus}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.nBtn2}>
-                <Text style={styles.nBtnText2}> {penalties} | + </Text>
-              </TouchableOpacity>
+              <View style={{ marginLeft: 20 }}>
+                <TouchableOpacity style={styles.nBtn2}>
+                  <Text style={styles.nBtnText2}> {penalties} | + </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           ) : (
-            <TouchableOpacity style={styles.nBtn} onPress={penaltyOnPlus}>
-              <Text style={styles.nBtnText}> + </Text>
+            <View style={styles.moveright}>
+              <TouchableOpacity style={styles.nBtn} onPress={penaltyOnPlus}>
+                <Text style={styles.nBtnText}> + </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          <Text style={styles.leftheadertext}>Fairways</Text>
+          <View style={styles.iconmoveright}>
+            <TouchableOpacity
+              style={isLeft ? styles.roundButtonPressed : styles.roundButton}
+              onPress={changeToLeft}
+            >
+              <Icon
+                name="arrow-top-left"
+                size={15}
+                color={isLeft ? 'white' : 'black'}
+              />
             </TouchableOpacity>
-          )}
-        </View>
-        <View style={styles.info_view5}>
-          <Text style={styles.info_text}> Fairways </Text>
-          <TouchableOpacity
-            style={isLeft ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeToLeft}
-          >
-            <Icon
-              name="arrow-top-left"
-              size={15}
-              color={isLeft ? 'white' : 'black'}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={isOn ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeToOn}
-          >
-            <Icon
-              name="circle-outline"
-              size={15}
-              color={isOn ? 'white' : 'black'}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={isRight ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeToRight}
-          >
-            <Icon
-              name="arrow-top-right"
-              size={15}
-              color={isRight ? 'white' : 'black'}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={isHazard ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeToHazard}
-          >
-            <Icon
-              name="arrow-down"
-              size={15}
-              color={isHazard ? 'white' : 'black'}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.btn_view_info}>
-          <Button
-            mode="contained"
-            onPress={changeGIR}
-            style={isGIRActive ? styles.btn_changeP : styles.btn_change}
-          >
-            GIR
-          </Button>
-          {enableSS ? (
-            <Button
-              mode="contained"
-              onPress={changeSS}
-              style={isSSActive ? styles.btn_changeP : styles.btn_changeE}
-              labelStyle={{ color: 'black' }}
+            <TouchableOpacity
+              style={isOn ? styles.roundButtonPressed : styles.roundButton}
+              onPress={changeToOn}
             >
-              Sand Saves
-            </Button>
-          ) : (
-            <Button
-              mode="contained"
-              onPress={changeSS}
-              style={styles.btn_change}
+              <Icon
+                name="circle-outline"
+                size={15}
+                color={isOn ? 'white' : 'black'}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={isRight ? styles.roundButtonPressed : styles.roundButton}
+              onPress={changeToRight}
             >
-              Sand Saves
-            </Button>
-          )}
-
-          <Button
-            mode="contained"
-            onPress={changeUD}
-            style={isUDActive ? styles.btn_changeP : styles.btn_change}
-          >
-            Up & Down
-          </Button>
+              <Icon
+                name="arrow-top-right"
+                size={15}
+                color={isRight ? 'white' : 'black'}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={isHazard ? styles.roundButtonPressed : styles.roundButton}
+              onPress={changeToHazard}
+            >
+              <Icon
+                name="arrow-down"
+                size={15}
+                color={isHazard ? 'white' : 'black'}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
-        <Button
-          style={styles.button}
-          labelStyle={styles.buttontext}
-          mode="contained"
-          onPress={onSubmitPressed}
-        >
-          Submit
-        </Button>
-        <Button
-          style={styles.button}
-          labelStyle={styles.buttontext}
-          mode="contained"
-          onPress={onBackPressed}
-        >
-          Back to Score Page
-        </Button>
-        {/* <Card style={styles.card}>
-        <Card.Actions>
-          <TouchableOpacity style={styles.nBtn}>
-            <Text style={styles.nBtnText}> + </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.nBtn}>
-            <Text style={styles.nBtnText}> + </Text>
-          </TouchableOpacity>
-        </Card.Actions>
-      </Card> */}
       </View>
+      <View style={styles.btn_view_info}>
+        <Button
+          mode="contained"
+          onPress={changeGIR}
+          style={isGIRActive ? styles.btn_changeP : styles.btn_change}
+        >
+          GIR
+        </Button>
+        {enableSS ? (
+          <Button
+            mode="contained"
+            onPress={changeSS}
+            style={isSSActive ? styles.btn_changeP : styles.btn_changeE}
+            labelStyle={{ color: 'black' }}
+          >
+            Sand Saves
+          </Button>
+        ) : (
+          <Button mode="contained" onPress={changeSS} style={styles.btn_change}>
+            Sand Saves
+          </Button>
+        )}
+
+        <Button
+          mode="contained"
+          onPress={changeUD}
+          style={isUDActive ? styles.btn_changeP : styles.btn_change}
+        >
+          Up & Down
+        </Button>
+      </View>
+      <Button
+        style={styles.button}
+        labelStyle={styles.buttontext}
+        mode="contained"
+        onPress={onSubmitPressed}
+      >
+        Submit
+      </Button>
+      <Portal>
+        <Dialog visible={visible} onDismiss={hideDialog}>
+          <Dialog.Title>Submit Your Score</Dialog.Title>
+          <Dialog.Content>
+            <Paragraph>
+              Your score will be used for ranking calculation. Make sure you
+              have entered the right informations.
+            </Paragraph>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={hideDialog}>Back</Button>
+            <Button onPress={proceedDialog}>Proceed</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </View>
   );
 };
