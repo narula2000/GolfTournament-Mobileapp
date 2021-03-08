@@ -11,6 +11,9 @@ const HomeScreen = () => {
   const onEnterPressed = () => {
     navigation.navigate('InfoScreen');
   };
+  const onTrialPressed = () => {
+    navigation.navigate('TrialScreen');
+  };
   const onButtonPressed = () => {
     navigation.navigate('RankingScreen');
   };
@@ -35,10 +38,7 @@ const HomeScreen = () => {
           <Text>Hole 1</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
+        <TouchableOpacity onPress={onTrialPressed} style={styles.roundButton}>
           <Text>Hole 2</Text>
         </TouchableOpacity>
         <TouchableOpacity

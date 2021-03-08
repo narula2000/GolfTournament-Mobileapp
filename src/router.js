@@ -3,7 +3,8 @@ import firebase from 'firebase/app';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import RankingScreen from './screens/RankingScreen';
-import InfoScreen from './screens/trialScreen';
+import InfoScreen from './screens/InfoScreen';
+import TrialScreen from './screens/trialScreen';
 import SignInScreen from './screens/SignInScreen';
 import HomeScreen from './screens/HomeScreen';
 import firebaseConfig from './firebase';
@@ -41,6 +42,13 @@ const Routes = () => (
       <Stack.Screen
         name="InfoScreen"
         component={InfoScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="TrialScreen"
+        component={TrialScreen}
         options={{
           headerShown: false,
         }}

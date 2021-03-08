@@ -22,7 +22,7 @@ const InfoScreen = () => {
   };
   const onBackPressed = () => {
     console.log('button pressed');
-    navigation.navigate('SignInScreen');
+    navigation.navigate('HomeScreen');
   };
   const par = 2;
   const [stroke, setStroke] = React.useState(par);
@@ -176,12 +176,6 @@ const InfoScreen = () => {
                   {stroke}
                   Birdie{' '}
                 </Paragraph>
-                {/* <View>
-                <TouchableOpacity style={styles.nBtn2} onPress={onCountPress}>
-                  <Text style={styles.nBtnText2}> {stroke} | + </Text>
-                </TouchableOpacity>
-                <TextInput> </TextInput>
-              </View> */}
               </Card>
             </View>
           ) : (
