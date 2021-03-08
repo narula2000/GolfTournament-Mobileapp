@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     // marginLeft: screenWidth - 370,
-    marginLeft: 20,
+    marginLeft: 10,
     marginTop: 20,
     justifyContent: 'center',
     alignItems: 'center',
