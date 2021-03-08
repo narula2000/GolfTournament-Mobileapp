@@ -192,7 +192,9 @@ const InfoScreen = () => {
               </Card>
             </View>
           ) : (
-            <View style={{ marginLeft:'auto',padding: 20, flexDirection: 'row' }}>
+            <View
+              style={{ marginLeft: 'auto', padding: 20, flexDirection: 'row' }}
+            >
               <TouchableOpacity style={styles.nBtn} onPress={onCountPress}>
                 <Text style={styles.nBtnText}> + </Text>
               </TouchableOpacity>
