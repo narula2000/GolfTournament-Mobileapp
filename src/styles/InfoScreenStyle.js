@@ -100,17 +100,85 @@ const styles = StyleSheet.create({
     padding: 10,
     alignSelf: 'center',
   },
-  card: {
+  nBtn2disabled: {
     width: 80,
+    borderWidth: 1,
+    backgroundColor: theme.colors.button_border,
+    borderRadius: 10,
+    borderColor: theme.colors.button_border,
+    height: 40,
+  },
+  card: {
+    width: 85,
     backgroundColor: theme.colors.white,
     borderColor: theme.colors.button_border,
-    height: 60,
+    height: 65,
     marginLeft: 20,
     borderWidth: 1,
   },
   carddivider: {
-    color: theme.colors.button_border,
+    backgroundColor: theme.colors.button_border,
     height: 2,
+  },
+  cardBogey: {
+    width: 85,
+    backgroundColor: theme.colors.white,
+    borderColor: '#0F28D3',
+    height: 65,
+    marginLeft: 20,
+    borderWidth: 2,
+  },
+  carddividerBogey: {
+    backgroundColor: '#0F28D3',
+    height: 3,
+  },
+  cardBogeyUp: {
+    width: 85,
+    backgroundColor: theme.colors.white,
+    borderColor: '#5B5F59',
+    height: 65,
+    marginLeft: 20,
+    borderWidth: 2,
+  },
+  carddividerBogeyUp: {
+    backgroundColor: '#5B5F59',
+    height: 3,
+  },
+  cardPar: {
+    width: 85,
+    backgroundColor: theme.colors.white,
+    borderColor: '#5B5F59',
+    height: 65,
+    marginLeft: 20,
+    borderWidth: 2,
+  },
+  carddividerPar: {
+    backgroundColor: '#5B5F59',
+    height: 3,
+  },
+  cardBirdie: {
+    width: 85,
+    backgroundColor: theme.colors.white,
+    borderColor: '#FF0000',
+    height: 65,
+    marginLeft: 20,
+    borderWidth: 2,
+  },
+  carddividerBirdie: {
+    backgroundColor: '#FF0000',
+    height: 3,
+  },
+  cardEagle: {
+    width: 85,
+    backgroundColor: theme.colors.white,
+    borderColor: '#49E81A',
+    height: 65,
+    marginLeft: 20,
+    borderWidth: 2,
+  },
+  carddividerEagle: {
+    backgroundColor: '#49E81A',
+    height: 3,
   },
   button: {
     backgroundColor: theme.colors.secondary,
@@ -128,15 +196,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     justifyContent: 'space-evenly',
   },
-  btn_change: {
+  disabledButton: {
     backgroundColor: theme.colors.button_border,
     borderRadius: 10,
   },
-  btn_changeE: {
+  enabledButton: {
     backgroundColor: theme.colors.white,
     borderRadius: 10,
   },
-  btn_changeP: {
+  activeButton: {
     backgroundColor: theme.colors.ourgreen,
     borderRadius: 10,
   },
