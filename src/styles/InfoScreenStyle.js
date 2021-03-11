@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 1,
     borderColor: theme.colors.button_border,
-    backgroundColor: 'blue',
+    backgroundColor: theme.colors.ourgreen,
     shadowColor: theme.colors.white,
   },
 });

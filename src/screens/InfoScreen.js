@@ -29,7 +29,7 @@ const InfoScreen = () => {
     console.log('button pressed');
     setVisible(true);
   };
-  const par = 5;
+  const par = 3;
   const [stroke, setStroke] = React.useState(par);
   const [score, setScore] = React.useState(stroke - par);
   const [isBogey, setBogey] = React.useState(false);
@@ -63,6 +63,7 @@ const InfoScreen = () => {
       setStroke(par);
     }
     setScore(0);
+    setPar(true);
   };
   const strokeOnPlus = () => {
     setStroke(stroke + 1);
@@ -133,7 +134,7 @@ const InfoScreen = () => {
       setAlbatross(false);
       setHoleInOne(true);
     }
-    if (putts - stroke + 1 <= par - 2) {
+    if (stroke + 1 - putts <= par - 2) {
       setGIR(true);
     } else {
       setGIR(false);
@@ -187,22 +188,32 @@ const InfoScreen = () => {
       setHoleInOne(false);
     }
     if (score - 1 === -2) {
-      setEagle(true);
-      setBogey(false);
-      setBogeyUp(false);
-      setPar(false);
-      setBirdie(false);
-      setAlbatross(false);
-      setHoleInOne(false);
+      if (stroke - 1 === 1) {
+        setHoleInOne(true);
+        setBirdie(false);
+      } else {
+        setEagle(true);
+        setBogey(false);
+        setBogeyUp(false);
+        setPar(false);
+        setBirdie(false);
+        setAlbatross(false);
+        setHoleInOne(false);
+      }
     }
     if (score - 1 === -3) {
-      setEagle(false);
-      setBogey(false);
-      setBogeyUp(false);
-      setPar(false);
-      setBirdie(false);
-      setAlbatross(true);
-      setHoleInOne(false);
+      if (stroke - 1 === 1) {
+        setHoleInOne(true);
+        setEagle(false);
+      } else {
+        setEagle(false);
+        setBogey(false);
+        setBogeyUp(false);
+        setPar(false);
+        setBirdie(false);
+        setAlbatross(true);
+        setHoleInOne(false);
+      }
     }
     if (score - 1 <= -4) {
       setEagle(false);
@@ -213,7 +224,7 @@ const InfoScreen = () => {
       setAlbatross(false);
       setHoleInOne(true);
     }
-    if (putts - stroke - 1 <= par - 2) {
+    if (stroke - 1 - putts <= par - 2) {
       setGIR(true);
     } else {
       setGIR(false);
@@ -290,7 +301,7 @@ const InfoScreen = () => {
     } else {
       setSandSaves(false);
     }
-    if (putts - 1 - stroke <= par - 2) {
+    if (stroke - putts + 1 <= par - 2) {
       setGIR(true);
     } else {
       setGIR(false);
@@ -309,7 +320,7 @@ const InfoScreen = () => {
     } else {
       setSandSaves(false);
     }
-    if (putts + 1 - stroke <= par - 2) {
+    if (stroke - putts - 1 <= par - 2) {
       setGIR(true);
     } else {
       setGIR(false);
@@ -345,6 +356,10 @@ const InfoScreen = () => {
     } else {
       setSandSaves(false);
     }
+  };
+  const changePenaltyButton = () => {
+    setShowPenalty(true);
+    setPenalties(1);
   };
   const penaltyOnMinus = () => {
     setPenalties(penalties - 1);
@@ -534,9 +549,7 @@ const InfoScreen = () => {
             <View style={styles.moveright}>
               <TouchableOpacity
                 style={styles.nBtn}
-                onPress={() => {
-                  setShowPenalty(true);
-                }}
+                onPress={changePenaltyButton}
               >
                 <Text style={styles.nBtnText}> + </Text>
               </TouchableOpacity>
