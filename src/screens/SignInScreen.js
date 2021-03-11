@@ -3,8 +3,8 @@ import { View, Image, Text, ActivityIndicator, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useNavigation } from '@react-navigation/native';
 import { Button, TextInput } from 'react-native-paper';
-import * as firebase from 'firebase';
-import * as FirebaseRecaptcha from 'expo-firebase-recaptcha';
+import firebase from 'firebase/app';
+import FirebaseRecaptcha from 'expo-firebase-recaptcha';
 import styles from '../styles/SignInScreenStyle';
 import firebaseConfig from '../firebase/index';
 
