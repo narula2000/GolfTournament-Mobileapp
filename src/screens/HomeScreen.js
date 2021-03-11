@@ -31,102 +31,60 @@ const HomeScreen = () => {
       </Appbar.Header>
       <Divider style={styles.divider} />
       <View style={styles.container}>
-        <TouchableOpacity onPress={onEnterPressed} style={styles.roundButton}>
-          <Text>1</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 1</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={onEnterPressed} style={styles.roundButton}>
-          <Text>2</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 2</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={onEnterPressed} style={styles.roundButton}>
-          <Text>3</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 3</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={onEnterPressed} style={styles.roundButton}>
-          <Text>4</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 4</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
-          <Text>5</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 5</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
-          <Text>6</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 6</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
-          <Text>7</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 7</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
-          <Text>8</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 8</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
-          <Text>9</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 9</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
-          <Text>10</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 10</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
-          <Text>11</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 11</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
-          <Text>12</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 12</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
-          <Text>13</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 13</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
-          <Text>14</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 14</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
-          <Text>15</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 15</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
-          <Text>16</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 16</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
-          <Text>17</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 17</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          // onPress={buttonClickedHandler}
-          style={styles.roundButton}
-        >
-          <Text>18</Text>
+        <TouchableOpacity style={styles.roundButton}>
+          <Text>Hole 18</Text>
         </TouchableOpacity>
       </View>
       <Button

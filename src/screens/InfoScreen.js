@@ -62,6 +62,7 @@ const InfoScreen = () => {
     if (stroke + 1 === 0) {
       setStroke(par);
     }
+    setStroke(par);
     setScore(0);
     setPar(true);
   };
