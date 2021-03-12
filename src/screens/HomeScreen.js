@@ -31,7 +31,7 @@ const HomeScreen = () => {
       </Appbar.Header>
       <Divider style={styles.divider} />
       <View style={styles.container}>
-        <TouchableOpacity style={styles.roundButton}>
+        <TouchableOpacity style={styles.roundButton} onPress={onEnterPressed}>
           <Text>Hole 1</Text>
         </TouchableOpacity>
 
