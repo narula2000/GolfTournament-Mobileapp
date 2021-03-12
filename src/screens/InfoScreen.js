@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -46,7 +45,7 @@ const InfoScreen = () => {
     Hazard: 'Hazard',
   });
 
-  const holePar = 3;
+  const holePar = 4;
 
   const GIR = holePar - 2;
 
@@ -171,6 +170,18 @@ const InfoScreen = () => {
     }
   };
 
+  const scoreEvaluator = () => {
+    if (score === 0) {
+      return <Paragraph style={styles.appbar_card_subtext}>To Par E</Paragraph>;
+    }
+    if (!showStroke) {
+      return <Paragraph style={styles.appbar_card_subtext}>To Par E</Paragraph>;
+    }
+    return (
+      <Paragraph style={styles.appbar_card_subtext}> To Par {score} </Paragraph>
+    );
+  };
+
   const checkSetSandSave = () => {
     if (putts === 1) {
       setSandSaves(true);
@@ -279,6 +290,7 @@ const InfoScreen = () => {
     setEnabledGIR(true);
     setPutts(1);
     setUpDown(true);
+    checkSetGIR(stroke - 1);
     if (sandShots > 0) {
       setSandSaves(true);
     }
@@ -363,16 +375,7 @@ const InfoScreen = () => {
         <Card style={styles.appbar_card}>
           <Card.Content>
             <Title style={styles.appbar_card_text}> Chakeera </Title>
-            {score === 0 ? (
-              <Paragraph style={styles.appbar_card_subtext}>To Par E</Paragraph>
-            ) : !showStroke ? (
-              <Paragraph style={styles.appbar_card_subtext}>To Par E</Paragraph>
-            ) : (
-              <Paragraph style={styles.appbar_card_subtext}>
-                {' '}
-                To Par {score}{' '}
-              </Paragraph>
-            )}
+            {scoreEvaluator()}
           </Card.Content>
         </Card>
       </Appbar.Header>
