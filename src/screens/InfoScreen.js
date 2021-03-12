@@ -43,11 +43,7 @@ const InfoScreen = () => {
   const [sandShots, setSandShots] = React.useState(0);
   const [penalties, setPenalties] = React.useState(0);
 
-  const [isLeft, setLeft] = React.useState(false);
-  const [isOn, setOn] = React.useState(false);
-  const [isRight, setRight] = React.useState(false);
-  const [isHazard, setHazard] = React.useState(false);
-
+  const [fairway, setFairway] = React.useState('');
   const [isBogey, setBogey] = React.useState(false);
   const [isPar, setPar] = React.useState(false);
   const [isBirdie, setBirdie] = React.useState(false);
@@ -243,34 +239,6 @@ const InfoScreen = () => {
     }
     console.log(stroke - 1);
     console.log(score - 1);
-  };
-
-  const fairwayLeft = () => {
-    setLeft(true);
-    setOn(false);
-    setRight(false);
-    setHazard(false);
-  };
-
-  const fairwayOn = () => {
-    setLeft(false);
-    setOn(true);
-    setRight(false);
-    setHazard(false);
-  };
-
-  const fairwayRight = () => {
-    setLeft(false);
-    setOn(false);
-    setRight(true);
-    setHazard(false);
-  };
-
-  const fairwayHazard = () => {
-    setLeft(false);
-    setOn(false);
-    setRight(false);
-    setHazard(true);
   };
 
   const toggleGIR = () => {
@@ -573,43 +541,65 @@ const InfoScreen = () => {
           )}
           <Text style={styles.leftheadertext}>Fairways</Text>
           <TouchableOpacity
-            style={isLeft ? styles.roundButtonPressed : styles.roundButton}
-            onPress={fairwayLeft}
+            style={
+              fairway === 'Left'
+                ? styles.roundButtonPressed
+                : styles.roundButton
+            }
+            onPress={() => {
+              setFairway('Left');
+            }}
           >
             <Icon
               name="arrow-top-left"
               size={15}
-              color={isLeft ? 'white' : 'black'}
+              color={fairway === 'Left' ? 'white' : 'black'}
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={isOn ? styles.roundButtonPressed : styles.roundButton}
-            onPress={fairwayOn}
+            style={
+              fairway === 'On' ? styles.roundButtonPressed : styles.roundButton
+            }
+            onPress={() => {
+              setFairway('On');
+            }}
           >
             <Icon
               name="circle-outline"
               size={15}
-              color={isOn ? 'white' : 'black'}
+              color={fairway === 'On' ? 'white' : 'black'}
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={isRight ? styles.roundButtonPressed : styles.roundButton}
-            onPress={fairwayRight}
+            style={
+              fairway === 'Right'
+                ? styles.roundButtonPressed
+                : styles.roundButton
+            }
+            onPress={() => {
+              setFairway('Right');
+            }}
           >
             <Icon
               name="arrow-top-right"
               size={15}
-              color={isRight ? 'white' : 'black'}
+              color={fairway === 'Right' ? 'white' : 'black'}
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={isHazard ? styles.roundButtonPressed : styles.roundButton}
-            onPress={fairwayHazard}
+            style={
+              fairway === 'Hazard'
+                ? styles.roundButtonPressed
+                : styles.roundButton
+            }
+            onPress={() => {
+              setFairway('Hazard');
+            }}
           >
             <Icon
               name="arrow-down"
               size={15}
-              color={isHazard ? 'white' : 'black'}
+              color={fairway === 'Hazard' ? 'white' : 'black'}
             />
           </TouchableOpacity>
         </View>
