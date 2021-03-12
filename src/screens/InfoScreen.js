@@ -19,8 +19,6 @@ import styles from '../styles/InfoScreenStyle';
 const InfoScreen = () => {
   const navigation = useNavigation();
 
-  const [visible, setVisible] = React.useState(false);
-
   const scoreOfNames = Object.freeze({
     HoleInOne: -4,
     Albatross: -3,
@@ -51,6 +49,8 @@ const InfoScreen = () => {
   const holePar = 3;
 
   const GIR = holePar - 2;
+
+  const [visible, setVisible] = React.useState(false);
 
   const [stroke, setStroke] = React.useState(holePar);
   const [score, setScore] = React.useState(stroke - holePar);
