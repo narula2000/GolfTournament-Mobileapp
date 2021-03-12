@@ -153,14 +153,6 @@ const InfoScreen = () => {
     }
   };
 
-  const checkSetGIR = () => {
-    if (stroke - 1 - putts <= GIR) {
-      setGIR(true);
-    } else {
-      setGIR(false);
-    }
-  };
-
   const checkSetSandSave = () => {
     if (putts === 1) {
       setSandSaves(true);
@@ -201,7 +193,11 @@ const InfoScreen = () => {
       setScoreState('HoleInOne');
     }
 
-    checkSetGIR();
+    if (stroke - putts - 1 <= holePar - 2) {
+      setGIR(true);
+    } else {
+      setGIR(false);
+    }
     console.log(stroke + 1);
     console.log(score + 1);
   };
@@ -237,7 +233,11 @@ const InfoScreen = () => {
       setScoreState('HoleInOne');
     }
 
-    checkSetGIR();
+    if (stroke - putts + 1 <= holePar - 2) {
+      setGIR(true);
+    } else {
+      setGIR(false);
+    }
     console.log(stroke - 1);
     console.log(score - 1);
   };
@@ -268,7 +268,11 @@ const InfoScreen = () => {
       setSandSaves(false);
     }
 
-    checkSetGIR();
+    if (stroke - putts - 1 <= holePar - 2) {
+      setGIR(true);
+    } else {
+      setGIR(false);
+    }
   };
 
   const decreasePutt = () => {
@@ -288,8 +292,11 @@ const InfoScreen = () => {
     } else {
       setSandSaves(false);
     }
-
-    checkSetGIR();
+    if (stroke - putts + 1 <= holePar - 2) {
+      setGIR(true);
+    } else {
+      setGIR(false);
+    }
   };
 
   const editSandShot = () => {
