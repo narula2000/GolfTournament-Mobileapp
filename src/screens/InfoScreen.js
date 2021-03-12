@@ -148,10 +148,6 @@ const InfoScreen = () => {
     console.log(score - 1);
   };
 
-  const toggleGIR = () => {
-    setGIR(!isGIRActive);
-  };
-
   const toggleSandSave = () => {
     setSandSaves(!isSandSaveActive);
   };
@@ -515,7 +511,9 @@ const InfoScreen = () => {
         {enableGIR ? (
           <Button
             mode="contained"
-            onPress={toggleGIR}
+            onPress={() => {
+              setGIR(!isGIRActive);
+            }}
             style={isGIRActive ? styles.activeButton : styles.enabledButton}
             labelStyle={{ color: 'black' }}
           >
@@ -524,7 +522,9 @@ const InfoScreen = () => {
         ) : (
           <Button
             mode="contained"
-            onPress={toggleGIR}
+            onPress={() => {
+              setGIR(!isGIRActive);
+            }}
             style={styles.disabledButton}
           >
             GIR
