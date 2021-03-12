@@ -49,14 +49,6 @@ const InfoScreen = () => {
   const [fairway, setFairway] = React.useState('');
   const [scoreState, setScoreState] = React.useState('');
 
-  const [isBogey, setBogey] = React.useState(false);
-  const [isPar, setPar] = React.useState(false);
-  const [isBirdie, setBirdie] = React.useState(false);
-  const [isEagle, setEagle] = React.useState(false);
-  const [isBogeyUp, setBogeyUp] = React.useState(false);
-  const [isAlbatross, setAlbatross] = React.useState(false);
-  const [isHoleInOne, setHoleInOne] = React.useState(false);
-
   const [showStroke, setShowStroke] = React.useState(false);
   const [showPutt, setShowPutt] = React.useState(false);
   const [showSandShots, setShowSandShots] = React.useState(false);
@@ -300,19 +292,19 @@ const InfoScreen = () => {
               </TouchableOpacity>
               <Card
                 style={
-                  isPar
+                  scoreState === 'Par'
                     ? styles.cardPar
-                    : isBogey
+                    : scoreState === 'Bogey'
                     ? styles.cardBogey
-                    : isBogeyUp
+                    : scoreState === 'BogeyUp'
                     ? styles.cardBogeyUp
-                    : isBirdie
+                    : scoreState === 'Birdie'
                     ? styles.cardBirdie
-                    : isEagle
+                    : scoreState === 'Eagle'
                     ? styles.cardEagle
-                    : isAlbatross
+                    : scoreState === 'Albatross'
                     ? styles.cardEagle
-                    : isHoleInOne
+                    : scoreState === 'HoleInOne'
                     ? styles.cardEagle
                     : styles.card
                 }
@@ -322,48 +314,48 @@ const InfoScreen = () => {
                 </Button>
                 <Divider
                   style={
-                    isPar
+                    scoreState === 'Par'
                       ? styles.carddividerPar
-                      : isBogey
+                      : scoreState === 'Bogey'
                       ? styles.carddividerBogey
-                      : isBogeyUp
+                      : scoreState === 'BogeyUp'
                       ? styles.carddividerBogeyUp
-                      : isBirdie
+                      : scoreState === 'Birdie'
                       ? styles.carddividerBirdie
-                      : isEagle
+                      : scoreState === 'Eagle'
                       ? styles.carddividerEagle
-                      : isAlbatross
+                      : scoreState === 'Albatross'
                       ? styles.carddividerEagle
-                      : isHoleInOne
+                      : scoreState === 'HoleInOne'
                       ? styles.carddividerEagle
                       : styles.carddivider
                   }
                 />
-                {isPar ? (
+                {scoreState === 'Par' ? (
                   <Paragraph style={{ alignSelf: 'center', color: '#5B5F59' }}>
                     Par
                   </Paragraph>
-                ) : isBogey ? (
+                ) : scoreState === 'Bogey' ? (
                   <Paragraph style={{ alignSelf: 'center', color: '#0F28D3' }}>
                     Bogey
                   </Paragraph>
-                ) : isBogeyUp ? (
+                ) : scoreState === 'BogeyUp' ? (
                   <Paragraph style={{ alignSelf: 'center', color: '#5B5F59' }}>
                     {score} Bogey
                   </Paragraph>
-                ) : isBirdie ? (
+                ) : scoreState === 'Birdie' ? (
                   <Paragraph style={{ alignSelf: 'center', color: '#FF0000' }}>
                     Birdie
                   </Paragraph>
-                ) : isEagle ? (
+                ) : scoreState === 'Eagle' ? (
                   <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
                     Eagle
                   </Paragraph>
-                ) : isAlbatross ? (
+                ) : scoreState === 'Albatross' ? (
                   <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
                     Albatross
                   </Paragraph>
-                ) : isHoleInOne ? (
+                ) : scoreState === 'HoleInOne' ? (
                   <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
                     Hole in One
                   </Paragraph>
