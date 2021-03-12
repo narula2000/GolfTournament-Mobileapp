@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -19,358 +18,305 @@ import styles from '../styles/InfoScreenStyle';
 const InfoScreen = () => {
   const navigation = useNavigation();
 
+  const scoreOfNames = Object.freeze({
+    HoleInOne: -4,
+    Albatross: -3,
+    Eagle: -2,
+    Par: 0,
+    Birdie: -1,
+    Bogey: 1,
+    BogeyUp: 2,
+  });
+
+  const scoreNames = Object.freeze({
+    HoleInOne: 'HoleInOne',
+    Albatross: 'Albatross',
+    Eagle: 'Eagle',
+    Birdie: 'Birdie',
+    Par: 'Par',
+    Bogey: 'Bogey',
+    BogeyUp: 'BogeyUp',
+  });
+
+  const fairways = Object.freeze({
+    Left: 'Left',
+    On: 'On',
+    Right: 'Right',
+    Hazard: 'Hazard',
+  });
+
+  const holePar = 4;
+
+  const GIR = holePar - 2;
+
   const [visible, setVisible] = React.useState(false);
 
-  const hideDialog = () => setVisible(false);
+  const [stroke, setStroke] = React.useState(holePar);
+  const [score, setScore] = React.useState(stroke - holePar);
 
-  const proceedDialog = () => navigation.navigate('HomeScreen');
-
-  const onSubmitPressed = () => {
-    console.log('button pressed');
-    setVisible(true);
-  };
-  const par = 3;
-  const [stroke, setStroke] = React.useState(par);
-  const [score, setScore] = React.useState(stroke - par);
-  const [isBogey, setBogey] = React.useState(false);
-  const [isPar, setPar] = React.useState(false);
-  const [isBirdie, setBirdie] = React.useState(false);
-  const [isEagle, setEagle] = React.useState(false);
-  const [isBogeyUp, setBogeyUp] = React.useState(false);
-  const [isAlbatross, setAlbatross] = React.useState(false);
-  const [isHoleInOne, setHoleInOne] = React.useState(false);
   const [putts, setPutts] = React.useState(0);
   const [sandShots, setSandShots] = React.useState(0);
   const [penalties, setPenalties] = React.useState(0);
+
+  const [fairway, setFairway] = React.useState('');
+  const [scoreState, setScoreState] = React.useState('');
+
   const [showStroke, setShowStroke] = React.useState(false);
   const [showPutt, setShowPutt] = React.useState(false);
   const [showSandShots, setShowSandShots] = React.useState(false);
   const [showPenalty, setShowPenalty] = React.useState(false);
-  const [isLeft, setLeft] = React.useState(false);
-  const [isOn, setOn] = React.useState(false);
-  const [isRight, setRight] = React.useState(false);
-  const [isHazard, setHazard] = React.useState(false);
+
   const [enableGIR, setEnabledGIR] = React.useState(false);
-  const [isGIRActive, setGIR] = React.useState(false);
-  const [isSSActive, setSandSaves] = React.useState(false);
-  const [enableSS, setEnabledSS] = React.useState(false);
+  const [enableSandSave, setEnabledSS] = React.useState(false);
   const [enableUD, setEnabledUD] = React.useState(false);
+
+  const [isGIRActive, setGIR] = React.useState(false);
+  const [isSandSaveActive, setSandSaves] = React.useState(false);
   const [isUDActive, setUpDown] = React.useState(false);
 
-  const changeStroke = () => {
-    setShowStroke(true);
-    if (stroke + 1 === 0) {
-      setStroke(par);
+  const styleCardScoreName = () => {
+    switch (scoreState) {
+      case scoreNames.Par:
+        return styles.cardPar;
+      case scoreNames.Bogey:
+        return styles.cardBogey;
+      case scoreNames.BogeyUp:
+        return styles.cardBogeyUp;
+      case scoreNames.Birdie:
+        return styles.cardBirdie;
+      case scoreNames.Eagle:
+        return styles.cardEagle;
+      case scoreNames.Albatross:
+        return styles.cardEagle;
+      case scoreNames.HoleInOne:
+        return styles.cardEagle;
+      default:
+        return styles.card;
     }
-    setStroke(par);
-    setScore(0);
-    setPar(true);
-  };
-  const strokeOnPlus = () => {
-    setStroke(stroke + 1);
-    if (stroke + 1 === 0) {
-      setStroke(par);
-    }
-    setScore(stroke + 1 - par);
-    if (score + 1 >= 2) {
-      setBogeyUp(true);
-      setBogey(false);
-      setPar(false);
-      setBirdie(false);
-      setEagle(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score + 1 === 1) {
-      setBogey(true);
-      setBogeyUp(false);
-      setPar(false);
-      setBirdie(false);
-      setEagle(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score + 1 === 0) {
-      setPar(true);
-      setBirdie(false);
-      setEagle(false);
-      setBogey(false);
-      setBogeyUp(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score + 1 === -1) {
-      setBirdie(true);
-      setEagle(false);
-      setBogey(false);
-      setBogeyUp(false);
-      setPar(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score + 1 === -2) {
-      setEagle(true);
-      setBogey(false);
-      setBogeyUp(false);
-      setPar(false);
-      setBirdie(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score + 1 === -3) {
-      setEagle(false);
-      setBogey(false);
-      setBogeyUp(false);
-      setPar(false);
-      setBirdie(false);
-      setAlbatross(true);
-      setHoleInOne(false);
-    }
-    if (score + 1 <= -4) {
-      setEagle(true);
-      setBogey(false);
-      setBogeyUp(false);
-      setPar(false);
-      setBirdie(false);
-      setAlbatross(false);
-      setHoleInOne(true);
-    }
-    if (stroke + 1 - putts <= par - 2) {
-      setGIR(true);
-    } else {
-      setGIR(false);
-    }
-    console.log(stroke + 1);
-    console.log(score + 1);
-  };
-  const strokeOnMinus = () => {
-    setStroke(stroke - 1);
-    if (stroke - 1 === 0) {
-      setStroke(par);
-    }
-    if (stroke - 1 <= 0) {
-      setShowStroke(false);
-    }
-    setScore(stroke - 1 - par);
-    if (score - 1 >= 2) {
-      setBogeyUp(true);
-      setBogey(false);
-      setPar(false);
-      setBirdie(false);
-      setEagle(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score - 1 === 1) {
-      setBogey(true);
-      setBogeyUp(false);
-      setPar(false);
-      setBirdie(false);
-      setEagle(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score - 1 === 0) {
-      setPar(true);
-      setBirdie(false);
-      setEagle(false);
-      setBogey(false);
-      setBogeyUp(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score - 1 === -1) {
-      setBirdie(true);
-      setEagle(false);
-      setBogey(false);
-      setBogeyUp(false);
-      setPar(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score - 1 === -2) {
-      if (stroke - 1 === 1) {
-        setHoleInOne(true);
-        setBirdie(false);
-      } else {
-        setEagle(true);
-        setBogey(false);
-        setBogeyUp(false);
-        setPar(false);
-        setBirdie(false);
-        setAlbatross(false);
-        setHoleInOne(false);
-      }
-    }
-    if (score - 1 === -3) {
-      if (stroke - 1 === 1) {
-        setHoleInOne(true);
-        setEagle(false);
-      } else {
-        setEagle(false);
-        setBogey(false);
-        setBogeyUp(false);
-        setPar(false);
-        setBirdie(false);
-        setAlbatross(true);
-        setHoleInOne(false);
-      }
-    }
-    if (score - 1 <= -4) {
-      setEagle(false);
-      setBogey(false);
-      setBogeyUp(false);
-      setPar(false);
-      setBirdie(false);
-      setAlbatross(false);
-      setHoleInOne(true);
-    }
-    if (stroke - 1 - putts <= par - 2) {
-      setGIR(true);
-    } else {
-      setGIR(false);
-    }
-    console.log(stroke - 1);
-    console.log(score - 1);
-  };
-  const changeToLeft = () => {
-    setLeft(true);
-    setOn(false);
-    setRight(false);
-    setHazard(false);
-  };
-  const changeToOn = () => {
-    setLeft(false);
-    setOn(true);
-    setRight(false);
-    setHazard(false);
-  };
-  const changeToRight = () => {
-    setLeft(false);
-    setOn(false);
-    setRight(true);
-    setHazard(false);
-  };
-  const changeToHazard = () => {
-    setLeft(false);
-    setOn(false);
-    setRight(false);
-    setHazard(true);
   };
 
-  const changeGIR = () => {
-    setGIR(!isGIRActive);
-  };
-  const changeSS = () => {
-    if (sandShots > 0) {
-      setSandSaves(!isSSActive);
-    } else {
-      setSandSaves(false);
+  const styleDividerScoreName = () => {
+    switch (scoreState) {
+      case scoreNames.Par:
+        return styles.carddividerPar;
+      case scoreNames.Bogey:
+        return styles.carddividerBogey;
+      case scoreNames.BogeyUp:
+        return styles.carddividerBogeyUp;
+      case scoreNames.Birdie:
+        return styles.carddividerBirdie;
+      case scoreNames.Eagle:
+        return styles.carddividerEagle;
+      case scoreNames.Albatross:
+        return styles.carddividerEagle;
+      case scoreNames.HoleInOne:
+        return styles.carddividerEagle;
+      default:
+        return styles.carddivider;
     }
   };
-  const changeUD = () => {
-    if (putts > 0) {
-      setUpDown(!isUDActive);
-    } else {
-      setUpDown(false);
+
+  const displayCardComponent = () => {
+    switch (scoreState) {
+      case scoreNames.Par:
+        return (
+          <Paragraph style={{ alignSelf: 'center', color: '#5B5F59' }}>
+            Par
+          </Paragraph>
+        );
+      case scoreNames.Bogey:
+        return (
+          <Paragraph style={{ alignSelf: 'center', color: '#0F28D3' }}>
+            Bogey
+          </Paragraph>
+        );
+      case scoreNames.BogeyUp:
+        return (
+          <Paragraph style={{ alignSelf: 'center', color: '#5B5F59' }}>
+            {score} Bogey
+          </Paragraph>
+        );
+      case scoreNames.Birdie:
+        return (
+          <Paragraph style={{ alignSelf: 'center', color: '#FF0000' }}>
+            Birdie
+          </Paragraph>
+        );
+      case scoreNames.Eagle:
+        return (
+          <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
+            Eagle
+          </Paragraph>
+        );
+      case scoreNames.Albatross:
+        return (
+          <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
+            Albatross
+          </Paragraph>
+        );
+      case scoreNames.HoleInOne:
+        return (
+          <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
+            Hole in One
+          </Paragraph>
+        );
+      default:
+        return <Paragraph style={{ alignSelf: 'center' }}>Par</Paragraph>;
     }
   };
-  const changePuttButton = () => {
+
+  const scoreEvaluator = () => {
+    if (score === 0) {
+      return <Paragraph style={styles.appbar_card_subtext}>To Par E</Paragraph>;
+    }
+    if (!showStroke) {
+      return <Paragraph style={styles.appbar_card_subtext}>To Par E</Paragraph>;
+    }
+    return (
+      <Paragraph style={styles.appbar_card_subtext}> To Par {score} </Paragraph>
+    );
+  };
+
+  const editStroke = () => {
+    setShowStroke(true);
+    setStroke(holePar);
+    setScore(0);
+    setScoreState(scoreNames.Par);
+  };
+
+  const increaseStroke = () => {
+    const currentStroke = stroke + 1;
+    const currentScore = currentStroke - holePar;
+    setScore(currentScore);
+    setStroke(currentStroke);
+
+    if (currentStroke === scoreOfNames.Par) {
+      setStroke(holePar);
+    }
+
+    if (currentScore >= scoreOfNames.BogeyUp) {
+      setScoreState(scoreNames.BogeyUp);
+    } else if (currentScore === scoreOfNames.Bogey) {
+      setScoreState(scoreNames.Bogey);
+    } else if (currentScore === scoreOfNames.Par) {
+      setScoreState(scoreNames.Par);
+    } else if (currentScore === scoreOfNames.Birdie) {
+      setScoreState(scoreNames.Birdie);
+    } else if (currentScore === scoreOfNames.Eagle) {
+      setScoreState(scoreNames.Eagle);
+    } else if (currentScore === scoreOfNames.Albatross) {
+      setScoreState(scoreNames.Albatross);
+    } else if (currentScore <= scoreOfNames.HoleInOne) {
+      setScoreState(scoreNames.HoleInOne);
+    }
+    setGIR(currentStroke - putts <= GIR);
+  };
+
+  const decreaseStroke = () => {
+    const currentStroke = stroke - 1;
+    const currentScore = currentStroke - holePar;
+    setScore(currentScore);
+    setStroke(currentStroke);
+
+    if (currentStroke === scoreOfNames.Par) {
+      setStroke(holePar);
+    }
+
+    setShowStroke(!currentStroke <= 0);
+
+    if (currentScore >= scoreOfNames.BogeyUp) {
+      setScoreState(scoreNames.BogeyUp);
+    } else if (currentScore === scoreOfNames.Bogey) {
+      setScoreState(scoreNames.Bogey);
+    } else if (currentScore === scoreOfNames.Par) {
+      setScoreState(scoreNames.Par);
+    } else if (currentScore === scoreOfNames.Birdie) {
+      setScoreState(scoreNames.Birdie);
+    } else if (currentScore === scoreOfNames.Eagle) {
+      if (currentStroke === 1) setScoreState(scoreNames.HoleInOne);
+      else setScoreState(scoreNames.Eagle);
+    } else if (currentScore === scoreOfNames.Albatross) {
+      if (currentStroke === 1) setScoreState(scoreNames.HoleInOne);
+      else setScoreState(scoreNames.Albatross);
+    } else if (currentScore <= scoreOfNames.HoleInOne) {
+      setScoreState(scoreNames.HoleInOne);
+    }
+    setGIR(currentStroke - putts <= GIR);
+  };
+
+  const editPutt = () => {
     setShowPutt(true);
     setEnabledUD(true);
     setEnabledGIR(true);
     setPutts(1);
     setUpDown(true);
-    if (sandShots > 0) {
-      setSandSaves(true);
-    }
+    setGIR(stroke - 1 <= GIR);
+    setSandSaves(sandShots > 0);
   };
-  const checkPuttonMinus = () => {
-    setPutts(putts - 1);
-    if (putts - 1 === 1) {
-      setUpDown(true);
-    } else {
-      setUpDown(false);
-    }
-    if (putts - 1 <= 0) {
+
+  const increasePutt = () => {
+    const currentPutts = putts + 1;
+    setPutts(currentPutts);
+    setUpDown(currentPutts === 1);
+    setSandSaves(sandShots > 0 && currentPutts === 1);
+    setGIR(stroke - currentPutts <= GIR);
+  };
+
+  const decreasePutt = () => {
+    const currentPutts = putts - 1;
+    setPutts(currentPutts);
+    setUpDown(currentPutts === 1);
+    if (currentPutts <= 0) {
       setShowPutt(false);
       setEnabledUD(false);
       setEnabledGIR(false);
     }
-    if (sandShots > 0 && putts - 1 === 1) {
-      setSandSaves(true);
-    } else {
-      setSandSaves(false);
-    }
-    if (stroke - putts + 1 <= par - 2) {
-      setGIR(true);
-    } else {
-      setGIR(false);
-    }
+    setSandSaves(sandShots > 0 && currentPutts === 1);
+    setGIR(stroke - currentPutts <= GIR);
   };
 
-  const checkPuttonPlus = () => {
-    setPutts(putts + 1);
-    if (putts + 1 === 1) {
-      setUpDown(true);
-    } else {
-      setUpDown(false);
-    }
-    if (sandShots > 0 && putts + 1 === 1) {
-      setSandSaves(true);
-    } else {
-      setSandSaves(false);
-    }
-    if (stroke - putts - 1 <= par - 2) {
-      setGIR(true);
-    } else {
-      setGIR(false);
-    }
-  };
-  const changeSandShotButton = () => {
+  const editSandShot = () => {
     setShowSandShots(true);
     setEnabledSS(true);
     setSandShots(1);
-    if (putts === 1) {
-      setSandSaves(true);
-    } else {
-      setSandSaves(false);
-    }
+    setSandSaves(putts === 1);
   };
-  const sandShotOnMinus = () => {
-    setSandShots(sandShots - 1);
-    if (sandShots - 1 < 1) {
+
+  const increaseSandShot = () => {
+    const currentSandShots = sandShots + 1;
+    setSandShots(currentSandShots);
+    setSandSaves(putts === 1);
+  };
+
+  const decreaseSandShot = () => {
+    const currentSandShots = sandShots - 1;
+    setSandShots(currentSandShots);
+    if (currentSandShots < 1) {
       setSandSaves(false);
       setShowSandShots(false);
       setEnabledSS(false);
     }
-    if (putts === 1) {
-      setSandSaves(true);
-    } else {
-      setSandSaves(false);
-    }
+    setSandSaves(putts === 1);
   };
-  const sandShotOnPlus = () => {
-    setSandShots(sandShots + 1);
-    if (putts === 1) {
-      setSandSaves(true);
-    } else {
-      setSandSaves(false);
-    }
-  };
-  const changePenaltyButton = () => {
+
+  const editPenalty = () => {
     setShowPenalty(true);
     setPenalties(1);
   };
-  const penaltyOnMinus = () => {
-    setPenalties(penalties - 1);
-    if (penalties - 1 < 1) {
+
+  const increasePenalty = () => {
+    const currentPenalties = penalties + 1;
+    setPenalties(currentPenalties);
+  };
+
+  const decreasePenalty = () => {
+    const currentPenalties = penalties - 1;
+    setPenalties(currentPenalties);
+    if (currentPenalties < 1) {
       setShowPenalty(false);
     }
   };
-  const penaltyOnPlus = () => {
-    setPenalties(penalties + 1);
-  };
+
   return (
     <View style={styles.maincontainer}>
       <Appbar.Header style={styles.appbar}>
@@ -381,22 +327,13 @@ const InfoScreen = () => {
         />
         <View>
           <Text> Hole 1 </Text>
-          <Text> Par {par} </Text>
+          <Text> Par {holePar} </Text>
           <Text> S.I 9</Text>
         </View>
         <Card style={styles.appbar_card}>
           <Card.Content>
             <Title style={styles.appbar_card_text}> Chakeera </Title>
-            {score === 0 ? (
-              <Paragraph style={styles.appbar_card_subtext}>To Par E</Paragraph>
-            ) : !showStroke ? (
-              <Paragraph style={styles.appbar_card_subtext}>To Par E</Paragraph>
-            ) : (
-              <Paragraph style={styles.appbar_card_subtext}>
-                {' '}
-                To Par {score}{' '}
-              </Paragraph>
-            )}
+            {scoreEvaluator()}
           </Card.Content>
         </Card>
       </Appbar.Header>
@@ -406,86 +343,20 @@ const InfoScreen = () => {
           <Text style={styles.leftheadertext}>Total Stroke</Text>
           {showStroke ? (
             <View style={{ padding: 20, flexDirection: 'row' }}>
-              <TouchableOpacity style={styles.nBtn} onPress={strokeOnMinus}>
+              <TouchableOpacity style={styles.nBtn} onPress={decreaseStroke}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
-              <Card
-                style={
-                  isPar
-                    ? styles.cardPar
-                    : isBogey
-                    ? styles.cardBogey
-                    : isBogeyUp
-                    ? styles.cardBogeyUp
-                    : isBirdie
-                    ? styles.cardBirdie
-                    : isEagle
-                    ? styles.cardEagle
-                    : isAlbatross
-                    ? styles.cardEagle
-                    : isHoleInOne
-                    ? styles.cardEagle
-                    : styles.card
-                }
-              >
-                <Button onPress={strokeOnPlus}>
+              <Card style={styleCardScoreName()}>
+                <Button onPress={increaseStroke}>
                   <Text> {stroke} | + </Text>
                 </Button>
-                <Divider
-                  style={
-                    isPar
-                      ? styles.carddividerPar
-                      : isBogey
-                      ? styles.carddividerBogey
-                      : isBogeyUp
-                      ? styles.carddividerBogeyUp
-                      : isBirdie
-                      ? styles.carddividerBirdie
-                      : isEagle
-                      ? styles.carddividerEagle
-                      : isAlbatross
-                      ? styles.carddividerEagle
-                      : isHoleInOne
-                      ? styles.carddividerEagle
-                      : styles.carddivider
-                  }
-                />
-                {isPar ? (
-                  <Paragraph style={{ alignSelf: 'center', color: '#5B5F59' }}>
-                    Par
-                  </Paragraph>
-                ) : isBogey ? (
-                  <Paragraph style={{ alignSelf: 'center', color: '#0F28D3' }}>
-                    Bogey
-                  </Paragraph>
-                ) : isBogeyUp ? (
-                  <Paragraph style={{ alignSelf: 'center', color: '#5B5F59' }}>
-                    {score} Bogey
-                  </Paragraph>
-                ) : isBirdie ? (
-                  <Paragraph style={{ alignSelf: 'center', color: '#FF0000' }}>
-                    Birdie
-                  </Paragraph>
-                ) : isEagle ? (
-                  <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
-                    Eagle
-                  </Paragraph>
-                ) : isAlbatross ? (
-                  <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
-                    Albatross
-                  </Paragraph>
-                ) : isHoleInOne ? (
-                  <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
-                    Hole in One
-                  </Paragraph>
-                ) : (
-                  <Paragraph style={{ alignSelf: 'center' }}>Par</Paragraph>
-                )}
+                <Divider style={styleDividerScoreName()} />
+                {displayCardComponent()}
               </Card>
             </View>
           ) : (
             <View style={styles.moveright}>
-              <TouchableOpacity style={styles.nBtn} onPress={changeStroke}>
+              <TouchableOpacity style={styles.nBtn} onPress={editStroke}>
                 <Text style={styles.nBtnText}> + </Text>
               </TouchableOpacity>
             </View>
@@ -493,21 +364,18 @@ const InfoScreen = () => {
           <Text style={styles.leftheadertext}>Putts</Text>
           {showPutt ? (
             <View style={{ padding: 20, flexDirection: 'row' }}>
-              <TouchableOpacity style={styles.nBtn} onPress={checkPuttonMinus}>
+              <TouchableOpacity style={styles.nBtn} onPress={decreasePutt}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
               <View style={{ marginLeft: 20 }}>
-                <TouchableOpacity
-                  style={styles.nBtn2}
-                  onPress={checkPuttonPlus}
-                >
+                <TouchableOpacity style={styles.nBtn2} onPress={increasePutt}>
                   <Text style={styles.nBtnText2}> {putts} | + </Text>
                 </TouchableOpacity>
               </View>
             </View>
           ) : (
             <View style={styles.moveright}>
-              <TouchableOpacity style={styles.nBtn} onPress={changePuttButton}>
+              <TouchableOpacity style={styles.nBtn} onPress={editPutt}>
                 <Text style={styles.nBtnText}> + </Text>
               </TouchableOpacity>
             </View>
@@ -515,21 +383,21 @@ const InfoScreen = () => {
           <Text style={styles.leftheadertext}>Sand Shots</Text>
           {showSandShots ? (
             <View style={{ padding: 20, flexDirection: 'row' }}>
-              <TouchableOpacity style={styles.nBtn} onPress={sandShotOnMinus}>
+              <TouchableOpacity style={styles.nBtn} onPress={decreaseSandShot}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
               <View style={{ marginLeft: 20 }}>
-                <TouchableOpacity style={styles.nBtn2} onPress={sandShotOnPlus}>
+                <TouchableOpacity
+                  style={styles.nBtn2}
+                  onPress={increaseSandShot}
+                >
                   <Text style={styles.nBtnText2}> {sandShots} | + </Text>
                 </TouchableOpacity>
               </View>
             </View>
           ) : (
             <View style={styles.moveright}>
-              <TouchableOpacity
-                style={styles.nBtn}
-                onPress={changeSandShotButton}
-              >
+              <TouchableOpacity style={styles.nBtn} onPress={editSandShot}>
                 <Text style={styles.nBtnText}> + </Text>
               </TouchableOpacity>
             </View>
@@ -537,64 +405,88 @@ const InfoScreen = () => {
           <Text style={styles.leftheadertext}>Penalties</Text>
           {showPenalty ? (
             <View style={{ padding: 20, flexDirection: 'row' }}>
-              <TouchableOpacity style={styles.nBtn} onPress={penaltyOnMinus}>
+              <TouchableOpacity style={styles.nBtn} onPress={decreasePenalty}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
               <View style={{ marginLeft: 20 }}>
-                <TouchableOpacity style={styles.nBtn2} onPress={penaltyOnPlus}>
+                <TouchableOpacity
+                  style={styles.nBtn2}
+                  onPress={increasePenalty}
+                >
                   <Text style={styles.nBtnText2}> {penalties} | + </Text>
                 </TouchableOpacity>
               </View>
             </View>
           ) : (
             <View style={styles.moveright}>
-              <TouchableOpacity
-                style={styles.nBtn}
-                onPress={changePenaltyButton}
-              >
+              <TouchableOpacity style={styles.nBtn} onPress={editPenalty}>
                 <Text style={styles.nBtnText}> + </Text>
               </TouchableOpacity>
             </View>
           )}
           <Text style={styles.leftheadertext}>Fairways</Text>
           <TouchableOpacity
-            style={isLeft ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeToLeft}
+            style={
+              fairway === fairways.Left
+                ? styles.roundButtonPressed
+                : styles.roundButton
+            }
+            onPress={() => {
+              setFairway(fairways.Left);
+            }}
           >
             <Icon
               name="arrow-top-left"
               size={15}
-              color={isLeft ? 'white' : 'black'}
+              color={fairway === fairways.Left ? 'white' : 'black'}
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={isOn ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeToOn}
+            style={
+              fairway === fairways.On
+                ? styles.roundButtonPressed
+                : styles.roundButton
+            }
+            onPress={() => {
+              setFairway(fairways.On);
+            }}
           >
             <Icon
               name="circle-outline"
               size={15}
-              color={isOn ? 'white' : 'black'}
+              color={fairway === fairways.On ? 'white' : 'black'}
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={isRight ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeToRight}
+            style={
+              fairway === fairways.Right
+                ? styles.roundButtonPressed
+                : styles.roundButton
+            }
+            onPress={() => {
+              setFairway(fairways.Right);
+            }}
           >
             <Icon
               name="arrow-top-right"
               size={15}
-              color={isRight ? 'white' : 'black'}
+              color={fairway === fairways.Right ? 'white' : 'black'}
             />
           </TouchableOpacity>
           <TouchableOpacity
-            style={isHazard ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeToHazard}
+            style={
+              fairway === fairways.Hazard
+                ? styles.roundButtonPressed
+                : styles.roundButton
+            }
+            onPress={() => {
+              setFairway(fairways.Hazard);
+            }}
           >
             <Icon
               name="arrow-down"
               size={15}
-              color={isHazard ? 'white' : 'black'}
+              color={fairway === fairways.Hazard ? 'white' : 'black'}
             />
           </TouchableOpacity>
         </View>
@@ -603,7 +495,9 @@ const InfoScreen = () => {
         {enableGIR ? (
           <Button
             mode="contained"
-            onPress={changeGIR}
+            onPress={() => {
+              setGIR(!isGIRActive);
+            }}
             style={isGIRActive ? styles.activeButton : styles.enabledButton}
             labelStyle={{ color: 'black' }}
           >
@@ -612,46 +506,46 @@ const InfoScreen = () => {
         ) : (
           <Button
             mode="contained"
-            onPress={changeGIR}
+            onPress={() => {
+              setGIR(!isGIRActive);
+            }}
             style={styles.disabledButton}
           >
             GIR
           </Button>
         )}
 
-        {enableSS ? (
+        {enableSandSave ? (
           <Button
             mode="contained"
-            onPress={changeSS}
-            style={isSSActive ? styles.activeButton : styles.enabledButton}
+            onPress={() => {
+              setSandSaves(!isSandSaveActive);
+            }}
+            style={
+              isSandSaveActive ? styles.activeButton : styles.enabledButton
+            }
             labelStyle={{ color: 'black' }}
           >
             Sand Saves
           </Button>
         ) : (
-          <Button
-            mode="contained"
-            onPress={changeSS}
-            style={styles.disabledButton}
-          >
+          <Button mode="contained" style={styles.disabledButton}>
             Sand Saves
           </Button>
         )}
         {enableUD ? (
           <Button
             mode="contained"
-            onPress={changeUD}
+            onPress={() => {
+              setUpDown(!isUDActive);
+            }}
             style={isUDActive ? styles.activeButton : styles.enabledButton}
             labelStyle={{ color: 'black' }}
           >
             Up & Down
           </Button>
         ) : (
-          <Button
-            mode="contained"
-            onPress={changeUD}
-            style={styles.disabledButton}
-          >
+          <Button mode="contained" style={styles.disabledButton}>
             Up & Down
           </Button>
         )}
@@ -660,12 +554,14 @@ const InfoScreen = () => {
         style={styles.button}
         labelStyle={styles.buttontext}
         mode="contained"
-        onPress={onSubmitPressed}
+        onPress={() => {
+          setVisible(true);
+        }}
       >
         Submit
       </Button>
       <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
+        <Dialog visible={visible} onDismiss={() => setVisible(false)}>
           <Dialog.Title>Submit Your Score</Dialog.Title>
           <Dialog.Content>
             <Paragraph>
@@ -674,8 +570,10 @@ const InfoScreen = () => {
             </Paragraph>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={hideDialog}>Back</Button>
-            <Button onPress={proceedDialog}>Proceed</Button>
+            <Button onPress={() => setVisible(false)}>Back</Button>
+            <Button onPress={() => navigation.navigate('HomeScreen')}>
+              Proceed
+            </Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
