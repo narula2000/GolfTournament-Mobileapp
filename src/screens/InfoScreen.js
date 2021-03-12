@@ -21,14 +21,11 @@ const InfoScreen = () => {
 
   const [visible, setVisible] = React.useState(false);
 
-  const hideDialog = () => setVisible(false);
-
-  const proceedDialog = () => navigation.navigate('HomeScreen');
-
   const onSubmitPressed = () => {
     console.log('button pressed');
     setVisible(true);
   };
+
   const par = 3;
   const [stroke, setStroke] = React.useState(par);
   const [score, setScore] = React.useState(stroke - par);
@@ -66,6 +63,7 @@ const InfoScreen = () => {
     setScore(0);
     setPar(true);
   };
+
   const strokeOnPlus = () => {
     setStroke(stroke + 1);
     if (stroke + 1 === 0) {
@@ -143,6 +141,7 @@ const InfoScreen = () => {
     console.log(stroke + 1);
     console.log(score + 1);
   };
+
   const strokeOnMinus = () => {
     setStroke(stroke - 1);
     if (stroke - 1 === 0) {
@@ -233,24 +232,28 @@ const InfoScreen = () => {
     console.log(stroke - 1);
     console.log(score - 1);
   };
+
   const changeToLeft = () => {
     setLeft(true);
     setOn(false);
     setRight(false);
     setHazard(false);
   };
+
   const changeToOn = () => {
     setLeft(false);
     setOn(true);
     setRight(false);
     setHazard(false);
   };
+
   const changeToRight = () => {
     setLeft(false);
     setOn(false);
     setRight(true);
     setHazard(false);
   };
+
   const changeToHazard = () => {
     setLeft(false);
     setOn(false);
@@ -261,6 +264,7 @@ const InfoScreen = () => {
   const changeGIR = () => {
     setGIR(!isGIRActive);
   };
+
   const changeSS = () => {
     if (sandShots > 0) {
       setSandSaves(!isSSActive);
@@ -268,6 +272,7 @@ const InfoScreen = () => {
       setSandSaves(false);
     }
   };
+
   const changeUD = () => {
     if (putts > 0) {
       setUpDown(!isUDActive);
@@ -275,6 +280,7 @@ const InfoScreen = () => {
       setUpDown(false);
     }
   };
+
   const changePuttButton = () => {
     setShowPutt(true);
     setEnabledUD(true);
@@ -285,6 +291,7 @@ const InfoScreen = () => {
       setSandSaves(true);
     }
   };
+
   const checkPuttonMinus = () => {
     setPutts(putts - 1);
     if (putts - 1 === 1) {
@@ -327,6 +334,7 @@ const InfoScreen = () => {
       setGIR(false);
     }
   };
+
   const changeSandShotButton = () => {
     setShowSandShots(true);
     setEnabledSS(true);
@@ -337,6 +345,7 @@ const InfoScreen = () => {
       setSandSaves(false);
     }
   };
+
   const sandShotOnMinus = () => {
     setSandShots(sandShots - 1);
     if (sandShots - 1 < 1) {
@@ -350,6 +359,7 @@ const InfoScreen = () => {
       setSandSaves(false);
     }
   };
+
   const sandShotOnPlus = () => {
     setSandShots(sandShots + 1);
     if (putts === 1) {
@@ -358,16 +368,19 @@ const InfoScreen = () => {
       setSandSaves(false);
     }
   };
+
   const changePenaltyButton = () => {
     setShowPenalty(true);
     setPenalties(1);
   };
+
   const penaltyOnMinus = () => {
     setPenalties(penalties - 1);
     if (penalties - 1 < 1) {
       setShowPenalty(false);
     }
   };
+
   const penaltyOnPlus = () => {
     setPenalties(penalties + 1);
   };
@@ -665,7 +678,7 @@ const InfoScreen = () => {
         Submit
       </Button>
       <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
+        <Dialog visible={visible} onDismiss={() => setVisible(false)}>
           <Dialog.Title>Submit Your Score</Dialog.Title>
           <Dialog.Content>
             <Paragraph>
@@ -674,8 +687,10 @@ const InfoScreen = () => {
             </Paragraph>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={hideDialog}>Back</Button>
-            <Button onPress={proceedDialog}>Proceed</Button>
+            <Button onPress={() => setVisible(false)}>Back</Button>
+            <Button onPress={() => navigation.navigate('HomeScreen')}>
+              Proceed
+            </Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
