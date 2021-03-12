@@ -26,9 +26,28 @@ const InfoScreen = () => {
     setVisible(true);
   };
 
+  const scoreName = Object.freeze({
+    Albatross: -3,
+    Eagle: -2,
+    Birdie: -1,
+    Bogey: 1,
+    BogeyUp: 2,
+  });
+
   const par = 3;
+
   const [stroke, setStroke] = React.useState(par);
   const [score, setScore] = React.useState(stroke - par);
+
+  const [putts, setPutts] = React.useState(0);
+  const [sandShots, setSandShots] = React.useState(0);
+  const [penalties, setPenalties] = React.useState(0);
+
+  const [isLeft, setLeft] = React.useState(false);
+  const [isOn, setOn] = React.useState(false);
+  const [isRight, setRight] = React.useState(false);
+  const [isHazard, setHazard] = React.useState(false);
+
   const [isBogey, setBogey] = React.useState(false);
   const [isPar, setPar] = React.useState(false);
   const [isBirdie, setBirdie] = React.useState(false);
@@ -36,35 +55,28 @@ const InfoScreen = () => {
   const [isBogeyUp, setBogeyUp] = React.useState(false);
   const [isAlbatross, setAlbatross] = React.useState(false);
   const [isHoleInOne, setHoleInOne] = React.useState(false);
-  const [putts, setPutts] = React.useState(0);
-  const [sandShots, setSandShots] = React.useState(0);
-  const [penalties, setPenalties] = React.useState(0);
+
   const [showStroke, setShowStroke] = React.useState(false);
   const [showPutt, setShowPutt] = React.useState(false);
   const [showSandShots, setShowSandShots] = React.useState(false);
   const [showPenalty, setShowPenalty] = React.useState(false);
-  const [isLeft, setLeft] = React.useState(false);
-  const [isOn, setOn] = React.useState(false);
-  const [isRight, setRight] = React.useState(false);
-  const [isHazard, setHazard] = React.useState(false);
+
   const [enableGIR, setEnabledGIR] = React.useState(false);
-  const [isGIRActive, setGIR] = React.useState(false);
-  const [isSSActive, setSandSaves] = React.useState(false);
-  const [enableSS, setEnabledSS] = React.useState(false);
+  const [enableSandSave, setEnabledSS] = React.useState(false);
   const [enableUD, setEnabledUD] = React.useState(false);
+
+  const [isGIRActive, setGIR] = React.useState(false);
+  const [isSandSaveActive, setSandSaves] = React.useState(false);
   const [isUDActive, setUpDown] = React.useState(false);
 
-  const changeStroke = () => {
+  const editStroke = () => {
     setShowStroke(true);
-    if (stroke + 1 === 0) {
-      setStroke(par);
-    }
     setStroke(par);
     setScore(0);
     setPar(true);
   };
 
-  const strokeOnPlus = () => {
+  const increaseStroke = () => {
     setStroke(stroke + 1);
     if (stroke + 1 === 0) {
       setStroke(par);
@@ -142,7 +154,7 @@ const InfoScreen = () => {
     console.log(score + 1);
   };
 
-  const strokeOnMinus = () => {
+  const decreaseStroke = () => {
     setStroke(stroke - 1);
     if (stroke - 1 === 0) {
       setStroke(par);
@@ -233,55 +245,47 @@ const InfoScreen = () => {
     console.log(score - 1);
   };
 
-  const changeToLeft = () => {
+  const fairwayLeft = () => {
     setLeft(true);
     setOn(false);
     setRight(false);
     setHazard(false);
   };
 
-  const changeToOn = () => {
+  const fairwayOn = () => {
     setLeft(false);
     setOn(true);
     setRight(false);
     setHazard(false);
   };
 
-  const changeToRight = () => {
+  const fairwayRight = () => {
     setLeft(false);
     setOn(false);
     setRight(true);
     setHazard(false);
   };
 
-  const changeToHazard = () => {
+  const fairwayHazard = () => {
     setLeft(false);
     setOn(false);
     setRight(false);
     setHazard(true);
   };
 
-  const changeGIR = () => {
+  const toggleGIR = () => {
     setGIR(!isGIRActive);
   };
 
-  const changeSS = () => {
-    if (sandShots > 0) {
-      setSandSaves(!isSSActive);
-    } else {
-      setSandSaves(false);
-    }
+  const toggleSandSave = () => {
+    setSandSaves(!isSandSaveActive);
   };
 
-  const changeUD = () => {
-    if (putts > 0) {
-      setUpDown(!isUDActive);
-    } else {
-      setUpDown(false);
-    }
+  const toggleUD = () => {
+    setUpDown(!isUDActive);
   };
 
-  const changePuttButton = () => {
+  const editPutt = () => {
     setShowPutt(true);
     setEnabledUD(true);
     setEnabledGIR(true);
@@ -292,7 +296,26 @@ const InfoScreen = () => {
     }
   };
 
-  const checkPuttonMinus = () => {
+  const increasePutt = () => {
+    setPutts(putts + 1);
+    if (putts + 1 === 1) {
+      setUpDown(true);
+    } else {
+      setUpDown(false);
+    }
+    if (sandShots > 0 && putts + 1 === 1) {
+      setSandSaves(true);
+    } else {
+      setSandSaves(false);
+    }
+    if (stroke - putts - 1 <= par - 2) {
+      setGIR(true);
+    } else {
+      setGIR(false);
+    }
+  };
+
+  const decreasePutt = () => {
     setPutts(putts - 1);
     if (putts - 1 === 1) {
       setUpDown(true);
@@ -316,26 +339,7 @@ const InfoScreen = () => {
     }
   };
 
-  const checkPuttonPlus = () => {
-    setPutts(putts + 1);
-    if (putts + 1 === 1) {
-      setUpDown(true);
-    } else {
-      setUpDown(false);
-    }
-    if (sandShots > 0 && putts + 1 === 1) {
-      setSandSaves(true);
-    } else {
-      setSandSaves(false);
-    }
-    if (stroke - putts - 1 <= par - 2) {
-      setGIR(true);
-    } else {
-      setGIR(false);
-    }
-  };
-
-  const changeSandShotButton = () => {
+  const editSandShot = () => {
     setShowSandShots(true);
     setEnabledSS(true);
     setSandShots(1);
@@ -346,7 +350,16 @@ const InfoScreen = () => {
     }
   };
 
-  const sandShotOnMinus = () => {
+  const increaseSandShot = () => {
+    setSandShots(sandShots + 1);
+    if (putts === 1) {
+      setSandSaves(true);
+    } else {
+      setSandSaves(false);
+    }
+  };
+
+  const decreaseSandShot = () => {
     setSandShots(sandShots - 1);
     if (sandShots - 1 < 1) {
       setSandSaves(false);
@@ -360,30 +373,22 @@ const InfoScreen = () => {
     }
   };
 
-  const sandShotOnPlus = () => {
-    setSandShots(sandShots + 1);
-    if (putts === 1) {
-      setSandSaves(true);
-    } else {
-      setSandSaves(false);
-    }
-  };
-
-  const changePenaltyButton = () => {
+  const editPenalty = () => {
     setShowPenalty(true);
     setPenalties(1);
   };
 
-  const penaltyOnMinus = () => {
+  const increasePenalty = () => {
     setPenalties(penalties - 1);
     if (penalties - 1 < 1) {
       setShowPenalty(false);
     }
   };
 
-  const penaltyOnPlus = () => {
+  const decreasePenalty = () => {
     setPenalties(penalties + 1);
   };
+
   return (
     <View style={styles.maincontainer}>
       <Appbar.Header style={styles.appbar}>
@@ -419,7 +424,7 @@ const InfoScreen = () => {
           <Text style={styles.leftheadertext}>Total Stroke</Text>
           {showStroke ? (
             <View style={{ padding: 20, flexDirection: 'row' }}>
-              <TouchableOpacity style={styles.nBtn} onPress={strokeOnMinus}>
+              <TouchableOpacity style={styles.nBtn} onPress={decreaseStroke}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
               <Card
@@ -441,7 +446,7 @@ const InfoScreen = () => {
                     : styles.card
                 }
               >
-                <Button onPress={strokeOnPlus}>
+                <Button onPress={increaseStroke}>
                   <Text> {stroke} | + </Text>
                 </Button>
                 <Divider
@@ -498,7 +503,7 @@ const InfoScreen = () => {
             </View>
           ) : (
             <View style={styles.moveright}>
-              <TouchableOpacity style={styles.nBtn} onPress={changeStroke}>
+              <TouchableOpacity style={styles.nBtn} onPress={editStroke}>
                 <Text style={styles.nBtnText}> + </Text>
               </TouchableOpacity>
             </View>
@@ -506,21 +511,18 @@ const InfoScreen = () => {
           <Text style={styles.leftheadertext}>Putts</Text>
           {showPutt ? (
             <View style={{ padding: 20, flexDirection: 'row' }}>
-              <TouchableOpacity style={styles.nBtn} onPress={checkPuttonMinus}>
+              <TouchableOpacity style={styles.nBtn} onPress={decreasePutt}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
               <View style={{ marginLeft: 20 }}>
-                <TouchableOpacity
-                  style={styles.nBtn2}
-                  onPress={checkPuttonPlus}
-                >
+                <TouchableOpacity style={styles.nBtn2} onPress={increasePutt}>
                   <Text style={styles.nBtnText2}> {putts} | + </Text>
                 </TouchableOpacity>
               </View>
             </View>
           ) : (
             <View style={styles.moveright}>
-              <TouchableOpacity style={styles.nBtn} onPress={changePuttButton}>
+              <TouchableOpacity style={styles.nBtn} onPress={editPutt}>
                 <Text style={styles.nBtnText}> + </Text>
               </TouchableOpacity>
             </View>
@@ -528,21 +530,21 @@ const InfoScreen = () => {
           <Text style={styles.leftheadertext}>Sand Shots</Text>
           {showSandShots ? (
             <View style={{ padding: 20, flexDirection: 'row' }}>
-              <TouchableOpacity style={styles.nBtn} onPress={sandShotOnMinus}>
+              <TouchableOpacity style={styles.nBtn} onPress={decreaseSandShot}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
               <View style={{ marginLeft: 20 }}>
-                <TouchableOpacity style={styles.nBtn2} onPress={sandShotOnPlus}>
+                <TouchableOpacity
+                  style={styles.nBtn2}
+                  onPress={increaseSandShot}
+                >
                   <Text style={styles.nBtnText2}> {sandShots} | + </Text>
                 </TouchableOpacity>
               </View>
             </View>
           ) : (
             <View style={styles.moveright}>
-              <TouchableOpacity
-                style={styles.nBtn}
-                onPress={changeSandShotButton}
-              >
+              <TouchableOpacity style={styles.nBtn} onPress={editSandShot}>
                 <Text style={styles.nBtnText}> + </Text>
               </TouchableOpacity>
             </View>
@@ -550,21 +552,21 @@ const InfoScreen = () => {
           <Text style={styles.leftheadertext}>Penalties</Text>
           {showPenalty ? (
             <View style={{ padding: 20, flexDirection: 'row' }}>
-              <TouchableOpacity style={styles.nBtn} onPress={penaltyOnMinus}>
+              <TouchableOpacity style={styles.nBtn} onPress={increasePenalty}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
               <View style={{ marginLeft: 20 }}>
-                <TouchableOpacity style={styles.nBtn2} onPress={penaltyOnPlus}>
+                <TouchableOpacity
+                  style={styles.nBtn2}
+                  onPress={decreasePenalty}
+                >
                   <Text style={styles.nBtnText2}> {penalties} | + </Text>
                 </TouchableOpacity>
               </View>
             </View>
           ) : (
             <View style={styles.moveright}>
-              <TouchableOpacity
-                style={styles.nBtn}
-                onPress={changePenaltyButton}
-              >
+              <TouchableOpacity style={styles.nBtn} onPress={editPenalty}>
                 <Text style={styles.nBtnText}> + </Text>
               </TouchableOpacity>
             </View>
@@ -572,7 +574,7 @@ const InfoScreen = () => {
           <Text style={styles.leftheadertext}>Fairways</Text>
           <TouchableOpacity
             style={isLeft ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeToLeft}
+            onPress={fairwayLeft}
           >
             <Icon
               name="arrow-top-left"
@@ -582,7 +584,7 @@ const InfoScreen = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={isOn ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeToOn}
+            onPress={fairwayOn}
           >
             <Icon
               name="circle-outline"
@@ -592,7 +594,7 @@ const InfoScreen = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={isRight ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeToRight}
+            onPress={fairwayRight}
           >
             <Icon
               name="arrow-top-right"
@@ -602,7 +604,7 @@ const InfoScreen = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={isHazard ? styles.roundButtonPressed : styles.roundButton}
-            onPress={changeToHazard}
+            onPress={fairwayHazard}
           >
             <Icon
               name="arrow-down"
@@ -616,7 +618,7 @@ const InfoScreen = () => {
         {enableGIR ? (
           <Button
             mode="contained"
-            onPress={changeGIR}
+            onPress={toggleGIR}
             style={isGIRActive ? styles.activeButton : styles.enabledButton}
             labelStyle={{ color: 'black' }}
           >
@@ -625,46 +627,40 @@ const InfoScreen = () => {
         ) : (
           <Button
             mode="contained"
-            onPress={changeGIR}
+            onPress={toggleGIR}
             style={styles.disabledButton}
           >
             GIR
           </Button>
         )}
 
-        {enableSS ? (
+        {enableSandSave ? (
           <Button
             mode="contained"
-            onPress={changeSS}
-            style={isSSActive ? styles.activeButton : styles.enabledButton}
+            onPress={toggleSandSave}
+            style={
+              isSandSaveActive ? styles.activeButton : styles.enabledButton
+            }
             labelStyle={{ color: 'black' }}
           >
             Sand Saves
           </Button>
         ) : (
-          <Button
-            mode="contained"
-            onPress={changeSS}
-            style={styles.disabledButton}
-          >
+          <Button mode="contained" style={styles.disabledButton}>
             Sand Saves
           </Button>
         )}
         {enableUD ? (
           <Button
             mode="contained"
-            onPress={changeUD}
+            onPress={toggleUD}
             style={isUDActive ? styles.activeButton : styles.enabledButton}
             labelStyle={{ color: 'black' }}
           >
             Up & Down
           </Button>
         ) : (
-          <Button
-            mode="contained"
-            onPress={changeUD}
-            style={styles.disabledButton}
-          >
+          <Button mode="contained" style={styles.disabledButton}>
             Up & Down
           </Button>
         )}
