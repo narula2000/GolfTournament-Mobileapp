@@ -21,11 +21,6 @@ const InfoScreen = () => {
 
   const [visible, setVisible] = React.useState(false);
 
-  const onSubmitPressed = () => {
-    console.log('button pressed');
-    setVisible(true);
-  };
-
   const scoreName = Object.freeze({
     HoleInOne: -4,
     Albatross: -3,
@@ -61,6 +56,11 @@ const InfoScreen = () => {
   const [isGIRActive, setGIR] = React.useState(false);
   const [isSandSaveActive, setSandSaves] = React.useState(false);
   const [isUDActive, setUpDown] = React.useState(false);
+
+  const onSubmitPressed = () => {
+    console.log('button pressed');
+    setVisible(true);
+  };
 
   const styleCardScoreName = () => {
     switch (scoreState) {
