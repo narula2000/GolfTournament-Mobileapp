@@ -35,12 +35,12 @@ const InfoScreen = () => {
     BogeyUp: 2,
   });
 
-  const par = 3;
+  const holePar = 3;
 
-  const GIR = par - 2;
+  const GIR = holePar - 2;
 
-  const [stroke, setStroke] = React.useState(par);
-  const [score, setScore] = React.useState(stroke - par);
+  const [stroke, setStroke] = React.useState(holePar);
+  const [score, setScore] = React.useState(stroke - holePar);
 
   const [putts, setPutts] = React.useState(0);
   const [sandShots, setSandShots] = React.useState(0);
@@ -72,19 +72,19 @@ const InfoScreen = () => {
 
   const editStroke = () => {
     setShowStroke(true);
-    setStroke(par);
+    setStroke(holePar);
     setScore(0);
-    setPar(true);
+    setScoreState('Par');
   };
 
   const increaseStroke = () => {
     setStroke(stroke + 1);
 
-    if (stroke + 1 === 0) {
-      setStroke(par);
+    if (stroke + 1 === scoreName.Par) {
+      setStroke(holePar);
     }
 
-    setScore(stroke + 1 - par);
+    setScore(stroke + 1 - holePar);
 
     if (score + 1 >= scoreName.BogeyUp) {
       setScoreState('BogeyUp');
@@ -112,90 +112,34 @@ const InfoScreen = () => {
   const decreaseStroke = () => {
     setStroke(stroke - 1);
 
-    if (stroke - 1 === 0) {
-      setStroke(par);
+    if (stroke - 1 === scoreName.Par) {
+      setStroke(holePar);
     }
 
     if (stroke - 1 <= 0) {
       setShowStroke(false);
     }
 
-    setScore(stroke - 1 - par);
+    setScore(stroke - 1 - holePar);
 
-    if (score - 1 >= 2) {
-      setBogeyUp(true);
-      setBogey(false);
-      setPar(false);
-      setBirdie(false);
-      setEagle(false);
-      setAlbatross(false);
-      setHoleInOne(false);
+    if (score - 1 >= scoreName.BogeyUp) {
+      setScoreState('BogeyUp');
+    } else if (score - 1 === scoreName.Bogey) {
+      setScoreState('Bogey');
+    } else if (score - 1 === scoreName.Par) {
+      setScoreState('Par');
+    } else if (score - 1 === scoreName.Birdie) {
+      setScoreState('Birdie');
+    } else if (score - 1 === scoreName.Eagle) {
+      if (stroke - 1 === 1) setScoreState('HoleInOne');
+      else setScoreState('Eagle');
+    } else if (score - 1 === scoreName.Albatross) {
+      if (stroke - 1 === 1) setScoreState('HoleInOne');
+      else setScoreState('Albatross');
+    } else if (score - 1 <= scoreName.HoleInOne) {
+      setScoreState('HoleInOne');
     }
-    if (score - 1 === 1) {
-      setBogey(true);
-      setBogeyUp(false);
-      setPar(false);
-      setBirdie(false);
-      setEagle(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score - 1 === 0) {
-      setPar(true);
-      setBirdie(false);
-      setEagle(false);
-      setBogey(false);
-      setBogeyUp(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score - 1 === -1) {
-      setBirdie(true);
-      setEagle(false);
-      setBogey(false);
-      setBogeyUp(false);
-      setPar(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score - 1 === -2) {
-      if (stroke - 1 === 1) {
-        setHoleInOne(true);
-        setBirdie(false);
-      } else {
-        setEagle(true);
-        setBogey(false);
-        setBogeyUp(false);
-        setPar(false);
-        setBirdie(false);
-        setAlbatross(false);
-        setHoleInOne(false);
-      }
-    }
-    if (score - 1 === -3) {
-      if (stroke - 1 === 1) {
-        setHoleInOne(true);
-        setEagle(false);
-      } else {
-        setEagle(false);
-        setBogey(false);
-        setBogeyUp(false);
-        setPar(false);
-        setBirdie(false);
-        setAlbatross(true);
-        setHoleInOne(false);
-      }
-    }
-    if (score - 1 <= -4) {
-      setEagle(false);
-      setBogey(false);
-      setBogeyUp(false);
-      setPar(false);
-      setBirdie(false);
-      setAlbatross(false);
-      setHoleInOne(true);
-    }
-    if (stroke - 1 - putts <= par - 2) {
+    if (stroke - 1 - putts <= GIR) {
       setGIR(true);
     } else {
       setGIR(false);
@@ -239,7 +183,7 @@ const InfoScreen = () => {
     } else {
       setSandSaves(false);
     }
-    if (stroke - putts - 1 <= par - 2) {
+    if (stroke - putts - 1 <= holePar - 2) {
       setGIR(true);
     } else {
       setGIR(false);
@@ -263,7 +207,7 @@ const InfoScreen = () => {
     } else {
       setSandSaves(false);
     }
-    if (stroke - putts + 1 <= par - 2) {
+    if (stroke - putts + 1 <= holePar - 2) {
       setGIR(true);
     } else {
       setGIR(false);
@@ -330,7 +274,7 @@ const InfoScreen = () => {
         />
         <View>
           <Text> Hole 1 </Text>
-          <Text> Par {par} </Text>
+          <Text> Par {holePar} </Text>
           <Text> S.I 9</Text>
         </View>
         <Card style={styles.appbar_card}>
