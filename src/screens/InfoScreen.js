@@ -21,13 +21,24 @@ const InfoScreen = () => {
 
   const [visible, setVisible] = React.useState(false);
 
-  const scoreName = Object.freeze({
+  const scoreNameScore = Object.freeze({
     HoleInOne: -4,
     Albatross: -3,
     Eagle: -2,
+    Par: 0,
     Birdie: -1,
     Bogey: 1,
     BogeyUp: 2,
+  });
+
+  const scoreName = Object.freeze({
+    HoleInOne: 'HoleInOne',
+    Albatross: 'Albatross',
+    Eagle: 'Eagle',
+    Birdie: 'Birdie',
+    Par: 'Par',
+    Bogey: 'Bogey',
+    BogeyUp: 'BogeyUp',
   });
 
   const holePar = 3;
@@ -64,19 +75,19 @@ const InfoScreen = () => {
 
   const styleCardScoreName = () => {
     switch (scoreState) {
-      case 'Par':
+      case scoreName.Par:
         return styles.cardPar;
-      case 'Bogey':
+      case scoreName.BogeyUp:
         return styles.cardBogey;
       case 'BogeyUp':
         return styles.cardBogeyUp;
-      case 'Birdie':
+      case scoreName.Birdie:
         return styles.cardBirdie;
-      case 'Eagle':
+      case scoreName.Eagle:
         return styles.cardEagle;
-      case 'Albatross':
+      case scoreName.Albatross:
         return styles.cardAlbatross;
-      case 'HoleInOne':
+      case scoreName.HoleInOne:
         return styles.cardHoleInOne;
       default:
         return styles.card;
@@ -85,19 +96,19 @@ const InfoScreen = () => {
 
   const styleDividerScoreName = () => {
     switch (scoreState) {
-      case 'Par':
+      case scoreName.Par:
         return styles.carddividerPar;
-      case 'Bogey':
+      case scoreName.BogeyUp:
         return styles.carddividerBogey;
       case 'BogeyUp':
         return styles.carddividerBogeyUp;
-      case 'Birdie':
+      case scoreName.Birdie:
         return styles.carddividerBirdie;
-      case 'Eagle':
+      case scoreName.Eagle:
         return styles.carddividerEagle;
-      case 'Albatross':
+      case scoreName.Albatross:
         return styles.carddividerAlbatross;
-      case 'HoleInOne':
+      case scoreName.HoleInOne:
         return styles.carddividerHoleInOne;
       default:
         return styles.carddivider;
@@ -106,13 +117,13 @@ const InfoScreen = () => {
 
   const displayCardComponent = () => {
     switch (scoreState) {
-      case 'Par':
+      case scoreName.Par:
         return (
           <Paragraph style={{ alignSelf: 'center', color: '#5B5F59' }}>
             Par
           </Paragraph>
         );
-      case 'Bogey':
+      case scoreName.BogeyUp:
         return (
           <Paragraph style={{ alignSelf: 'center', color: '#0F28D3' }}>
             Bogey
@@ -124,25 +135,25 @@ const InfoScreen = () => {
             {score} Bogey
           </Paragraph>
         );
-      case 'Birdie':
+      case scoreName.Birdie:
         return (
           <Paragraph style={{ alignSelf: 'center', color: '#FF0000' }}>
             Birdie
           </Paragraph>
         );
-      case 'Eagle':
+      case scoreName.Eagle:
         return (
           <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
             Eagle
           </Paragraph>
         );
-      case 'Albatross':
+      case scoreName.Albatross:
         return (
           <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
             Albatross
           </Paragraph>
         );
-      case 'HoleInOne':
+      case scoreName.HoleInOne:
         return (
           <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
             Hole in One
@@ -165,81 +176,82 @@ const InfoScreen = () => {
     setShowStroke(true);
     setStroke(holePar);
     setScore(0);
-    setScoreState('Par');
+    setScoreState(scoreName.Par);
   };
 
   const increaseStroke = () => {
-    setStroke(stroke + 1);
+    const currentStroke = stroke + 1;
+    const currentScore = currentStroke - holePar;
+    setScore(currentScore);
+    setStroke(currentStroke);
 
-    if (stroke + 1 === scoreName.Par) {
+    if (currentStroke === scoreNameScore.Par) {
       setStroke(holePar);
     }
 
-    setScore(stroke + 1 - holePar);
-
-    if (score + 1 >= scoreName.BogeyUp) {
-      setScoreState('BogeyUp');
-    } else if (score + 1 === scoreName.Bogey) {
-      setScoreState('Bogey');
-    } else if (score + 1 === scoreName.Par) {
-      setScoreState('Par');
-    } else if (score + 1 === scoreName.Birdie) {
-      setScoreState('Birdie');
-    } else if (score + 1 === scoreName.Eagle) {
-      setScoreState('Eagle');
-    } else if (score + 1 === scoreName.Albatross) {
-      setScoreState('Albatross');
-    } else if (score + 1 <= scoreName.HoleInOne) {
-      setScoreState('HoleInOne');
+    if (currentScore >= scoreNameScore.BogeyUp) {
+      setScoreState(scoreName.BogeyUp);
+    } else if (currentScore === scoreNameScore.Bogey) {
+      setScoreState(scoreName.BogeyUp);
+    } else if (currentScore === scoreNameScore.Par) {
+      setScoreState(scoreName.Par);
+    } else if (currentScore === scoreNameScore.Birdie) {
+      setScoreState(scoreName.Birdie);
+    } else if (currentScore === scoreNameScore.Eagle) {
+      setScoreState(scoreName.Eagle);
+    } else if (currentScore === scoreNameScore.Albatross) {
+      setScoreState(scoreName.Albatross);
+    } else if (currentScore <= scoreNameScore.HoleInOne) {
+      setScoreState(scoreName.HoleInOne);
     }
 
-    if (stroke - putts - 1 <= holePar - 2) {
+    if (currentStroke - putts <= GIR) {
       setGIR(true);
     } else {
       setGIR(false);
     }
-    console.log(stroke + 1);
-    console.log(score + 1);
+    console.log('ScoreState: ', scoreState);
   };
 
   const decreaseStroke = () => {
-    setStroke(stroke - 1);
+    const currentStroke = stroke - 1;
+    const currentScore = currentStroke - holePar;
+    setScore(currentScore);
+    setStroke(currentStroke);
 
-    if (stroke - 1 === scoreName.Par) {
+    if (currentStroke === scoreNameScore.Par) {
       setStroke(holePar);
     }
 
-    if (stroke - 1 <= 0) {
+    if (currentStroke <= 0) {
       setShowStroke(false);
     }
 
-    setScore(stroke - 1 - holePar);
-
-    if (score - 1 >= scoreName.BogeyUp) {
+    if (currentScore >= scoreNameScore.BogeyUp) {
       setScoreState('BogeyUp');
-    } else if (score - 1 === scoreName.Bogey) {
-      setScoreState('Bogey');
-    } else if (score - 1 === scoreName.Par) {
-      setScoreState('Par');
-    } else if (score - 1 === scoreName.Birdie) {
-      setScoreState('Birdie');
-    } else if (score - 1 === scoreName.Eagle) {
-      if (stroke - 1 === 1) setScoreState('HoleInOne');
-      else setScoreState('Eagle');
-    } else if (score - 1 === scoreName.Albatross) {
-      if (stroke - 1 === 1) setScoreState('HoleInOne');
-      else setScoreState('Albatross');
-    } else if (score - 1 <= scoreName.HoleInOne) {
-      setScoreState('HoleInOne');
+    } else if (currentScore === scoreNameScore.Bogey) {
+      setScoreState(scoreName.BogeyUp);
+    } else if (currentScore === scoreNameScore.Par) {
+      setScoreState(scoreName.Par);
+    } else if (currentScore === scoreNameScore.Birdie) {
+      setScoreState(scoreName.Birdie);
+    } else if (currentScore === scoreNameScore.Eagle) {
+      if (currentStroke === 1) setScoreState(scoreName.HoleInOne);
+      else setScoreState(scoreName.Eagle);
+    } else if (currentScore === scoreNameScore.Albatross) {
+      if (currentStroke === 1) setScoreState(scoreName.HoleInOne);
+      else setScoreState(scoreName.Albatross);
+    } else if (currentScore <= scoreNameScore.HoleInOne) {
+      setScoreState(scoreName.HoleInOne);
     }
 
-    if (stroke - putts + 1 <= holePar - 2) {
+    if (currentStroke - putts <= GIR) {
       setGIR(true);
     } else {
       setGIR(false);
     }
-    console.log(stroke - 1);
-    console.log(score - 1);
+
+    console.log('ScoreState: ', scoreState);
   };
 
   const editPutt = () => {
@@ -254,49 +266,60 @@ const InfoScreen = () => {
   };
 
   const increasePutt = () => {
-    setPutts(putts + 1);
+    const currentPutts = putts + 1;
+    setPutts(currentPutts);
 
-    if (putts + 1 === 1) {
+    if (currentPutts === 1) {
       setUpDown(true);
     } else {
       setUpDown(false);
     }
 
-    if (sandShots > 0 && putts + 1 === 1) {
+    if (sandShots > 0 && currentPutts === 1) {
       setSandSaves(true);
     } else {
       setSandSaves(false);
     }
 
-    if (stroke - putts - 1 <= holePar - 2) {
+    if (stroke - currentPutts <= GIR) {
       setGIR(true);
     } else {
       setGIR(false);
     }
+
+    console.log('Stroke: ', stroke);
+    console.log('Score: ', score);
+    console.log('ToG: ', stroke - currentPutts);
   };
 
   const decreasePutt = () => {
-    setPutts(putts - 1);
-    if (putts - 1 === 1) {
+    const currentPutts = putts - 1;
+    setPutts(currentPutts);
+
+    if (currentPutts === 1) {
       setUpDown(true);
     } else {
       setUpDown(false);
     }
-    if (putts - 1 <= 0) {
+    if (currentPutts <= 0) {
       setShowPutt(false);
       setEnabledUD(false);
       setEnabledGIR(false);
     }
-    if (sandShots > 0 && putts - 1 === 1) {
+    if (sandShots > 0 && currentPutts === 1) {
       setSandSaves(true);
     } else {
       setSandSaves(false);
     }
-    if (stroke - putts + 1 <= holePar - 2) {
+
+    if (stroke - currentPutts <= GIR) {
       setGIR(true);
     } else {
       setGIR(false);
     }
+    console.log('Stroke: ', stroke);
+    console.log('Score: ', score);
+    console.log('ToG: ', stroke - currentPutts);
   };
 
   const editSandShot = () => {
@@ -307,13 +330,15 @@ const InfoScreen = () => {
   };
 
   const increaseSandShot = () => {
-    setSandShots(sandShots + 1);
+    const currentSandShots = sandShots + 1;
+    setSandShots(currentSandShots);
     checkSetSandSave();
   };
 
   const decreaseSandShot = () => {
-    setSandShots(sandShots - 1);
-    if (sandShots - 1 < 1) {
+    const currentSandShots = sandShots - 1;
+    setSandShots(currentSandShots);
+    if (currentSandShots < 1) {
       setSandSaves(false);
       setShowSandShots(false);
       setEnabledSS(false);
@@ -327,14 +352,16 @@ const InfoScreen = () => {
   };
 
   const increasePenalty = () => {
-    setPenalties(penalties - 1);
-    if (penalties - 1 < 1) {
-      setShowPenalty(false);
-    }
+    const currentPenalties = penalties + 1;
+    setPenalties(currentPenalties);
   };
 
   const decreasePenalty = () => {
-    setPenalties(penalties + 1);
+    const currentPenalties = penalties - 1;
+    setPenalties(currentPenalties);
+    if (currentPenalties < 1) {
+      setShowPenalty(false);
+    }
   };
 
   return (
@@ -434,13 +461,13 @@ const InfoScreen = () => {
           <Text style={styles.leftheadertext}>Penalties</Text>
           {showPenalty ? (
             <View style={{ padding: 20, flexDirection: 'row' }}>
-              <TouchableOpacity style={styles.nBtn} onPress={increasePenalty}>
+              <TouchableOpacity style={styles.nBtn} onPress={decreasePenalty}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
               <View style={{ marginLeft: 20 }}>
                 <TouchableOpacity
                   style={styles.nBtn2}
-                  onPress={decreasePenalty}
+                  onPress={increasePenalty}
                 >
                   <Text style={styles.nBtnText2}> {penalties} | + </Text>
                 </TouchableOpacity>
