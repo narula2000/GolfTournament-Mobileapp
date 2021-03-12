@@ -179,6 +179,30 @@ const InfoScreen = () => {
     }
   };
 
+  const checkSetSandSaveForPutt = (currentPutts) => {
+    if (sandShots > 0 && currentPutts === 1) {
+      setSandSaves(true);
+    } else {
+      setSandSaves(false);
+    }
+  };
+
+  const checkSetGIR = (toHole) => {
+    if (toHole <= GIR) {
+      setGIR(true);
+    } else {
+      setGIR(false);
+    }
+  };
+
+  const checkSetUD = (currentPutts) => {
+    if (currentPutts === 1) {
+      setUpDown(true);
+    } else {
+      setUpDown(false);
+    }
+  };
+
   const editStroke = () => {
     setShowStroke(true);
     setStroke(holePar);
@@ -211,13 +235,7 @@ const InfoScreen = () => {
     } else if (currentScore <= scoreOfNames.HoleInOne) {
       setScoreState(scoreNames.HoleInOne);
     }
-
-    if (currentStroke - putts <= GIR) {
-      setGIR(true);
-    } else {
-      setGIR(false);
-    }
-    console.log('ScoreState: ', scoreState);
+    checkSetGIR(currentStroke - putts);
   };
 
   const decreaseStroke = () => {
@@ -252,13 +270,7 @@ const InfoScreen = () => {
       setScoreState(scoreNames.HoleInOne);
     }
 
-    if (currentStroke - putts <= GIR) {
-      setGIR(true);
-    } else {
-      setGIR(false);
-    }
-
-    console.log('ScoreState: ', scoreState);
+    checkSetGIR(currentStroke - putts);
   };
 
   const editPutt = () => {
@@ -275,58 +287,22 @@ const InfoScreen = () => {
   const increasePutt = () => {
     const currentPutts = putts + 1;
     setPutts(currentPutts);
-
-    if (currentPutts === 1) {
-      setUpDown(true);
-    } else {
-      setUpDown(false);
-    }
-
-    if (sandShots > 0 && currentPutts === 1) {
-      setSandSaves(true);
-    } else {
-      setSandSaves(false);
-    }
-
-    if (stroke - currentPutts <= GIR) {
-      setGIR(true);
-    } else {
-      setGIR(false);
-    }
-
-    console.log('Stroke: ', stroke);
-    console.log('Score: ', score);
-    console.log('ToG: ', stroke - currentPutts);
+    checkSetUD(currentPutts);
+    checkSetSandSaveForPutt(currentPutts);
+    checkSetGIR(stroke - currentPutts);
   };
 
   const decreasePutt = () => {
     const currentPutts = putts - 1;
     setPutts(currentPutts);
-
-    if (currentPutts === 1) {
-      setUpDown(true);
-    } else {
-      setUpDown(false);
-    }
+    checkSetUD(currentPutts);
     if (currentPutts <= 0) {
       setShowPutt(false);
       setEnabledUD(false);
       setEnabledGIR(false);
     }
-    if (sandShots > 0 && currentPutts === 1) {
-      setSandSaves(true);
-    } else {
-      setSandSaves(false);
-    }
-
-    if (stroke - currentPutts <= GIR) {
-      setGIR(true);
-    } else {
-      setGIR(false);
-    }
-    console.log('Stroke: ', stroke);
-    console.log('Score: ', score);
-    console.log('ToG: ', stroke - currentPutts);
+    checkSetSandSaveForPutt(currentPutts);
+    checkSetGIR(stroke - currentPutts);
   };
 
   const editSandShot = () => {
