@@ -127,3 +127,5 @@ pnpm-debug.log*
 *.sln
 *.sw?
 .expo
+
+.metals/

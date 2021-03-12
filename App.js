@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-native-paper';
 import Routes from './src/router';
-import theme from './src/core/theme';
+import { theme } from './src/core/theme';
 
 const Main = () => (
   <Provider theme={theme}>

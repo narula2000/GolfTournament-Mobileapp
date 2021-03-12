@@ -1,62 +1,39 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useNavigation } from '@react-navigation/native';
 import { Button, TextInput } from 'react-native-paper';
-import Logo from '../components/Logo';
-import Background from '../components/Background';
-import theme from '../core/theme';
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: theme.colors.primary,
-    borderRadius: 20,
-    height: 59,
-    justifyContent: 'center',
-    marginVertical: 20,
-    width: 'auto',
-  },
-  buttontext: {
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-  textinput: {
-    backgroundColor: theme.colors.white,
-    marginVertical: 10,
-    width: '100%',
-  },
-});
+import styles from '../styles/SignInScreenStyle';
 
 const SignInScreen = () => {
-  // const { navigate } = useNavigation();
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const navigation = useNavigation();
+
+  const [number, setNumber] = React.useState('');
   const onEnterPressed = () => {
     console.log('button pressed');
+    console.log('number setted');
+    console.log(number);
+    navigation.navigate('HomeScreen');
   };
   return (
-    <View style={Background.background}>
+    <View style={styles.maincontainer}>
       <KeyboardAwareScrollView
         resetScrollToCoords={{ x: 0, y: 0 }}
-        contentContainerStyle={Background.container}
-        keyboardShouldPersistTaps="always"
+        contentContainerStyle={styles.container}
       >
-        <Logo />
-        <TextInput
-          label="Username"
-          value={username}
-          mode="outlined"
-          onChangeText={(_username) => setUsername(_username)}
-          style={styles.textinput}
-          returnKeyType="next"
+        <Image
+          // eslint-disable-next-line global-require
+          source={require('../assets/golf-logo.png')}
+          style={styles.image}
         />
+        <Text style={styles.text}>Enter Phone Number</Text>
         <TextInput
-          label="Password"
-          value={password}
-          mode="outlined"
-          onChangeText={(_password) => setPassword(_password)}
           style={styles.textinput}
-          secureTextEntry
-          returnKeyType="done"
+          onChangeText={(num) => setNumber(num)}
+          value={number}
+          mode="outlined"
+          keyboardType="phone-pad"
+          maxLength={10}
         />
         <Button
           style={styles.button}
@@ -64,8 +41,7 @@ const SignInScreen = () => {
           mode="contained"
           onPress={onEnterPressed}
         >
-          {' '}
-          Enter Tournament{' '}
+          Enter Tournament
         </Button>
       </KeyboardAwareScrollView>
     </View>
