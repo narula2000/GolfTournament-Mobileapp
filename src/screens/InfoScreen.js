@@ -21,7 +21,7 @@ const InfoScreen = () => {
 
   const [visible, setVisible] = React.useState(false);
 
-  const scoreNameScore = Object.freeze({
+  const scoreOfNames = Object.freeze({
     HoleInOne: -4,
     Albatross: -3,
     Eagle: -2,
@@ -31,7 +31,7 @@ const InfoScreen = () => {
     BogeyUp: 2,
   });
 
-  const scoreName = Object.freeze({
+  const scoreNames = Object.freeze({
     HoleInOne: 'HoleInOne',
     Albatross: 'Albatross',
     Eagle: 'Eagle',
@@ -39,6 +39,13 @@ const InfoScreen = () => {
     Par: 'Par',
     Bogey: 'Bogey',
     BogeyUp: 'BogeyUp',
+  });
+
+  const fairways = Object.freeze({
+    Left: 'Left',
+    On: 'On',
+    Right: 'Right',
+    Hazard: 'Hazard',
   });
 
   const holePar = 3;
@@ -75,19 +82,19 @@ const InfoScreen = () => {
 
   const styleCardScoreName = () => {
     switch (scoreState) {
-      case scoreName.Par:
+      case scoreNames.Par:
         return styles.cardPar;
-      case scoreName.BogeyUp:
+      case scoreNames.BogeyUp:
         return styles.cardBogey;
       case 'BogeyUp':
         return styles.cardBogeyUp;
-      case scoreName.Birdie:
+      case scoreNames.Birdie:
         return styles.cardBirdie;
-      case scoreName.Eagle:
+      case scoreNames.Eagle:
         return styles.cardEagle;
-      case scoreName.Albatross:
+      case scoreNames.Albatross:
         return styles.cardAlbatross;
-      case scoreName.HoleInOne:
+      case scoreNames.HoleInOne:
         return styles.cardHoleInOne;
       default:
         return styles.card;
@@ -96,19 +103,19 @@ const InfoScreen = () => {
 
   const styleDividerScoreName = () => {
     switch (scoreState) {
-      case scoreName.Par:
+      case scoreNames.Par:
         return styles.carddividerPar;
-      case scoreName.BogeyUp:
+      case scoreNames.BogeyUp:
         return styles.carddividerBogey;
       case 'BogeyUp':
         return styles.carddividerBogeyUp;
-      case scoreName.Birdie:
+      case scoreNames.Birdie:
         return styles.carddividerBirdie;
-      case scoreName.Eagle:
+      case scoreNames.Eagle:
         return styles.carddividerEagle;
-      case scoreName.Albatross:
+      case scoreNames.Albatross:
         return styles.carddividerAlbatross;
-      case scoreName.HoleInOne:
+      case scoreNames.HoleInOne:
         return styles.carddividerHoleInOne;
       default:
         return styles.carddivider;
@@ -117,13 +124,13 @@ const InfoScreen = () => {
 
   const displayCardComponent = () => {
     switch (scoreState) {
-      case scoreName.Par:
+      case scoreNames.Par:
         return (
           <Paragraph style={{ alignSelf: 'center', color: '#5B5F59' }}>
             Par
           </Paragraph>
         );
-      case scoreName.BogeyUp:
+      case scoreNames.BogeyUp:
         return (
           <Paragraph style={{ alignSelf: 'center', color: '#0F28D3' }}>
             Bogey
@@ -135,25 +142,25 @@ const InfoScreen = () => {
             {score} Bogey
           </Paragraph>
         );
-      case scoreName.Birdie:
+      case scoreNames.Birdie:
         return (
           <Paragraph style={{ alignSelf: 'center', color: '#FF0000' }}>
             Birdie
           </Paragraph>
         );
-      case scoreName.Eagle:
+      case scoreNames.Eagle:
         return (
           <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
             Eagle
           </Paragraph>
         );
-      case scoreName.Albatross:
+      case scoreNames.Albatross:
         return (
           <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
             Albatross
           </Paragraph>
         );
-      case scoreName.HoleInOne:
+      case scoreNames.HoleInOne:
         return (
           <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
             Hole in One
@@ -176,7 +183,7 @@ const InfoScreen = () => {
     setShowStroke(true);
     setStroke(holePar);
     setScore(0);
-    setScoreState(scoreName.Par);
+    setScoreState(scoreNames.Par);
   };
 
   const increaseStroke = () => {
@@ -185,24 +192,24 @@ const InfoScreen = () => {
     setScore(currentScore);
     setStroke(currentStroke);
 
-    if (currentStroke === scoreNameScore.Par) {
+    if (currentStroke === scoreOfNames.Par) {
       setStroke(holePar);
     }
 
-    if (currentScore >= scoreNameScore.BogeyUp) {
-      setScoreState(scoreName.BogeyUp);
-    } else if (currentScore === scoreNameScore.Bogey) {
-      setScoreState(scoreName.BogeyUp);
-    } else if (currentScore === scoreNameScore.Par) {
-      setScoreState(scoreName.Par);
-    } else if (currentScore === scoreNameScore.Birdie) {
-      setScoreState(scoreName.Birdie);
-    } else if (currentScore === scoreNameScore.Eagle) {
-      setScoreState(scoreName.Eagle);
-    } else if (currentScore === scoreNameScore.Albatross) {
-      setScoreState(scoreName.Albatross);
-    } else if (currentScore <= scoreNameScore.HoleInOne) {
-      setScoreState(scoreName.HoleInOne);
+    if (currentScore >= scoreOfNames.BogeyUp) {
+      setScoreState(scoreNames.BogeyUp);
+    } else if (currentScore === scoreOfNames.Bogey) {
+      setScoreState(scoreNames.BogeyUp);
+    } else if (currentScore === scoreOfNames.Par) {
+      setScoreState(scoreNames.Par);
+    } else if (currentScore === scoreOfNames.Birdie) {
+      setScoreState(scoreNames.Birdie);
+    } else if (currentScore === scoreOfNames.Eagle) {
+      setScoreState(scoreNames.Eagle);
+    } else if (currentScore === scoreOfNames.Albatross) {
+      setScoreState(scoreNames.Albatross);
+    } else if (currentScore <= scoreOfNames.HoleInOne) {
+      setScoreState(scoreNames.HoleInOne);
     }
 
     if (currentStroke - putts <= GIR) {
@@ -219,7 +226,7 @@ const InfoScreen = () => {
     setScore(currentScore);
     setStroke(currentStroke);
 
-    if (currentStroke === scoreNameScore.Par) {
+    if (currentStroke === scoreOfNames.Par) {
       setStroke(holePar);
     }
 
@@ -227,22 +234,22 @@ const InfoScreen = () => {
       setShowStroke(false);
     }
 
-    if (currentScore >= scoreNameScore.BogeyUp) {
+    if (currentScore >= scoreOfNames.BogeyUp) {
       setScoreState('BogeyUp');
-    } else if (currentScore === scoreNameScore.Bogey) {
-      setScoreState(scoreName.BogeyUp);
-    } else if (currentScore === scoreNameScore.Par) {
-      setScoreState(scoreName.Par);
-    } else if (currentScore === scoreNameScore.Birdie) {
-      setScoreState(scoreName.Birdie);
-    } else if (currentScore === scoreNameScore.Eagle) {
-      if (currentStroke === 1) setScoreState(scoreName.HoleInOne);
-      else setScoreState(scoreName.Eagle);
-    } else if (currentScore === scoreNameScore.Albatross) {
-      if (currentStroke === 1) setScoreState(scoreName.HoleInOne);
-      else setScoreState(scoreName.Albatross);
-    } else if (currentScore <= scoreNameScore.HoleInOne) {
-      setScoreState(scoreName.HoleInOne);
+    } else if (currentScore === scoreOfNames.Bogey) {
+      setScoreState(scoreNames.BogeyUp);
+    } else if (currentScore === scoreOfNames.Par) {
+      setScoreState(scoreNames.Par);
+    } else if (currentScore === scoreOfNames.Birdie) {
+      setScoreState(scoreNames.Birdie);
+    } else if (currentScore === scoreOfNames.Eagle) {
+      if (currentStroke === 1) setScoreState(scoreNames.HoleInOne);
+      else setScoreState(scoreNames.Eagle);
+    } else if (currentScore === scoreOfNames.Albatross) {
+      if (currentStroke === 1) setScoreState(scoreNames.HoleInOne);
+      else setScoreState(scoreNames.Albatross);
+    } else if (currentScore <= scoreOfNames.HoleInOne) {
+      setScoreState(scoreNames.HoleInOne);
     }
 
     if (currentStroke - putts <= GIR) {
@@ -483,64 +490,66 @@ const InfoScreen = () => {
           <Text style={styles.leftheadertext}>Fairways</Text>
           <TouchableOpacity
             style={
-              fairway === 'Left'
+              fairway === fairways.Left
                 ? styles.roundButtonPressed
                 : styles.roundButton
             }
             onPress={() => {
-              setFairway('Left');
+              setFairway(fairways.Left);
             }}
           >
             <Icon
               name="arrow-top-left"
               size={15}
-              color={fairway === 'Left' ? 'white' : 'black'}
+              color={fairway === fairways.Left ? 'white' : 'black'}
             />
           </TouchableOpacity>
           <TouchableOpacity
             style={
-              fairway === 'On' ? styles.roundButtonPressed : styles.roundButton
+              fairway === fairways.On
+                ? styles.roundButtonPressed
+                : styles.roundButton
             }
             onPress={() => {
-              setFairway('On');
+              setFairway(fairways.On);
             }}
           >
             <Icon
               name="circle-outline"
               size={15}
-              color={fairway === 'On' ? 'white' : 'black'}
+              color={fairway === fairways.On ? 'white' : 'black'}
             />
           </TouchableOpacity>
           <TouchableOpacity
             style={
-              fairway === 'Right'
+              fairway === fairways.Right
                 ? styles.roundButtonPressed
                 : styles.roundButton
             }
             onPress={() => {
-              setFairway('Right');
+              setFairway(fairways.Right);
             }}
           >
             <Icon
               name="arrow-top-right"
               size={15}
-              color={fairway === 'Right' ? 'white' : 'black'}
+              color={fairway === fairways.Right ? 'white' : 'black'}
             />
           </TouchableOpacity>
           <TouchableOpacity
             style={
-              fairway === 'Hazard'
+              fairway === fairways.Hazard
                 ? styles.roundButtonPressed
                 : styles.roundButton
             }
             onPress={() => {
-              setFairway('Hazard');
+              setFairway(fairways.Hazard);
             }}
           >
             <Icon
               name="arrow-down"
               size={15}
-              color={fairway === 'Hazard' ? 'white' : 'black'}
+              color={fairway === fairways.Hazard ? 'white' : 'black'}
             />
           </TouchableOpacity>
         </View>
