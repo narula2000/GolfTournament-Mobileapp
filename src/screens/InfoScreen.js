@@ -84,9 +84,9 @@ const InfoScreen = () => {
     switch (scoreState) {
       case scoreNames.Par:
         return styles.cardPar;
-      case scoreNames.BogeyUp:
+      case scoreNames.Bogey:
         return styles.cardBogey;
-      case 'BogeyUp':
+      case scoreNames.BogeyUp:
         return styles.cardBogeyUp;
       case scoreNames.Birdie:
         return styles.cardBirdie;
@@ -105,9 +105,9 @@ const InfoScreen = () => {
     switch (scoreState) {
       case scoreNames.Par:
         return styles.carddividerPar;
-      case scoreNames.BogeyUp:
+      case scoreNames.Bogey:
         return styles.carddividerBogey;
-      case 'BogeyUp':
+      case scoreNames.BogeyUp:
         return styles.carddividerBogeyUp;
       case scoreNames.Birdie:
         return styles.carddividerBirdie;
@@ -130,13 +130,13 @@ const InfoScreen = () => {
             Par
           </Paragraph>
         );
-      case scoreNames.BogeyUp:
+      case scoreNames.Bogey:
         return (
           <Paragraph style={{ alignSelf: 'center', color: '#0F28D3' }}>
             Bogey
           </Paragraph>
         );
-      case 'BogeyUp':
+      case scoreNames.BogeyUp:
         return (
           <Paragraph style={{ alignSelf: 'center', color: '#5B5F59' }}>
             {score} Bogey
@@ -199,7 +199,7 @@ const InfoScreen = () => {
     if (currentScore >= scoreOfNames.BogeyUp) {
       setScoreState(scoreNames.BogeyUp);
     } else if (currentScore === scoreOfNames.Bogey) {
-      setScoreState(scoreNames.BogeyUp);
+      setScoreState(scoreNames.Bogey);
     } else if (currentScore === scoreOfNames.Par) {
       setScoreState(scoreNames.Par);
     } else if (currentScore === scoreOfNames.Birdie) {
@@ -235,9 +235,9 @@ const InfoScreen = () => {
     }
 
     if (currentScore >= scoreOfNames.BogeyUp) {
-      setScoreState('BogeyUp');
-    } else if (currentScore === scoreOfNames.Bogey) {
       setScoreState(scoreNames.BogeyUp);
+    } else if (currentScore === scoreOfNames.Bogey) {
+      setScoreState(scoreNames.Bogey);
     } else if (currentScore === scoreOfNames.Par) {
       setScoreState(scoreNames.Par);
     } else if (currentScore === scoreOfNames.Birdie) {
