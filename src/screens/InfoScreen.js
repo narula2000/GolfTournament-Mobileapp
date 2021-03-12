@@ -93,9 +93,9 @@ const InfoScreen = () => {
       case scoreNames.Eagle:
         return styles.cardEagle;
       case scoreNames.Albatross:
-        return styles.cardAlbatross;
+        return styles.cardEagle;
       case scoreNames.HoleInOne:
-        return styles.cardHoleInOne;
+        return styles.cardEagle;
       default:
         return styles.card;
     }
@@ -114,9 +114,9 @@ const InfoScreen = () => {
       case scoreNames.Eagle:
         return styles.carddividerEagle;
       case scoreNames.Albatross:
-        return styles.carddividerAlbatross;
+        return styles.carddividerEagle;
       case scoreNames.HoleInOne:
-        return styles.carddividerHoleInOne;
+        return styles.carddividerEagle;
       default:
         return styles.carddivider;
     }
