@@ -74,11 +74,6 @@ const InfoScreen = () => {
   const [isSandSaveActive, setSandSaves] = React.useState(false);
   const [isUDActive, setUpDown] = React.useState(false);
 
-  const onSubmitPressed = () => {
-    console.log('button pressed');
-    setVisible(true);
-  };
-
   const styleCardScoreName = () => {
     switch (scoreState) {
       case scoreNames.Par:
@@ -182,38 +177,6 @@ const InfoScreen = () => {
     );
   };
 
-  const checkSetSandSave = () => {
-    if (putts === 1) {
-      setSandSaves(true);
-    } else {
-      setSandSaves(false);
-    }
-  };
-
-  const checkSetSandSaveForPutt = (currentPutts) => {
-    if (sandShots > 0 && currentPutts === 1) {
-      setSandSaves(true);
-    } else {
-      setSandSaves(false);
-    }
-  };
-
-  const checkSetGIR = (toHole) => {
-    if (toHole <= GIR) {
-      setGIR(true);
-    } else {
-      setGIR(false);
-    }
-  };
-
-  const checkSetUD = (currentPutts) => {
-    if (currentPutts === 1) {
-      setUpDown(true);
-    } else {
-      setUpDown(false);
-    }
-  };
-
   const editStroke = () => {
     setShowStroke(true);
     setStroke(holePar);
@@ -246,7 +209,7 @@ const InfoScreen = () => {
     } else if (currentScore <= scoreOfNames.HoleInOne) {
       setScoreState(scoreNames.HoleInOne);
     }
-    checkSetGIR(currentStroke - putts);
+    setGIR(currentStroke - putts <= GIR);
   };
 
   const decreaseStroke = () => {
@@ -259,9 +222,7 @@ const InfoScreen = () => {
       setStroke(holePar);
     }
 
-    if (currentStroke <= 0) {
-      setShowStroke(false);
-    }
+    setShowStroke(!currentStroke <= 0);
 
     if (currentScore >= scoreOfNames.BogeyUp) {
       setScoreState(scoreNames.BogeyUp);
@@ -280,8 +241,7 @@ const InfoScreen = () => {
     } else if (currentScore <= scoreOfNames.HoleInOne) {
       setScoreState(scoreNames.HoleInOne);
     }
-
-    checkSetGIR(currentStroke - putts);
+    setGIR(currentStroke - putts <= GIR);
   };
 
   const editPutt = () => {
@@ -290,44 +250,42 @@ const InfoScreen = () => {
     setEnabledGIR(true);
     setPutts(1);
     setUpDown(true);
-    checkSetGIR(stroke - 1);
-    if (sandShots > 0) {
-      setSandSaves(true);
-    }
+    setGIR(stroke - 1 <= GIR);
+    setSandSaves(sandShots > 0);
   };
 
   const increasePutt = () => {
     const currentPutts = putts + 1;
     setPutts(currentPutts);
-    checkSetUD(currentPutts);
-    checkSetSandSaveForPutt(currentPutts);
-    checkSetGIR(stroke - currentPutts);
+    setUpDown(currentPutts === 1);
+    setSandSaves(sandShots > 0 && currentPutts === 1);
+    setGIR(stroke - currentPutts <= GIR);
   };
 
   const decreasePutt = () => {
     const currentPutts = putts - 1;
     setPutts(currentPutts);
-    checkSetUD(currentPutts);
+    setUpDown(currentPutts === 1);
     if (currentPutts <= 0) {
       setShowPutt(false);
       setEnabledUD(false);
       setEnabledGIR(false);
     }
-    checkSetSandSaveForPutt(currentPutts);
-    checkSetGIR(stroke - currentPutts);
+    setSandSaves(sandShots > 0 && currentPutts === 1);
+    setGIR(stroke - currentPutts <= GIR);
   };
 
   const editSandShot = () => {
     setShowSandShots(true);
     setEnabledSS(true);
     setSandShots(1);
-    checkSetSandSave();
+    setSandSaves(putts === 1);
   };
 
   const increaseSandShot = () => {
     const currentSandShots = sandShots + 1;
     setSandShots(currentSandShots);
-    checkSetSandSave();
+    setSandSaves(putts === 1);
   };
 
   const decreaseSandShot = () => {
@@ -338,7 +296,7 @@ const InfoScreen = () => {
       setShowSandShots(false);
       setEnabledSS(false);
     }
-    checkSetSandSave();
+    setSandSaves(putts === 1);
   };
 
   const editPenalty = () => {
@@ -596,7 +554,9 @@ const InfoScreen = () => {
         style={styles.button}
         labelStyle={styles.buttontext}
         mode="contained"
-        onPress={onSubmitPressed}
+        onPress={() => {
+          setVisible(true);
+        }}
       >
         Submit
       </Button>
