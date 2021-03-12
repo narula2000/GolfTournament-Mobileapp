@@ -62,6 +62,97 @@ const InfoScreen = () => {
   const [isSandSaveActive, setSandSaves] = React.useState(false);
   const [isUDActive, setUpDown] = React.useState(false);
 
+  const styleCardScoreName = () => {
+    switch (scoreState) {
+      case 'Par':
+        return styles.cardPar;
+      case 'Bogey':
+        return styles.cardBogey;
+      case 'BogeyUp':
+        return styles.cardBogeyUp;
+      case 'Birdie':
+        return styles.cardBirdie;
+      case 'Eagle':
+        return styles.cardEagle;
+      case 'Albatross':
+        return styles.cardAlbatross;
+      case 'HoleInOne':
+        return styles.cardHoleInOne;
+      default:
+        return styles.card;
+    }
+  };
+
+  const styleDividerScoreName = () => {
+    switch (scoreState) {
+      case 'Par':
+        return styles.carddividerPar;
+      case 'Bogey':
+        return styles.carddividerBogey;
+      case 'BogeyUp':
+        return styles.carddividerBogeyUp;
+      case 'Birdie':
+        return styles.carddividerBirdie;
+      case 'Eagle':
+        return styles.carddividerEagle;
+      case 'Albatross':
+        return styles.carddividerAlbatross;
+      case 'HoleInOne':
+        return styles.carddividerHoleInOne;
+      default:
+        return styles.carddivider;
+    }
+  };
+
+  const displayCardComponent = () => {
+    switch (scoreState) {
+      case 'Par':
+        return (
+          <Paragraph style={{ alignSelf: 'center', color: '#5B5F59' }}>
+            Par
+          </Paragraph>
+        );
+      case 'Bogey':
+        return (
+          <Paragraph style={{ alignSelf: 'center', color: '#0F28D3' }}>
+            Bogey
+          </Paragraph>
+        );
+      case 'BogeyUp':
+        return (
+          <Paragraph style={{ alignSelf: 'center', color: '#5B5F59' }}>
+            {score} Bogey
+          </Paragraph>
+        );
+      case 'Birdie':
+        return (
+          <Paragraph style={{ alignSelf: 'center', color: '#FF0000' }}>
+            Birdie
+          </Paragraph>
+        );
+      case 'Eagle':
+        return (
+          <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
+            Eagle
+          </Paragraph>
+        );
+      case 'Albatross':
+        return (
+          <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
+            Albatross
+          </Paragraph>
+        );
+      case 'HoleInOne':
+        return (
+          <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
+            Hole in One
+          </Paragraph>
+        );
+      default:
+        return <Paragraph style={{ alignSelf: 'center' }}>Par</Paragraph>;
+    }
+  };
+
   const checkSetGIR = () => {
     if (stroke - 1 - putts <= GIR) {
       setGIR(true);
@@ -277,78 +368,12 @@ const InfoScreen = () => {
               <TouchableOpacity style={styles.nBtn} onPress={decreaseStroke}>
                 <Text style={styles.nBtnText}> - </Text>
               </TouchableOpacity>
-              <Card
-                style={
-                  scoreState === 'Par'
-                    ? styles.cardPar
-                    : scoreState === 'Bogey'
-                    ? styles.cardBogey
-                    : scoreState === 'BogeyUp'
-                    ? styles.cardBogeyUp
-                    : scoreState === 'Birdie'
-                    ? styles.cardBirdie
-                    : scoreState === 'Eagle'
-                    ? styles.cardEagle
-                    : scoreState === 'Albatross'
-                    ? styles.cardEagle
-                    : scoreState === 'HoleInOne'
-                    ? styles.cardEagle
-                    : styles.card
-                }
-              >
+              <Card style={styleCardScoreName()}>
                 <Button onPress={increaseStroke}>
                   <Text> {stroke} | + </Text>
                 </Button>
-                <Divider
-                  style={
-                    scoreState === 'Par'
-                      ? styles.carddividerPar
-                      : scoreState === 'Bogey'
-                      ? styles.carddividerBogey
-                      : scoreState === 'BogeyUp'
-                      ? styles.carddividerBogeyUp
-                      : scoreState === 'Birdie'
-                      ? styles.carddividerBirdie
-                      : scoreState === 'Eagle'
-                      ? styles.carddividerEagle
-                      : scoreState === 'Albatross'
-                      ? styles.carddividerEagle
-                      : scoreState === 'HoleInOne'
-                      ? styles.carddividerEagle
-                      : styles.carddivider
-                  }
-                />
-                {scoreState === 'Par' ? (
-                  <Paragraph style={{ alignSelf: 'center', color: '#5B5F59' }}>
-                    Par
-                  </Paragraph>
-                ) : scoreState === 'Bogey' ? (
-                  <Paragraph style={{ alignSelf: 'center', color: '#0F28D3' }}>
-                    Bogey
-                  </Paragraph>
-                ) : scoreState === 'BogeyUp' ? (
-                  <Paragraph style={{ alignSelf: 'center', color: '#5B5F59' }}>
-                    {score} Bogey
-                  </Paragraph>
-                ) : scoreState === 'Birdie' ? (
-                  <Paragraph style={{ alignSelf: 'center', color: '#FF0000' }}>
-                    Birdie
-                  </Paragraph>
-                ) : scoreState === 'Eagle' ? (
-                  <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
-                    Eagle
-                  </Paragraph>
-                ) : scoreState === 'Albatross' ? (
-                  <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
-                    Albatross
-                  </Paragraph>
-                ) : scoreState === 'HoleInOne' ? (
-                  <Paragraph style={{ alignSelf: 'center', color: '#49E81A' }}>
-                    Hole in One
-                  </Paragraph>
-                ) : (
-                  <Paragraph style={{ alignSelf: 'center' }}>Par</Paragraph>
-                )}
+                <Divider style={styleDividerScoreName()} />
+                {displayCardComponent()}
               </Card>
             </View>
           ) : (
