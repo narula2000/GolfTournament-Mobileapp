@@ -27,6 +27,7 @@ const InfoScreen = () => {
   };
 
   const scoreName = Object.freeze({
+    HoleInOne: -4,
     Albatross: -3,
     Eagle: -2,
     Birdie: -1,
@@ -36,6 +37,8 @@ const InfoScreen = () => {
 
   const par = 3;
 
+  const GIR = par - 2;
+
   const [stroke, setStroke] = React.useState(par);
   const [score, setScore] = React.useState(stroke - par);
 
@@ -44,6 +47,8 @@ const InfoScreen = () => {
   const [penalties, setPenalties] = React.useState(0);
 
   const [fairway, setFairway] = React.useState('');
+  const [scoreState, setScoreState] = React.useState('');
+
   const [isBogey, setBogey] = React.useState(false);
   const [isPar, setPar] = React.useState(false);
   const [isBirdie, setBirdie] = React.useState(false);
@@ -74,74 +79,28 @@ const InfoScreen = () => {
 
   const increaseStroke = () => {
     setStroke(stroke + 1);
+
     if (stroke + 1 === 0) {
       setStroke(par);
     }
+
     setScore(stroke + 1 - par);
-    if (score + 1 >= 2) {
-      setBogeyUp(true);
-      setBogey(false);
-      setPar(false);
-      setBirdie(false);
-      setEagle(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score + 1 === 1) {
-      setBogey(true);
-      setBogeyUp(false);
-      setPar(false);
-      setBirdie(false);
-      setEagle(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score + 1 === 0) {
-      setPar(true);
-      setBirdie(false);
-      setEagle(false);
-      setBogey(false);
-      setBogeyUp(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score + 1 === -1) {
-      setBirdie(true);
-      setEagle(false);
-      setBogey(false);
-      setBogeyUp(false);
-      setPar(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score + 1 === -2) {
-      setEagle(true);
-      setBogey(false);
-      setBogeyUp(false);
-      setPar(false);
-      setBirdie(false);
-      setAlbatross(false);
-      setHoleInOne(false);
-    }
-    if (score + 1 === -3) {
-      setEagle(false);
-      setBogey(false);
-      setBogeyUp(false);
-      setPar(false);
-      setBirdie(false);
-      setAlbatross(true);
-      setHoleInOne(false);
-    }
-    if (score + 1 <= -4) {
-      setEagle(true);
-      setBogey(false);
-      setBogeyUp(false);
-      setPar(false);
-      setBirdie(false);
-      setAlbatross(false);
-      setHoleInOne(true);
-    }
-    if (stroke + 1 - putts <= par - 2) {
+
+    if (score + 1 >= scoreName.BogeyUp) {
+      setScoreState('BogeyUp');
+    } else if (score + 1 === scoreName.Bogey) {
+      setScoreState('Bogey');
+    } else if (score + 1 === scoreName.Par) {
+      setScoreState('Par');
+    } else if (score + 1 === scoreName.Birdie) {
+      setScoreState('Birdie');
+    } else if (score + 1 === scoreName.Eagle) {
+      setScoreState('Eagle');
+    } else if (score + 1 === scoreName.Albatross) {
+      setScoreState('Albatross');
+    } else if (score + 1 <= scoreName.HoleInOne) {
+      setScoreState('HoleInOne');
+    } else if (stroke + 1 - putts <= GIR) {
       setGIR(true);
     } else {
       setGIR(false);
@@ -152,13 +111,17 @@ const InfoScreen = () => {
 
   const decreaseStroke = () => {
     setStroke(stroke - 1);
+
     if (stroke - 1 === 0) {
       setStroke(par);
     }
+
     if (stroke - 1 <= 0) {
       setShowStroke(false);
     }
+
     setScore(stroke - 1 - par);
+
     if (score - 1 >= 2) {
       setBogeyUp(true);
       setBogey(false);
