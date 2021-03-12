@@ -62,6 +62,22 @@ const InfoScreen = () => {
   const [isSandSaveActive, setSandSaves] = React.useState(false);
   const [isUDActive, setUpDown] = React.useState(false);
 
+  const checkSetGIR = () => {
+    if (stroke - 1 - putts <= GIR) {
+      setGIR(true);
+    } else {
+      setGIR(false);
+    }
+  };
+
+  const checkSetSandSave = () => {
+    if (putts === 1) {
+      setSandSaves(true);
+    } else {
+      setSandSaves(false);
+    }
+  };
+
   const editStroke = () => {
     setShowStroke(true);
     setStroke(holePar);
@@ -92,11 +108,9 @@ const InfoScreen = () => {
       setScoreState('Albatross');
     } else if (score + 1 <= scoreName.HoleInOne) {
       setScoreState('HoleInOne');
-    } else if (stroke + 1 - putts <= GIR) {
-      setGIR(true);
-    } else {
-      setGIR(false);
     }
+
+    checkSetGIR();
     console.log(stroke + 1);
     console.log(score + 1);
   };
@@ -131,21 +145,10 @@ const InfoScreen = () => {
     } else if (score - 1 <= scoreName.HoleInOne) {
       setScoreState('HoleInOne');
     }
-    if (stroke - 1 - putts <= GIR) {
-      setGIR(true);
-    } else {
-      setGIR(false);
-    }
+
+    checkSetGIR();
     console.log(stroke - 1);
     console.log(score - 1);
-  };
-
-  const toggleSandSave = () => {
-    setSandSaves(!isSandSaveActive);
-  };
-
-  const toggleUD = () => {
-    setUpDown(!isUDActive);
   };
 
   const editPutt = () => {
@@ -161,21 +164,20 @@ const InfoScreen = () => {
 
   const increasePutt = () => {
     setPutts(putts + 1);
+
     if (putts + 1 === 1) {
       setUpDown(true);
     } else {
       setUpDown(false);
     }
+
     if (sandShots > 0 && putts + 1 === 1) {
       setSandSaves(true);
     } else {
       setSandSaves(false);
     }
-    if (stroke - putts - 1 <= holePar - 2) {
-      setGIR(true);
-    } else {
-      setGIR(false);
-    }
+
+    checkSetGIR();
   };
 
   const decreasePutt = () => {
@@ -195,31 +197,20 @@ const InfoScreen = () => {
     } else {
       setSandSaves(false);
     }
-    if (stroke - putts + 1 <= holePar - 2) {
-      setGIR(true);
-    } else {
-      setGIR(false);
-    }
+
+    checkSetGIR();
   };
 
   const editSandShot = () => {
     setShowSandShots(true);
     setEnabledSS(true);
     setSandShots(1);
-    if (putts === 1) {
-      setSandSaves(true);
-    } else {
-      setSandSaves(false);
-    }
+    checkSetSandSave();
   };
 
   const increaseSandShot = () => {
     setSandShots(sandShots + 1);
-    if (putts === 1) {
-      setSandSaves(true);
-    } else {
-      setSandSaves(false);
-    }
+    checkSetSandSave();
   };
 
   const decreaseSandShot = () => {
@@ -229,11 +220,7 @@ const InfoScreen = () => {
       setShowSandShots(false);
       setEnabledSS(false);
     }
-    if (putts === 1) {
-      setSandSaves(true);
-    } else {
-      setSandSaves(false);
-    }
+    checkSetSandSave();
   };
 
   const editPenalty = () => {
@@ -526,7 +513,9 @@ const InfoScreen = () => {
         {enableSandSave ? (
           <Button
             mode="contained"
-            onPress={toggleSandSave}
+            onPress={() => {
+              setSandSaves(!isSandSaveActive);
+            }}
             style={
               isSandSaveActive ? styles.activeButton : styles.enabledButton
             }
@@ -542,7 +531,9 @@ const InfoScreen = () => {
         {enableUD ? (
           <Button
             mode="contained"
-            onPress={toggleUD}
+            onPress={() => {
+              setUpDown(!isUDActive);
+            }}
             style={isUDActive ? styles.activeButton : styles.enabledButton}
             labelStyle={{ color: 'black' }}
           >
