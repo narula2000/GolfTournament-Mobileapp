@@ -222,6 +222,15 @@ const InfoScreen = () => {
       setStroke(holePar);
     }
 
+    if (currentStroke < 1) {
+      setShowPutt(false);
+      setShowSandShots(false);
+      setShowPenalty(false);
+      setEnabledGIR(false);
+      setEnabledSS(false);
+      setEnabledUD(false);
+    }
+
     setShowStroke(!currentStroke <= 0);
 
     if (currentScore >= scoreOfNames.BogeyUp) {
@@ -245,13 +254,15 @@ const InfoScreen = () => {
   };
 
   const editPutt = () => {
-    setShowPutt(true);
-    setEnabledUD(true);
-    setEnabledGIR(true);
-    setPutts(1);
-    setUpDown(true);
-    setGIR(stroke - 1 <= GIR);
-    setSandSaves(sandShots > 0);
+    if (showStroke) {
+      setShowPutt(true);
+      setEnabledUD(true);
+      setEnabledGIR(true);
+      setPutts(1);
+      setUpDown(true);
+      setGIR(stroke - 1 <= GIR);
+      setSandSaves(sandShots > 0);
+    }
   };
 
   const increasePutt = () => {
@@ -276,10 +287,12 @@ const InfoScreen = () => {
   };
 
   const editSandShot = () => {
-    setShowSandShots(true);
-    setEnabledSS(true);
-    setSandShots(1);
-    setSandSaves(putts === 1);
+    if (showStroke) {
+      setShowSandShots(true);
+      setEnabledSS(true);
+      setSandShots(1);
+      setSandSaves(putts === 1);
+    }
   };
 
   const increaseSandShot = () => {
@@ -300,8 +313,10 @@ const InfoScreen = () => {
   };
 
   const editPenalty = () => {
-    setShowPenalty(true);
-    setPenalties(1);
+    if (showStroke) {
+      setShowPenalty(true);
+      setPenalties(1);
+    }
   };
 
   const increasePenalty = () => {
@@ -435,11 +450,7 @@ const InfoScreen = () => {
               setFairway(fairways.Left);
             }}
           >
-            <Icon
-              name="arrow-top-left"
-              size={15}
-              color={fairway === fairways.Left ? 'white' : 'black'}
-            />
+            <Icon name="arrow-top-left" size={15} color="white" />
           </TouchableOpacity>
           <TouchableOpacity
             style={
@@ -454,7 +465,8 @@ const InfoScreen = () => {
             <Icon
               name="circle-outline"
               size={15}
-              color={fairway === fairways.On ? 'white' : 'black'}
+              color="white"
+              // color={fairway === fairways.On ? 'white' : 'black'}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -467,11 +479,7 @@ const InfoScreen = () => {
               setFairway(fairways.Right);
             }}
           >
-            <Icon
-              name="arrow-top-right"
-              size={15}
-              color={fairway === fairways.Right ? 'white' : 'black'}
-            />
+            <Icon name="arrow-top-right" size={15} color="white" />
           </TouchableOpacity>
           <TouchableOpacity
             style={
@@ -483,11 +491,7 @@ const InfoScreen = () => {
               setFairway(fairways.Hazard);
             }}
           >
-            <Icon
-              name="arrow-down"
-              size={15}
-              color={fairway === fairways.Hazard ? 'white' : 'black'}
-            />
+            <Icon name="arrow-down" size={15} color="white" />
           </TouchableOpacity>
         </View>
       </View>

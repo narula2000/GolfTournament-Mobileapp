@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 1,
     borderColor: theme.colors.button_border,
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.button_border,
   },
   roundButtonPressed: {
     marginVertical: 5,
