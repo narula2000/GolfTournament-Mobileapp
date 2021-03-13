@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Image, TouchableOpacity, Text } from 'react-native';
 import { Appbar, Divider, Card, Title, Button } from 'react-native-paper';
 import styles from '../styles/HomeScreenStyle';
+import 'firebase/auth';
 
 const HomeScreen = () => {
   const username = 'Chakeera Wansoh'; // get name from DB
@@ -25,59 +26,59 @@ const HomeScreen = () => {
       <Divider style={styles.divider} />
       <View style={styles.container}>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 1</Text>
+          <Text>1</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 2</Text>
+          <Text>2</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 3</Text>
+          <Text>3</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 4</Text>
+          <Text>4</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 5</Text>
+          <Text>5</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 6</Text>
+          <Text>6</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 7</Text>
+          <Text>7</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 8</Text>
+          <Text>8</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 9</Text>
+          <Text>9</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 10</Text>
+          <Text>10</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 11</Text>
+          <Text>11</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 12</Text>
+          <Text>12</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 13</Text>
+          <Text>13</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 14</Text>
+          <Text>14</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 15</Text>
+          <Text>15</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 16</Text>
+          <Text>16</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 17</Text>
+          <Text>17</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.roundButton}>
-          <Text>Hole 18</Text>
+          <Text>18</Text>
         </TouchableOpacity>
       </View>
       <Button
