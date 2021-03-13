@@ -3,7 +3,7 @@ import firebase from 'firebase/app';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SignIn from './screens/SignIn';
-import HomeScreen from './screens/HomeScreen';
+import Home from './screens/Home';
 import firebaseConfig from './firebase';
 
 if (!firebase.apps.length) {
@@ -23,8 +23,8 @@ const Routes = () => (
         }}
       />
       <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name="Home"
+        component={Home}
         options={{
           headerShown: false,
         }}
