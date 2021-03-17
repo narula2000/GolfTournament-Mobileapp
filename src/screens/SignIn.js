@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, Image, Alert } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 import {
   FirebaseRecaptchaVerifierModal,
   FirebaseRecaptchaBanner,
@@ -10,15 +11,16 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseConfig from '../firebase/index';
 import styles from '../styles/SignInScreenStyle';
+import firebasefunction from '../firebase/functions';
 
 const SignIn = () => {
   const recaptchaVerifier = React.useRef(null);
   const [phoneNumber, setPhoneNumber] = React.useState('');
   const [verificationId, setVerificationId] = React.useState();
   const [verificationCode, setVerificationCode] = React.useState();
+  const navigation = useNavigation();
 
   const attemptInvisibleVerification = true;
-
   return (
     <View style={styles.maincontainer}>
       <KeyboardAwareScrollView
@@ -36,11 +38,10 @@ const SignIn = () => {
           attemptInvisibleVerification={attemptInvisibleVerification}
         />
         <TextInput
-          label="Enter phone number"
+          label="Enter Phone Number"
           style={styles.textinput}
           placeholder="+66 234567890"
           mode="outlined"
-          autoFocus
           autoCompleteType="tel"
           keyboardType="phone-pad"
           textContentType="telephoneNumber"
@@ -66,7 +67,7 @@ const SignIn = () => {
             }
           }}
         >
-          Send Verification Code
+          {`${verificationId ? 'Resend' : 'Send'} Verification Code`}
         </Button>
         <TextInput
           style={styles.textinput}
@@ -88,7 +89,15 @@ const SignIn = () => {
                 verificationCode
               );
               await firebase.auth().signInWithCredential(credential);
-              Alert.alert('Phone authentication successful 👍');
+              navigation.navigate('Home');
+              console.log(firebase.auth().currentUser.uid);
+              console.log(firebase.auth().currentUser.phoneNumber);
+              await firebasefunction.renameUserId(
+                firebase.auth().currentUser.uid,
+                String(firebase.auth().currentUser.phoneNumber),
+                '-MVJvH4-b4b7W5E2RISk',
+                '-MVJvH40Ql3ljGX6eB2E'
+              );
             } catch (err) {
               Alert.alert(`Error: ${err.message}`);
             }

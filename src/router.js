@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SignIn from './screens/SignIn';
 import Home from './screens/Home';
 import firebaseConfig from './firebase';
+import 'firebase/auth';
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
