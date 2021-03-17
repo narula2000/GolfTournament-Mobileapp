@@ -30,6 +30,13 @@ const fetchHoles = async (userId, _adminId, _tournamentId) => {
   return holesSnap.val();
 };
 
+const checkTournament = async (_adminId, _tournamentId) => {
+  const path = `admin/${_adminId}/${_tournamentId}`;
+  const database = firebase.database();
+  const tournament = await database.ref(path).once('value');
+  return tournament.exists();
+};
+
 const fetchSpecificHoles = async (
   userId,
   _adminId,
@@ -76,4 +83,5 @@ export default {
   fetchUserScore,
   fetchAllUserId,
   fetchValidUserId,
+  checkTournament,
 };
