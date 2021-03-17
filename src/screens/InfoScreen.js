@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   Appbar,
   Button,
@@ -17,6 +17,7 @@ import styles from '../styles/InfoScreenStyle';
 
 const InfoScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
 
   const scoreOfNames = Object.freeze({
     HoleInOne: -4,
@@ -46,6 +47,7 @@ const InfoScreen = () => {
   });
 
   const holePar = 4;
+  const { hole } = route.params;
 
   const GIR = holePar - 2;
 
@@ -341,7 +343,7 @@ const InfoScreen = () => {
           style={styles.image}
         />
         <View>
-          <Text> Hole 1 </Text>
+          <Text> Hole {hole} </Text>
           <Text> Par {holePar} </Text>
           <Text> S.I 9</Text>
         </View>
