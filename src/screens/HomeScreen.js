@@ -1,12 +1,19 @@
 import React from 'react';
 import { View, Image, TouchableOpacity, Text } from 'react-native';
 import { Appbar, Divider, Card, Title, Button } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/HomeScreenStyle';
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
   const username = 'Chakeera Wansoh'; // get name from DB
   const currentScore = '100pts'; // get from DB
-  const onEnterPressed = () => {};
+  const onEnterPressed = () => {
+    navigation.navigate('InfoScreen');
+  };
+  const onButtonPressed = () => {
+    navigation.navigate('RankingScreen');
+  };
   return (
     <View style={styles.maincontainer}>
       <Appbar.Header style={styles.appbar}>
@@ -24,7 +31,7 @@ const HomeScreen = () => {
       </Appbar.Header>
       <Divider style={styles.divider} />
       <View style={styles.container}>
-        <TouchableOpacity style={styles.roundButton}>
+        <TouchableOpacity style={styles.roundButton} onPress={onEnterPressed}>
           <Text>Hole 1</Text>
         </TouchableOpacity>
 
@@ -84,7 +91,7 @@ const HomeScreen = () => {
         style={styles.button}
         labelStyle={styles.buttontext}
         mode="contained"
-        onPress={onEnterPressed}
+        onPress={onButtonPressed}
       >
         Tournament Ranking
       </Button>

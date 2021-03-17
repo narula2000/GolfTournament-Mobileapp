@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
   },
   roundButton: {
     marginVertical: 5,
-    width: 80,
-    height: 80,
+    width: 70,
+    height: 70,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
