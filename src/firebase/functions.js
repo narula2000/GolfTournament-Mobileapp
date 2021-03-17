@@ -1,14 +1,20 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 
+const checkTournament = async (_adminId, _tournamentId) => {
+  const path = `admin/${_adminId}/${_tournamentId}`;
+  const database = firebase.database();
+  const tournament = await database.ref(path).once('value');
+  return tournament.exists();
+};
+
 const renameUserId = (userId, _phonenumber, _adminId, _tournamentId) => {
   const path = `admin/${_adminId}/${_tournamentId}/`;
   const database = firebase.database();
   database.ref(path).on('value', (snap) => {
     const users = snap.val();
     if (users !== undefined && users != null) {
-      const dummyIds = Object.keys(users);
-      dummyIds.forEach((dummyId) => {
+      Object.keys(users).forEach((dummyId) => {
         if (
           dummyId.length < 4 && // Eliminate valid userId
           users.dummyId.phonenumber !== undefined &&
@@ -30,14 +36,7 @@ const fetchHoles = async (userId, _adminId, _tournamentId) => {
   return holesSnap.val();
 };
 
-const checkTournament = async (_adminId, _tournamentId) => {
-  const path = `admin/${_adminId}/${_tournamentId}`;
-  const database = firebase.database();
-  const tournament = await database.ref(path).once('value');
-  return tournament.exists();
-};
-
-const fetchSpecificHoles = async (
+const fetchSpecificHole = async (
   userId,
   _adminId,
   _tournamentId,
@@ -79,7 +78,7 @@ const fetchValidUserIds = async (_adminId, _tournamentId) => {
 export default {
   renameUserId,
   fetchHoles,
-  fetchSpecificHoles,
+  fetchSpecificHole,
   fetchUserScore,
   fetchAllUserIds,
   fetchValidUserIds,
