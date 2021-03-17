@@ -48,7 +48,6 @@ const fetchUserScore = async (userId, _adminId, _tournamentId) => {
   Object.keys(holes).forEach((hole) => {
     userScore += holes[hole].score;
   });
-  console.log('Hole Data ->', userScore);
   return userScore;
 };
 
