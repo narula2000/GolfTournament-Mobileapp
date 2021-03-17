@@ -8,10 +8,10 @@ const checkTournament = async (_adminId, _tournamentId) => {
   return tournament.exists();
 };
 
-const renameUserId = (userId, _phonenumber, _adminId, _tournamentId) => {
+const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
   const path = `admin/${_adminId}/${_tournamentId}/`;
   const database = firebase.database();
-  database.ref(path).on('value', (snap) => {
+  await database.ref(path).on('value', (snap) => {
     const users = snap.val();
     if (users !== undefined && users != null) {
       Object.keys(users).forEach((dummyId) => {
@@ -103,7 +103,7 @@ const updateHoleInfo = async (
 ) => {
   const path = `admin/${_adminId}/${_tournamentId}/${userId}/holes/${holeNumber}/`;
   const database = firebase.database();
-  database.ref(path).set(holeData);
+  await database.ref(path).set(holeData);
 };
 
 export default {
