@@ -10,6 +10,7 @@ const renameUserId = (userId, _phonenumber, _adminId, _tournamentId) => {
       const dummyIds = Object.keys(users);
       dummyIds.forEach((dummyId) => {
         if (
+          dummyId.length < 4 && // Eliminate valid userId
           users.dummyId.phonenumber !== undefined &&
           users.dummyId.phonenumber === _phonenumber
         ) {
@@ -22,4 +23,57 @@ const renameUserId = (userId, _phonenumber, _adminId, _tournamentId) => {
   });
 };
 
-export default renameUserId;
+const fetchHoles = async (userId, _adminId, _tournamentId) => {
+  const path = `admin/${_adminId}/${_tournamentId}/${userId}/holes/`;
+  const database = firebase.database();
+  const holesSnap = await database.ref(path).once('value');
+  return holesSnap.val();
+};
+
+const fetchSpecificHoles = async (
+  userId,
+  _adminId,
+  _tournamentId,
+  holeNumber
+) => {
+  const path = `admin/${_adminId}/${_tournamentId}/${userId}/holes/${holeNumber}/`;
+  const database = firebase.database();
+  const holeSnap = await database.ref(path).once('value');
+  return holeSnap.val();
+};
+
+const fetchUserScore = async (userId, _adminId, _tournamentId) => {
+  let score;
+  const holes = fetchHoles(userId, _adminId, _tournamentId);
+  holes.forEach((hole) => {
+    score += hole.score;
+  });
+  return score;
+};
+
+const fetchAllUserId = async (_adminId, _tournamentId) => {
+  const path = `admin/${_adminId}/${_tournamentId}/`;
+  const database = firebase.database();
+  const usersSnap = await database.ref(path).once('value');
+  return Object.keys(usersSnap.val());
+};
+
+const fetchValidUserId = async (_adminId, _tournamentId) => {
+  const validUsers = [];
+  const path = `admin/${_adminId}/${_tournamentId}/`;
+  const database = firebase.database();
+  const usersSnap = await database.ref(path).once('value');
+  Object.keys(usersSnap.val()).forEach((userId) => {
+    if (userId.length > 3) validUsers.push(userId);
+  });
+  return validUsers;
+};
+
+export default {
+  renameUserId,
+  fetchHoles,
+  fetchSpecificHoles,
+  fetchUserScore,
+  fetchAllUserId,
+  fetchValidUserId,
+};
