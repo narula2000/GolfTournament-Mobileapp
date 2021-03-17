@@ -35,7 +35,6 @@ const SignIn = () => {
           firebaseConfig={firebaseConfig}
           attemptInvisibleVerification={attemptInvisibleVerification}
         />
-        {/* <Text style={{ marginTop: 20 }}>Enter phone number</Text> */}
         <TextInput
           label="Enter phone number"
           style={styles.textinput}
@@ -45,7 +44,7 @@ const SignIn = () => {
           autoCompleteType="tel"
           keyboardType="phone-pad"
           textContentType="telephoneNumber"
-          maxLength={12}
+          maxLength={19}
           onChangeText={(number) => setPhoneNumber(number)}
         />
         <Button
@@ -54,9 +53,6 @@ const SignIn = () => {
           mode="contained"
           disabled={!phoneNumber}
           onPress={async () => {
-            // The FirebaseRecaptchaVerifierModal ref implements the
-            // FirebaseAuthApplicationVerifier interface and can be
-            // passed directly to `verifyPhoneNumber`.
             try {
               const phoneProvider = new firebase.auth.PhoneAuthProvider();
               const verificationid = await phoneProvider.verifyPhoneNumber(
