@@ -11,20 +11,15 @@ const checkTournament = async (_adminId, _tournamentId) => {
 const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
   const path = `admin/${_adminId}/${_tournamentId}/`;
   const database = firebase.database();
-  await database.ref(path).on('value', (snap) => {
-    const users = snap.val();
-    if (users !== undefined && users != null) {
-      Object.keys(users).forEach((dummyId) => {
-        if (
-          dummyId.length < 4 && // Eliminate valid userId
-          users.dummyId.phonenumber !== undefined &&
-          users.dummyId.phonenumber === _phonenumber
-        ) {
-          // Clone old key values to new UserID
-          users[userId] = users[dummyId];
-          delete users[dummyId]; // Delete old key
-        }
-      });
+  const users = await database.ref(path).once('value');
+  Object.keys(users).forEach((dummyId) => {
+    if (
+      dummyId.length < 4 && // Eliminate valid userId
+      users[dummyId].phonenumber !== undefined &&
+      users[dummyId].phonenumber === _phonenumber
+    ) {
+      users[userId] = users[dummyId];
+      delete users[dummyId]; // Delete old key
     }
   });
 };
