@@ -58,14 +58,14 @@ const fetchUserScore = async (userId, _adminId, _tournamentId) => {
   return score;
 };
 
-const fetchAllUserId = async (_adminId, _tournamentId) => {
+const fetchAllUserIds = async (_adminId, _tournamentId) => {
   const path = `admin/${_adminId}/${_tournamentId}/`;
   const database = firebase.database();
   const usersSnap = await database.ref(path).once('value');
   return Object.keys(usersSnap.val());
 };
 
-const fetchValidUserId = async (_adminId, _tournamentId) => {
+const fetchValidUserIds = async (_adminId, _tournamentId) => {
   const validUsers = [];
   const path = `admin/${_adminId}/${_tournamentId}/`;
   const database = firebase.database();
@@ -81,7 +81,7 @@ export default {
   fetchHoles,
   fetchSpecificHoles,
   fetchUserScore,
-  fetchAllUserId,
-  fetchValidUserId,
+  fetchAllUserIds,
+  fetchValidUserIds,
   checkTournament,
 };
