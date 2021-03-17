@@ -94,6 +94,18 @@ const fetchValidUserInfo = async (_adminId, _tournamentId) => {
   return validUsers;
 };
 
+const updateHoleInfo = async (
+  userId,
+  _adminId,
+  _tournamentId,
+  holeNumber,
+  holeData
+) => {
+  const path = `admin/${_adminId}/${_tournamentId}/${userId}/holes/${holeNumber}/`;
+  const database = firebase.database();
+  database.ref(path).set(holeData);
+};
+
 export default {
   renameUserId,
   fetchHoles,
@@ -104,4 +116,5 @@ export default {
   checkTournament,
   fetchTournament,
   fetchValidUserInfo,
+  updateHoleInfo,
 };
