@@ -4,7 +4,7 @@ import { Appbar, Divider, Card, Title, Button } from 'react-native-paper';
 import styles from '../styles/HomeScreenStyle';
 import 'firebase/auth';
 
-const HomeScreen = () => {
+const Home = () => {
   const username = 'Chakeera Wansoh'; // get name from DB
   const currentScore = '100pts'; // get from DB
   const onEnterPressed = () => {};
@@ -98,4 +98,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default Home;
