@@ -44,9 +44,9 @@ const fetchSpecificHoles = async (
 
 const fetchUserScore = async (userId, _adminId, _tournamentId) => {
   let score;
-  const holes = fetchHoles(userId, _adminId, _tournamentId);
-  holes.forEach((hole) => {
-    score += hole.score;
+  const holes = await fetchHoles(userId, _adminId, _tournamentId);
+  Object.keys(holes).forEach((hole) => {
+    score += holes[hole].score;
   });
   return score;
 };
