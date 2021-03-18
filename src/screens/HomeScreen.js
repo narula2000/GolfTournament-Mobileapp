@@ -10,16 +10,16 @@ const HomeScreen = () => {
   const username = 'Chakeera Wansoh'; // get name from DB
   const currentScore = '100pts'; // get from DB
   const holePressed = async (num) => {
-    const mockdata = await firebaseFunctions.fetchSpecificHoles(
-      '-MVzeHB1cnYZiLP8hcyC',
-      '-MVzeHB1cnYZiLP8hcyA',
-      '-MVzeHB1cnYZiLP8hcyB',
+    const mockdata = await firebaseFunctions.fetchSpecificHole(
+      '-MW-uAZGeJP37DQawr0i',
+      '-MW-uAZGeJP37DQawr0g',
+      '-MW-uAZGeJP37DQawr0h',
       `hole${num}`
     );
     const fullscore = await firebaseFunctions.fetchUserScore(
-      '-MVzeHB1cnYZiLP8hcyC',
-      '-MVzeHB1cnYZiLP8hcyA',
-      '-MVzeHB1cnYZiLP8hcyB'
+      '-MW-uAZGeJP37DQawr0i',
+      '-MW-uAZGeJP37DQawr0g',
+      '-MW-uAZGeJP37DQawr0h'
     );
     console.log('data ->', mockdata);
     console.log('score ->', fullscore);
@@ -27,8 +27,43 @@ const HomeScreen = () => {
       navigation.navigate('InfoScreen', { hole: num });
     }, 0);
   };
-  const onButtonPressed = () => {
-    navigation.navigate('RankingScreen');
+  const onButtonPressed = async () => {
+    const allUsers = async () => {
+      const table = [];
+      const compare = (a, b) => {
+        if (a.score < b.score) {
+          return -1;
+        }
+        if (a.score > b.score) {
+          return 1;
+        }
+        return 0;
+      };
+      const users = await firebaseFunctions.fetchValidUserInfo(
+        '-MW-uAZGeJP37DQawr0g',
+        '-MW-uAZGeJP37DQawr0h'
+      );
+      await Promise.all(
+        Object.keys(users).map(async (userId) => {
+          const { name } = users[userId];
+          const score = await firebaseFunctions.fetchUserScore(
+            userId,
+            '-MW-uAZGeJP37DQawr0g',
+            '-MW-uAZGeJP37DQawr0h'
+          );
+          const userData = {
+            name: name,
+            score: score,
+          };
+          table.push(userData);
+        })
+      );
+      table.sort(compare);
+      return table;
+    };
+
+    const table = await allUsers();
+    navigation.navigate('RankingScreen', { table: table });
   };
   return (
     <View style={styles.maincontainer}>
