@@ -3,6 +3,7 @@ import { View, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button, Appbar, DataTable } from 'react-native-paper';
 import styles from '../styles/RankingScreenStyle';
+import firebaseFunctions from '../firebase/functions';
 
 const RankingScreen = () => {
   const navigation = useNavigation();
@@ -10,6 +11,7 @@ const RankingScreen = () => {
     console.log('button pressed');
     navigation.navigate('HomeScreen');
   };
+  const allUsers = firebaseFunctions.fetchValidUserId();
   return (
     <View>
       <Appbar.Header style={styles.appbar}>
@@ -29,7 +31,18 @@ const RankingScreen = () => {
           <DataTable.Title numeric>Stroke</DataTable.Title>
           <DataTable.Title numeric>Score</DataTable.Title>
         </DataTable.Header>
+        <DataTable.Row>
+          <DataTable.Cell />
+        </DataTable.Row>
       </DataTable>
+      <Button
+        onPress={() => {
+          console.log(allUsers);
+        }}
+      >
+        {' '}
+        Users{' '}
+      </Button>
       <Button
         style={styles.button}
         labelStyle={styles.buttontext}
