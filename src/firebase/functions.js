@@ -8,23 +8,18 @@ const checkTournament = async (_adminId, _tournamentId) => {
   return tournament.exists();
 };
 
-const renameUserId = (userId, _phonenumber, _adminId, _tournamentId) => {
+const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
   const path = `admin/${_adminId}/${_tournamentId}/`;
   const database = firebase.database();
-  database.ref(path).on('value', (snap) => {
-    const users = snap.val();
-    if (users !== undefined && users != null) {
-      Object.keys(users).forEach((dummyId) => {
-        if (
-          dummyId.length < 4 && // Eliminate valid userId
-          users.dummyId.phonenumber !== undefined &&
-          users.dummyId.phonenumber === _phonenumber
-        ) {
-          // Clone old key values to new UserID
-          users[userId] = users[dummyId];
-          delete users[dummyId]; // Delete old key
-        }
-      });
+  const users = await database.ref(path).once('value');
+  Object.keys(users).forEach((dummyId) => {
+    if (
+      dummyId.length < 4 && // Eliminate valid userId
+      users[dummyId].phonenumber !== undefined &&
+      users[dummyId].phonenumber === _phonenumber
+    ) {
+      users[userId] = users[dummyId];
+      delete users[dummyId]; // Delete old key
     }
   });
 };
@@ -57,14 +52,14 @@ const fetchUserScore = async (userId, _adminId, _tournamentId) => {
   return userScore;
 };
 
-const fetchAllUserIds = async (_adminId, _tournamentId) => {
+const fetchAllUserId = async (_adminId, _tournamentId) => {
   const path = `admin/${_adminId}/${_tournamentId}/`;
   const database = firebase.database();
   const usersSnap = await database.ref(path).once('value');
   return Object.keys(usersSnap.val());
 };
 
-const fetchValidUserIds = async (_adminId, _tournamentId) => {
+const fetchValidUserId = async (_adminId, _tournamentId) => {
   const validUsers = [];
   const path = `admin/${_adminId}/${_tournamentId}/`;
   const database = firebase.database();
@@ -83,7 +78,7 @@ const fetchTournament = async (_adminId, _tournamentId) => {
 };
 
 const fetchValidUserInfo = async (_adminId, _tournamentId) => {
-  const validIds = await fetchValidUserIds(_adminId, _tournamentId);
+  const validIds = await fetchValidUserId(_adminId, _tournamentId);
   const tournamentInfo = await fetchTournament(_adminId, _tournamentId);
   const validUsers = {};
 
@@ -103,7 +98,7 @@ const updateHoleInfo = async (
 ) => {
   const path = `admin/${_adminId}/${_tournamentId}/${userId}/holes/${holeNumber}/`;
   const database = firebase.database();
-  database.ref(path).set(holeData);
+  await database.ref(path).set(holeData);
 };
 
 export default {
@@ -111,8 +106,8 @@ export default {
   fetchHoles,
   fetchSpecificHole,
   fetchUserScore,
-  fetchAllUserIds,
-  fetchValidUserIds,
+  fetchAllUserId,
+  fetchValidUserId,
   checkTournament,
   fetchTournament,
   fetchValidUserInfo,
