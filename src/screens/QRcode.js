@@ -6,7 +6,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import 'firebase/auth';
 import styles from '../styles/QRcodeScreenStyle';
 
-const Home = () => {
+const QRcode = () => {
   const navigation = useNavigation();
 
   return (
@@ -37,4 +37,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default QRcode;

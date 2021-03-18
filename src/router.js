@@ -4,8 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SignIn from './screens/SignIn';
 import Home from './screens/Home';
-import QRcode from './screens/QRcode';
-import QRcodeScanner from './screens/QRcodeScanner';
+import QRcodeScreen from './screens/QRcode';
+import CameraScreen from './screens/Camera';
 import firebaseConfig from './firebase';
 import 'firebase/auth';
 
@@ -17,17 +17,17 @@ const Stack = createStackNavigator();
 
 const Routes = () => (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName="QRcode">
+    <Stack.Navigator initialRouteName="QRcodeScreen">
       <Stack.Screen
-        name="QRcode"
-        component={QRcode}
+        name="QRcodeScreen"
+        component={QRcodeScreen}
         options={{
           headerShown: false,
         }}
       />
       <Stack.Screen
         name="QRcodeScanner"
-        component={QRcodeScanner}
+        component={CameraScreen}
         options={{
           headerShown: false,
         }}
