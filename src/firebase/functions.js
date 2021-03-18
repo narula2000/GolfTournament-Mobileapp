@@ -1,24 +1,25 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 
-const renameUserId = (userId, _phonenumber, _adminId, _tournamentId) => {
+const checkTournament = async (_adminId, _tournamentId) => {
+  const path = `admin/${_adminId}/${_tournamentId}`;
+  const database = firebase.database();
+  const tournament = await database.ref(path).once('value');
+  return tournament.exists();
+};
+
+const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
   const path = `admin/${_adminId}/${_tournamentId}/`;
   const database = firebase.database();
-  database.ref(path).on('value', (snap) => {
-    const users = snap.val();
-    if (users !== undefined && users != null) {
-      const dummyIds = Object.keys(users);
-      dummyIds.forEach((dummyId) => {
-        if (
-          dummyId.length < 4 && // Eliminate valid userId
-          users.dummyId.phonenumber !== undefined &&
-          users.dummyId.phonenumber === _phonenumber
-        ) {
-          // Clone old key values to new UserID
-          users[userId] = users[dummyId];
-          delete users[dummyId]; // Delete old key
-        }
-      });
+  const users = await database.ref(path).once('value');
+  Object.keys(users).forEach((dummyId) => {
+    if (
+      dummyId.length < 4 && // Eliminate valid userId
+      users[dummyId].phonenumber !== undefined &&
+      users[dummyId].phonenumber === _phonenumber
+    ) {
+      users[userId] = users[dummyId];
+      delete users[dummyId]; // Delete old key
     }
   });
 };
@@ -30,7 +31,7 @@ const fetchHoles = async (userId, _adminId, _tournamentId) => {
   return holesSnap.val();
 };
 
-const fetchSpecificHoles = async (
+const fetchSpecificHole = async (
   userId,
   _adminId,
   _tournamentId,
@@ -69,11 +70,46 @@ const fetchValidUserId = async (_adminId, _tournamentId) => {
   return validUsers;
 };
 
+const fetchTournament = async (_adminId, _tournamentId) => {
+  const path = `admin/${_adminId}/${_tournamentId}/`;
+  const database = firebase.database();
+  const holesSnap = await database.ref(path).once('value');
+  return holesSnap.val();
+};
+
+const fetchValidUserInfo = async (_adminId, _tournamentId) => {
+  const validIds = await fetchValidUserId(_adminId, _tournamentId);
+  const tournamentInfo = await fetchTournament(_adminId, _tournamentId);
+  const validUsers = {};
+
+  Object.keys(tournamentInfo).forEach((userId) => {
+    if (validIds.includes(userId)) validUsers[userId] = tournamentInfo[userId];
+  });
+
+  return validUsers;
+};
+
+const updateHoleInfo = async (
+  userId,
+  _adminId,
+  _tournamentId,
+  holeNumber,
+  holeData
+) => {
+  const path = `admin/${_adminId}/${_tournamentId}/${userId}/holes/${holeNumber}/`;
+  const database = firebase.database();
+  await database.ref(path).set(holeData);
+};
+
 export default {
   renameUserId,
   fetchHoles,
-  fetchSpecificHoles,
+  fetchSpecificHole,
   fetchUserScore,
   fetchAllUserId,
   fetchValidUserId,
+  checkTournament,
+  fetchTournament,
+  fetchValidUserInfo,
+  updateHoleInfo,
 };
