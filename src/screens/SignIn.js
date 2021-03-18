@@ -21,6 +21,7 @@ const SignIn = () => {
   const navigation = useNavigation();
 
   const attemptInvisibleVerification = true;
+  const auth = firebase.auth();
   return (
     <View style={styles.maincontainer}>
       <KeyboardAwareScrollView
@@ -90,16 +91,18 @@ const SignIn = () => {
               );
               await firebase.auth().signInWithCredential(credential);
               navigation.navigate('Home');
+              const newUID = String(firebase.auth().currentUser.uid);
+              const num = String(auth.currentUser.phoneNumber);
               console.log(firebase.auth().currentUser.uid);
               console.log(firebase.auth().currentUser.phoneNumber);
               await firebasefunction.renameUserId(
-                firebase.auth().currentUser.uid,
-                String(firebase.auth().currentUser.phoneNumber),
-                '-MVJvH4-b4b7W5E2RISk',
-                '-MVJvH40Ql3ljGX6eB2E'
+                newUID,
+                num,
+                '-MW2gGt1N_nId9AWwzIy',
+                '-MW2gGt1N_nId9AWwzIz'
               );
             } catch (err) {
-              Alert.alert(`Error: ${err.message}`);
+              Alert.alert(`WWW Error: ${err.message}`);
             }
           }}
         >
