@@ -74,9 +74,7 @@ const Camera = () => {
         style={StyleSheet.absoluteFillObject}
       />
       {scanned && (
-        <Button style={styles.button} onPress={() => setScanned(false)}>
-          Tap to Scan Again
-        </Button>
+        <Button onPress={() => setScanned(false)}>Tap to Scan Again</Button>
       )}
     </View>
   );
