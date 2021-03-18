@@ -11,7 +11,8 @@ const checkTournament = async (_adminId, _tournamentId) => {
 const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
   const path = `admin/${_adminId}/${_tournamentId}/`;
   const database = firebase.database();
-  const users = await database.ref(path).once('value');
+  const usersRef = await database.ref(path).once('value');
+  const users = usersRef.val();
   Object.keys(users).forEach((dummyId) => {
     if (
       dummyId.length < 4 && // Eliminate valid userId
@@ -19,9 +20,10 @@ const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
       users[dummyId].phonenumber === _phonenumber
     ) {
       users[userId] = users[dummyId];
-      delete users[dummyId]; // Delete old key
+      delete users[dummyId];
     }
   });
+  await database.ref(path).set(users);
 };
 
 const fetchHoles = async (userId, _adminId, _tournamentId) => {
@@ -43,11 +45,12 @@ const fetchSpecificHole = async (
   return holeSnap.val();
 };
 
-const fetchUserScore = async (userId, _adminId, _tournamentId) => {
+const fetchValidUserScore = async (userId, _adminId, _tournamentId) => {
   let userScore = 0;
   const holes = await fetchHoles(userId, _adminId, _tournamentId);
   Object.keys(holes).forEach((hole) => {
-    userScore += holes[hole].score;
+    if (holes[hole].updateDate !== holes[hole].createDate)
+      userScore += holes[hole].score;
   });
   return userScore;
 };
@@ -105,7 +108,7 @@ export default {
   renameUserId,
   fetchHoles,
   fetchSpecificHole,
-  fetchUserScore,
+  fetchValidUserScore,
   fetchAllUserIds,
   fetchValidUserIds,
   checkTournament,
