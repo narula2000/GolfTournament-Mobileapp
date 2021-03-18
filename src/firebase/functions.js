@@ -19,9 +19,10 @@ const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
       users[dummyId].phonenumber === _phonenumber
     ) {
       users[userId] = users[dummyId];
-      delete users[dummyId]; // Delete old key
+      delete users[dummyId];
     }
   });
+  await database.ref(path).set(users);
 };
 
 const fetchHoles = async (userId, _adminId, _tournamentId) => {
