@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SignIn from './screens/SignIn';
 import Home from './screens/Home';
 import QRcode from './screens/QRcode';
+import QRcodeScanner from './screens/QRcodeScanner';
 import firebaseConfig from './firebase';
 import 'firebase/auth';
 
@@ -20,6 +21,13 @@ const Routes = () => (
       <Stack.Screen
         name="QRcode"
         component={QRcode}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="QRcodeScanner"
+        component={QRcodeScanner}
         options={{
           headerShown: false,
         }}

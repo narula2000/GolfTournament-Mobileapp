@@ -1,17 +1,14 @@
 import React from 'react';
-import { View, Image, Alert } from 'react-native';
+import { View, Image } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import firebase from 'firebase/app';
 import 'firebase/auth';
-import firebasefunction from '../firebase/functions';
 import styles from '../styles/QRcodeScreenStyle';
 
-// Implement QR code scanner check if the tournament exists if yes go to login page.
-
 const Home = () => {
-  const [tournamentId, setTournamentId] = React.useState('');
+  const navigation = useNavigation();
+
   return (
     <View style={styles.maincontainer}>
       <KeyboardAwareScrollView
@@ -27,6 +24,9 @@ const Home = () => {
           style={styles.button}
           labelStyle={styles.buttontext}
           mode="contained"
+          onPress={() => {
+            navigation.navigate('QRcodeScanner');
+          }}
         >
           Scan Tournament QR code
         </Button>
