@@ -28,23 +28,24 @@ const styles = StyleSheet.create({
   table: {
     backgroundColor: theme.colors.background,
     width: screenWidth,
+    height: screenHeight - 200,
     marginTop: 50,
     justifyContent: 'center',
   },
-  ranking: {
+  column1: {
     justifyContent: 'space-between',
   },
   button: {
     backgroundColor: theme.colors.secondary,
     borderRadius: 20,
-    height: 35,
+    height: 30,
     justifyContent: 'center',
     marginVertical: 10,
     marginLeft: 90,
     width: 230,
   },
   buttontext: {
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: 'bold',
     justifyContent: 'center',
   },

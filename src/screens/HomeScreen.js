@@ -28,6 +28,21 @@ const HomeScreen = () => {
     }, 0);
   };
   const onButtonPressed = async () => {
+    const users = await firebaseFunctions.fetchValidUserInfo(
+      '-MW-uAZGeJP37DQawr0g',
+      '-MW-uAZGeJP37DQawr0h'
+    );
+    const { name } = users['-MW-uAZGeJP37DQawr0i'];
+    const currentUserScore = await firebaseFunctions.fetchUserScore(
+      'user1',
+      '-MW-uAZGeJP37DQawr0g',
+      '-MW-uAZGeJP37DQawr0h'
+    );
+    const currentUserData = {
+      name: name,
+      score: currentUserScore,
+      id: 0,
+    };
     const allUsers = async () => {
       const table = [];
       const compare = (a, b) => {
@@ -39,10 +54,6 @@ const HomeScreen = () => {
         }
         return 0;
       };
-      const users = await firebaseFunctions.fetchValidUserInfo(
-        '-MW-uAZGeJP37DQawr0g',
-        '-MW-uAZGeJP37DQawr0h'
-      );
       await Promise.all(
         Object.keys(users).map(async (userId) => {
           const { name } = users[userId];
@@ -54,16 +65,30 @@ const HomeScreen = () => {
           const userData = {
             name: name,
             score: score,
+            id: 0,
           };
           table.push(userData);
         })
       );
+      let i = 1;
       table.sort(compare);
+      table.forEach((obj) => {
+        // eslint-disable-next-line no-param-reassign
+        obj.id = i;
+        i += 1;
+        if (obj.name === currentUserData.name) {
+          currentUserData.id = obj.id;
+        }
+      });
+      console.log(table);
+      console.log(currentUserData);
       return table;
     };
-
     const table = await allUsers();
-    navigation.navigate('RankingScreen', { table: table });
+    navigation.navigate('RankingScreen', {
+      table: table,
+      currentUser: currentUserData,
+    });
   };
   return (
     <View style={styles.maincontainer}>

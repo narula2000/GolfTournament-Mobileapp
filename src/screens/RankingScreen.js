@@ -1,22 +1,19 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Button, Appbar, DataTable } from 'react-native-paper';
 import styles from '../styles/RankingScreenStyle';
 
 const RankingScreen = () => {
-  let ranking = 0;
   const route = useRoute();
-  const { table } = route.params;
+  const { table, currentUser } = route.params;
   const navigation = useNavigation();
   const onBackPressed = () => {
     console.log('button pressed');
     navigation.navigate('HomeScreen');
+    console.log(table);
+    console.log(currentUser);
   };
-  const itemsPerPage = 8;
-  const [pageNumber, setPage] = React.useState(0);
-  const from = pageNumber * itemsPerPage;
-  const to = (pageNumber + 1) * itemsPerPage;
 
   return (
     <View>
@@ -29,32 +26,48 @@ const RankingScreen = () => {
       </Appbar.Header>
       <DataTable style={styles.table}>
         <DataTable.Header>
-          <DataTable.Title numeric style={styles.ranking}>
+          <DataTable.Title numeric style={styles.column1}>
             {' '}
-            Ranking{' '}
+            #{' '}
           </DataTable.Title>
-          <DataTable.Title>Username</DataTable.Title>
-          <DataTable.Title numeric>Stroke</DataTable.Title>
-          <DataTable.Title numeric>Score</DataTable.Title>
+          <DataTable.Title style={{ marginLeft: -30 }}>
+            Username
+          </DataTable.Title>
+          <DataTable.Title numeric style={{ marginLeft: 40 }}>
+            Stroke
+          </DataTable.Title>
+          <DataTable.Title numeric style={{ marginLeft: -30 }}>
+            Score
+          </DataTable.Title>
         </DataTable.Header>
-        {table.map((userInfo) => {
-          ranking += 1;
-          return (
+        <ScrollView>
+          <DataTable.Row>
+            <DataTable.Cell style={{ flex: 1 }}>
+              {currentUser.id}
+            </DataTable.Cell>
+            <DataTable.Cell style={{ flex: 3 }}>
+              {currentUser.name}
+            </DataTable.Cell>
+            <DataTable.Cell>{currentUser.score}</DataTable.Cell>
+            <DataTable.Cell style={{ flex: 'auto' }}>
+              {currentUser.score}
+            </DataTable.Cell>
+          </DataTable.Row>
+          {table.map((userInfo) => (
             <DataTable.Row key={userInfo.name}>
-              <DataTable.Cell>{ranking}</DataTable.Cell>
-              <DataTable.Cell>{userInfo.name}</DataTable.Cell>
+              <DataTable.Cell style={{ flex: 1 }}>{userInfo.id}</DataTable.Cell>
+              <DataTable.Cell style={{ flex: 3 }}>
+                {userInfo.name}
+              </DataTable.Cell>
               <DataTable.Cell>{userInfo.score}</DataTable.Cell>
-              <DataTable.Cell>{userInfo.score}</DataTable.Cell>
+              <DataTable.Cell style={{ flex: 'auto' }}>
+                {userInfo.score}
+              </DataTable.Cell>
             </DataTable.Row>
-          );
-        })}
-        <DataTable.Pagination
-          page={pageNumber}
-          numberOfPages={Math.floor(table.length / itemsPerPage)}
-          onPageChange={(page) => setPage(page)}
-          label={`${from + 1}-${to} of ${table.length}`}
-        />
+          ))}
+        </ScrollView>
       </DataTable>
+
       <Button
         style={styles.button}
         labelStyle={styles.buttontext}
