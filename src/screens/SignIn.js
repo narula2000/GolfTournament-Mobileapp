@@ -99,8 +99,8 @@ const SignIn = () => {
               await firebasefunction.renameUserId(
                 newUID,
                 num,
-                String({ adminId }),
-                String({ tournamentId })
+                adminId,
+                tournamentId
               );
             } catch (err) {
               Alert.alert(`Error: ${err.message}`);

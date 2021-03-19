@@ -34,26 +34,27 @@ const Camera = () => {
   const [tournamentId, setTournamentId] = React.useState('');
   const [adminId, setAdminId] = React.useState('');
   const navigation = useNavigation();
-
   React.useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
   }, []);
-  const handleBarCodeScanned = ({ data }) => {
+  const handleBarCodeScanned = async ({ data }) => {
     try {
       const scannedData = JSON.parse({ data }.data);
       setAdminId(String(scannedData.adminId));
       setTournamentId(String(scannedData.tournamentId));
-      if (
-        firebasefunction.checkTournament(
-          String({ adminId }),
-          String({ tournamentId })
-        )
-      ) {
-        navigation.navigate('SignIn', { tournamentId, adminId });
-      }
+      await firebasefunction
+        .checkTournament(adminId, tournamentId)
+        .then((result) => {
+          if (result) {
+            navigation.navigate('SignIn', {
+              tournamentId: tournamentId,
+              adminId: adminId,
+            });
+          }
+        });
     } catch (err) {
       console.log(err);
       setScanned(true);
