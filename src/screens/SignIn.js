@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import { View, Image, Alert } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   FirebaseRecaptchaVerifierModal,
   FirebaseRecaptchaBanner,
@@ -19,7 +19,8 @@ const SignIn = () => {
   const [verificationId, setVerificationId] = React.useState();
   const [verificationCode, setVerificationCode] = React.useState();
   const navigation = useNavigation();
-
+  const route = useRoute();
+  const { tournamentId, adminId } = route.params;
   const attemptInvisibleVerification = true;
   const auth = firebase.auth();
   return (
@@ -91,18 +92,18 @@ const SignIn = () => {
               );
               await firebase.auth().signInWithCredential(credential);
               navigation.navigate('Home');
-              const newUID = String(firebase.auth().currentUser.uid);
+              const newUID = String(auth.currentUser.uid);
               const num = String(auth.currentUser.phoneNumber);
               console.log(firebase.auth().currentUser.uid);
               console.log(firebase.auth().currentUser.phoneNumber);
               await firebasefunction.renameUserId(
                 newUID,
                 num,
-                '-MW2gGt1N_nId9AWwzIy',
-                '-MW2gGt1N_nId9AWwzIz'
+                adminId,
+                tournamentId
               );
             } catch (err) {
-              Alert.alert(`WWW Error: ${err.message}`);
+              Alert.alert(`Error: ${err.message}`);
             }
           }}
         >
