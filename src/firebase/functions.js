@@ -2,10 +2,10 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 
 const checkTournament = async (_adminId, _tournamentId) => {
-  const path = `admin/${_adminId}/${_tournamentId}`;
+  const path = `tournament/`;
   const database = firebase.database();
   const tournament = await database.ref(path).once('value');
-  return tournament.exists();
+  return tournament.val().includes(_tournamentId);
 };
 
 const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
