@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     height: 45,
     justifyContent: 'center',
-    marginVertical: 20,
+    marginVertical: 10,
     width: 'auto',
   },
   buttontext: {
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     color: theme.colors.white,
   },
   textinput: {
+    marginVertical: 10,
     fontSize: 15,
     fontWeight: 'bold',
     backgroundColor: theme.colors.white,
