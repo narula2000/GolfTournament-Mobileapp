@@ -4,9 +4,13 @@ import 'firebase/database';
 const checkTournament = async (_adminId, _tournamentId) => {
   const path = `tournament/`;
   const database = firebase.database();
-  const tournament = await database.ref(path).once('value');
-  const tournamentList = String(tournament.val()).split(', ');
-  return tournamentList.includes(_tournamentId);
+  const tournamentListRef = await database.ref(path).once('value');
+  const tournamentList = tournamentListRef.val();
+  let flag = false;
+  Object.keys(tournamentList).forEach((key) => {
+    if (tournamentList[key].id === _tournamentId) flag = true;
+  });
+  return flag;
 };
 
 const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
