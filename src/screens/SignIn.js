@@ -17,7 +17,7 @@ const SignIn = () => {
   const recaptchaVerifier = React.useRef(null);
   const [phoneNumber, setPhoneNumber] = React.useState('');
   const [verificationId, setVerificationId] = React.useState();
-  const [verificationCode, setVerificationCode] = React.useState();
+  const [verificationCode, setVerificationCode] = React.useState('');
   const [showOTP, setShowOTP] = React.useState(false);
   const navigation = useNavigation();
   // const route = useRoute();
@@ -49,6 +49,7 @@ const SignIn = () => {
               keyboardType="number-pad"
               label="6-Digits OTP Code"
               placeholder="123456"
+              value={verificationCode}
               onChangeText={setVerificationCode}
             />
             <Button
