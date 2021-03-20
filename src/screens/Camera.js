@@ -5,28 +5,7 @@ import { Button, Text } from 'react-native-paper';
 import 'firebase/auth';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import firebasefunction from '../firebase/functions';
-import theme from '../core/theme';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  button: {
-    backgroundColor: theme.colors.secondary,
-    borderRadius: 20,
-    height: 45,
-    justifyContent: 'center',
-    marginVertical: 20,
-    width: 'auto',
-  },
-  buttontext: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: theme.colors.white,
-  },
-});
+import styles from '../styles/CameraScreenStyle';
 
 const Camera = () => {
   const [hasPermission, setHasPermission] = React.useState(null);
@@ -34,6 +13,7 @@ const Camera = () => {
   const [tournamentId, setTournamentId] = React.useState('');
   const [adminId, setAdminId] = React.useState('');
   const navigation = useNavigation();
+
   React.useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -75,7 +55,9 @@ const Camera = () => {
         style={StyleSheet.absoluteFillObject}
       />
       {scanned && (
-        <Button onPress={() => setScanned(false)}>Tap to Scan Again</Button>
+        <Button style={styles.button} onPress={() => setScanned(false)}>
+          Tap to Scan Again
+        </Button>
       )}
     </View>
   );

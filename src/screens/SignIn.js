@@ -20,8 +20,8 @@ const SignIn = () => {
   const [verificationCode, setVerificationCode] = React.useState();
   const [showOTP, setShowOTP] = React.useState(false);
   const navigation = useNavigation();
-  const route = useRoute();
-  const { tournamentId, adminId } = route.params;
+  // const route = useRoute();
+  // const { tournamentId, adminId } = route.params;
   const attemptInvisibleVerification = true;
   const auth = firebase.auth();
 
@@ -65,12 +65,12 @@ const SignIn = () => {
                   navigation.navigate('Home');
                   const newUID = String(auth.currentUser.uid);
                   const num = String(auth.currentUser.phoneNumber);
-                  await firebasefunction.renameUserId(
-                    newUID,
-                    num,
-                    adminId,
-                    tournamentId
-                  );
+                  // await firebasefunction.renameUserId(
+                  //   newUID,
+                  //   num,
+                  //   adminId,
+                  //   tournamentId
+                  // );
                   console.log(newUID);
                   console.log(num);
                 } catch (err) {
