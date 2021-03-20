@@ -5,7 +5,8 @@ const checkTournament = async (_adminId, _tournamentId) => {
   const path = `tournament/`;
   const database = firebase.database();
   const tournament = await database.ref(path).once('value');
-  return tournament.val().includes(_tournamentId);
+  const tournamentList = String(tournament.val()).split(', ');
+  return tournamentList.includes(_tournamentId);
 };
 
 const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
