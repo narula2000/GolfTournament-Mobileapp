@@ -33,10 +33,11 @@ const Camera = () => {
               tournamentId: tournamentId,
               adminId: adminId,
             });
+          } else {
+            setScanned(true);
           }
         });
     } catch (err) {
-      console.log(err);
       setScanned(true);
       Alert.alert(`Tournament Not Found`);
     }
@@ -56,7 +57,7 @@ const Camera = () => {
       />
       {scanned && (
         <Button style={styles.button} onPress={() => setScanned(false)}>
-          Tap to Scan Again
+          Wrong QR code Scan Again
         </Button>
       )}
     </View>
