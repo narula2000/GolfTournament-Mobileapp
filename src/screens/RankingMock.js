@@ -1,22 +1,8 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import { View, Image, ScrollView, TouchableOpacity } from 'react-native';
 // import { SearchBar } from 'react-native-elements';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import {
-  Button,
-  Appbar,
-  DataTable,
-  Text,
-  Dialog,
-  Portal,
-  Searchbar,
-} from 'react-native-paper';
+import { Appbar, DataTable, Text, Searchbar } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from '../styles/RankingMockStyle';
