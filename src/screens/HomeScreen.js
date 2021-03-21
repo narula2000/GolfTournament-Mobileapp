@@ -16,7 +16,7 @@ const HomeScreen = () => {
       '-MW-uAZGeJP37DQawr0h',
       `hole${num}`
     );
-    const fullscore = await firebaseFunctions.fetchUserScore(
+    const fullscore = await firebaseFunctions.fetchValidUserScore(
       '-MW-uAZGeJP37DQawr0i',
       '-MW-uAZGeJP37DQawr0g',
       '-MW-uAZGeJP37DQawr0h'
@@ -32,8 +32,8 @@ const HomeScreen = () => {
       '-MW-uAZGeJP37DQawr0g',
       '-MW-uAZGeJP37DQawr0h'
     );
-    const { name } = users['-MW-uAZGeJP37DQawr0i'];
-    const currentUserScore = await firebaseFunctions.fetchUserScore(
+    const { name } = users.user1;
+    const currentUserScore = await firebaseFunctions.fetchValidUserScore(
       'user1',
       '-MW-uAZGeJP37DQawr0g',
       '-MW-uAZGeJP37DQawr0h'
@@ -57,7 +57,7 @@ const HomeScreen = () => {
       await Promise.all(
         Object.keys(users).map(async (userId) => {
           const { name } = users[userId];
-          const score = await firebaseFunctions.fetchUserScore(
+          const score = await firebaseFunctions.fetchValidUserScore(
             userId,
             '-MW-uAZGeJP37DQawr0g',
             '-MW-uAZGeJP37DQawr0h'
@@ -80,12 +80,12 @@ const HomeScreen = () => {
           currentUserData.id = obj.id;
         }
       });
-      console.log(table);
+      // console.log(table);
       console.log(currentUserData);
       return table;
     };
     const table = await allUsers();
-    navigation.navigate('RankingScreen', {
+    navigation.navigate('RankingMock', {
       table: table,
       currentUser: currentUserData,
     });

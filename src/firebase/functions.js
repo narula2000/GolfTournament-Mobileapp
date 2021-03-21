@@ -49,8 +49,9 @@ const fetchValidUserScore = async (userId, _adminId, _tournamentId) => {
   let userScore = 0;
   const holes = await fetchHoles(userId, _adminId, _tournamentId);
   Object.keys(holes).forEach((hole) => {
-    if (holes[hole].updateDate !== holes[hole].createDate)
+    if (holes[hole].updateDate !== holes[hole].createDate) {
       userScore += holes[hole].score;
+    }
   });
   return userScore;
 };
