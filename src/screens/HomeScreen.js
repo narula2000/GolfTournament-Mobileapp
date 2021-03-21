@@ -16,7 +16,7 @@ const HomeScreen = () => {
       '-MW-uAZGeJP37DQawr0h',
       `hole${num}`
     );
-    const fullscore = await firebaseFunctions.fetchUserScore(
+    const fullscore = await firebaseFunctions.fetchValidUserScore(
       '-MW-uAZGeJP37DQawr0i',
       '-MW-uAZGeJP37DQawr0g',
       '-MW-uAZGeJP37DQawr0h'
@@ -46,7 +46,7 @@ const HomeScreen = () => {
       await Promise.all(
         Object.keys(users).map(async (userId) => {
           const { name } = users[userId];
-          const score = await firebaseFunctions.fetchUserScore(
+          const score = await firebaseFunctions.fetchValidUserScore(
             userId,
             '-MW-uAZGeJP37DQawr0g',
             '-MW-uAZGeJP37DQawr0h'
