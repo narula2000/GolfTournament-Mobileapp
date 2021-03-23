@@ -121,7 +121,19 @@ const updateHoleInfo = async (
 ) => {
   const path = `admin/${_adminId}/${_tournamentId}/${userId}/holes/${holeNumber}/`;
   const database = firebase.database();
-  await database.ref(path).set(JSON.parse(holeData));
+  await database.ref(path).set({
+    createDate: holeData.createDate,
+    gir: holeData.gir,
+    par: holeData.par,
+    penalty: holeData.penalty,
+    putt: holeData.putt,
+    sandSave: holeData.sandSave,
+    sandShot: holeData.sandShot,
+    score: holeData.score,
+    stroke: holeData.stroke,
+    strokeIndex: holeData.strokeIndex,
+    updateDate: holeData.updateDate,
+  });
 };
 
 export default {
