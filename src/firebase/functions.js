@@ -23,7 +23,7 @@ const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
   const users = usersRef.val();
   Object.keys(users).forEach((dummyId) => {
     if (
-      dummyId.length > 4 && // Eliminate valid userId
+      dummyId.length < 4 && // Eliminate valid userId
       users[dummyId].phonenumber !== undefined &&
       users[dummyId].phonenumber === _phonenumber
     ) {
@@ -31,6 +31,7 @@ const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
       delete users[dummyId];
     }
   });
+  console.log(users);
   await database.ref(path).set(users);
 };
 

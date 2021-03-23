@@ -33,8 +33,6 @@ const Camera = () => {
               tournamentId: tournamentId,
               adminId: adminId,
             });
-          } else {
-            setScanned(true);
           }
         });
     } catch (err) {
