@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     height: 45,
     justifyContent: 'center',
-    marginVertical: 10,
+    marginVertical: 20,
     width: 'auto',
   },
   buttontext: {
@@ -31,19 +31,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.colors.white,
   },
-  textinput: {
-    marginVertical: 10,
-    fontSize: 15,
-    fontWeight: 'bold',
-    backgroundColor: theme.colors.white,
-    width: screenWidth - 100,
-  },
-  text: { fontWeight: 'bold', fontSize: 20, padding: 10 },
   image: {
     height: 200,
     marginBottom: 12,
     width: 200,
   },
+  text: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    padding: 5,
+  },
 });
-
 export default styles;

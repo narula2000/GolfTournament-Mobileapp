@@ -5,25 +5,19 @@ const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height;
 
 const styles = StyleSheet.create({
-  maincontainer: {
-    backgroundColor: theme.colors.background,
-    flex: 1,
-    width: screenWidth,
-    height: screenHeight,
-  },
   container: {
-    alignItems: 'center',
     flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
-    padding: 20,
-    width: '100%',
+    alignItems: 'center',
   },
   button: {
     backgroundColor: theme.colors.secondary,
     borderRadius: 20,
     height: 45,
     justifyContent: 'center',
-    marginVertical: 10,
+    alignContent: 'center',
+    marginVertical: 20,
     width: 'auto',
   },
   buttontext: {
@@ -31,19 +25,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.colors.white,
   },
-  textinput: {
-    marginVertical: 10,
-    fontSize: 15,
-    fontWeight: 'bold',
-    backgroundColor: theme.colors.white,
-    width: screenWidth - 100,
-  },
-  text: { fontWeight: 'bold', fontSize: 20, padding: 10 },
-  image: {
-    height: 200,
-    marginBottom: 12,
-    width: 200,
-  },
 });
-
 export default styles;
