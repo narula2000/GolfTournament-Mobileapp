@@ -31,6 +31,7 @@ const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
       delete users[dummyId];
     }
   });
+  console.log(users);
   await database.ref(path).set(users);
 };
 
