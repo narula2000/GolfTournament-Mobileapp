@@ -4,8 +4,16 @@ import 'firebase/database';
 const checkTournament = async (_adminId, _tournamentId) => {
   const path = `tournament/`;
   const database = firebase.database();
-  const tournament = await database.ref(path).once('value');
-  return tournament.val().includes(_tournamentId);
+  const tournamentListRef = await database.ref(path).once('value');
+  if (tournamentListRef.exists()) {
+    const tournamentList = tournamentListRef.val();
+    let flag = false;
+    Object.keys(tournamentList).forEach((key) => {
+      if (tournamentList[key].id === _tournamentId) flag = true;
+    });
+    return flag;
+  }
+  return false;
 };
 
 const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
@@ -23,6 +31,7 @@ const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
       delete users[dummyId];
     }
   });
+  console.log(users);
   await database.ref(path).set(users);
 };
 

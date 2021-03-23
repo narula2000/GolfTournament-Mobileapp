@@ -7,7 +7,14 @@ import RankingMock from './screens/RankingMock';
 import InfoScreen from './screens/InfoScreen';
 import SignInScreen from './screens/SignInScreen';
 import HomeScreen from './screens/HomeScreen';
+import Ranking from './screens/Ranking';
+import Info from './screens/Info';
+import SignIn from './screens/SignIn';
+import Home from './screens/Home';
+import QRcodeScreen from './screens/QRcode';
+import CameraScreen from './screens/Camera';
 import firebaseConfig from './firebase';
+import 'firebase/auth';
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -17,28 +24,28 @@ const Stack = createStackNavigator();
 
 const Routes = () => (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName="SignInScreen">
+    <Stack.Navigator initialRouteName="QRcodeScreen">
       <Stack.Screen
-        name="SignInScreen"
-        component={SignInScreen}
+        name="QRcodeScreen"
+        component={QRcodeScreen}
         options={{
           headerShown: false,
         }}
       />
       <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name="QRcodeScanner"
+        component={CameraScreen}
         options={{
           headerShown: false,
         }}
       />
-      {/* <Stack.Screen
-        name="RankingScreen"
-        component={RankingScreen}
+      <Stack.Screen
+        name="SignIn"
+        component={SignIn}
         options={{
           headerShown: false,
         }}
-      /> */}
+      />
       <Stack.Screen
         name="RankingMock"
         component={RankingMock}
@@ -47,8 +54,22 @@ const Routes = () => (
         }}
       />
       <Stack.Screen
-        name="InfoScreen"
-        component={InfoScreen}
+        name="Home"
+        component={Home}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Ranking"
+        component={Ranking}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Info"
+        component={Info}
         options={{
           headerShown: false,
         }}

@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.ourgreen,
     borderRadius: 10,
   },
-  roundButton: {
+  roundButtonDisabled: {
     marginVertical: 5,
     width: 30,
     height: 30,
@@ -220,6 +220,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.colors.button_border,
     backgroundColor: theme.colors.button_border,
+  },
+  roundButtonActive: {
+    marginVertical: 5,
+    width: 30,
+    height: 30,
+    marginLeft: 10,
+    marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    borderWidth: 1,
+    borderColor: theme.colors.button_border,
+    backgroundColor: theme.colors.white,
   },
   roundButtonPressed: {
     marginVertical: 5,

@@ -4,11 +4,15 @@ import { Appbar, Divider, Card, Title, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/HomeScreenStyle';
 import firebaseFunctions from '../firebase/functions';
+// import 'firebase/auth';
 
-const HomeScreen = () => {
+const Home = () => {
   const navigation = useNavigation();
   const username = 'Chakeera Wansoh'; // get name from DB
   const currentScore = '100pts'; // get from DB
+  const adminId = '';
+  const tournamentId = '';
+  const userId = '';
   const holePressed = async (num) => {
     const mockdata = await firebaseFunctions.fetchSpecificHole(
       '-MW-uAZGeJP37DQawr0i',
@@ -24,7 +28,12 @@ const HomeScreen = () => {
     console.log('data ->', mockdata);
     console.log('score ->', fullscore);
     setTimeout(() => {
-      navigation.navigate('InfoScreen', { hole: num });
+      navigation.navigate('InfoScreen', {
+        hole: num,
+        adminId,
+        tournamentId,
+        userId,
+      });
     }, 0);
   };
   const onButtonPressed = async () => {
@@ -264,4 +273,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default Home;
