@@ -87,7 +87,8 @@ const fetchValidUserIds = async (_adminId, _tournamentId) => {
   const database = firebase.database();
   const usersSnap = await database.ref(path).once('value');
   Object.keys(usersSnap.val()).forEach((userId) => {
-    if (userId.length > 3) validUsers.push(userId);
+    if (userId.length > 3 && userId !== 'name' && userId !== 'isComplete')
+      validUsers.push(userId);
   });
   return validUsers;
 };
