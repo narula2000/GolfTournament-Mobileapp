@@ -2,8 +2,8 @@ import React from 'react';
 import firebase from 'firebase/app';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import RankingScreen from './screens/RankingScreen';
-import InfoScreen from './screens/InfoScreen';
+import Ranking from './screens/Ranking';
+import Info from './screens/Info';
 import SignIn from './screens/SignIn';
 import Home from './screens/Home';
 import QRcodeScreen from './screens/QRcode';
@@ -49,15 +49,15 @@ const Routes = () => (
         }}
       />
       <Stack.Screen
-        name="RankingScreen"
-        component={RankingScreen}
+        name="Ranking"
+        component={Ranking}
         options={{
           headerShown: false,
         }}
       />
       <Stack.Screen
-        name="InfoScreen"
-        component={InfoScreen}
+        name="Info"
+        component={Info}
         options={{
           headerShown: false,
         }}

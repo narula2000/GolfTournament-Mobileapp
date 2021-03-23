@@ -3,9 +3,11 @@ import { View, Image, TouchableOpacity, Text } from 'react-native';
 import { Appbar, Divider, Card, Title, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/HomeScreenStyle';
-import 'firebase/auth';
+import firebaseFunctions from '../firebase/functions';
+// import 'firebase/auth';
 
 const Home = () => {
+  const navigation = useNavigation();
   const username = 'Chakeera Wansoh'; // get name from DB
   const currentScore = '100pts'; // get from DB
   const adminId = '';
