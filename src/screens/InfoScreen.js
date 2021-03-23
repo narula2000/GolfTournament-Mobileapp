@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -235,6 +236,10 @@ const InfoScreen = () => {
 
     setShowStroke(!currentStroke <= 0);
 
+    if (currentStroke <= 0) {
+      setFairway('');
+    }
+
     if (currentScore >= scoreOfNames.BogeyUp) {
       setScoreState(scoreNames.BogeyUp);
     } else if (currentScore === scoreOfNames.Bogey) {
@@ -446,54 +451,87 @@ const InfoScreen = () => {
             style={
               fairway === fairways.Left
                 ? styles.roundButtonPressed
-                : styles.roundButton
+                : !showStroke
+                ? styles.roundButtonDisabled
+                : styles.roundButtonActive
             }
             onPress={() => {
-              setFairway(fairways.Left);
+              if (showStroke) {
+                setFairway(fairways.Left);
+              }
             }}
           >
-            <Icon name="arrow-top-left" size={15} color="white" />
+            <Icon
+              name="arrow-top-left"
+              size={15}
+              color={
+                showStroke && fairway !== fairways.Left ? 'black' : 'white'
+              }
+            />
           </TouchableOpacity>
           <TouchableOpacity
             style={
               fairway === fairways.On
                 ? styles.roundButtonPressed
-                : styles.roundButton
+                : !showStroke
+                ? styles.roundButtonDisabled
+                : styles.roundButtonActive
             }
             onPress={() => {
-              setFairway(fairways.On);
+              if (showStroke) {
+                setFairway(fairways.On);
+              }
             }}
           >
             <Icon
               name="circle-outline"
               size={15}
-              color="white"
-              // color={fairway === fairways.On ? 'white' : 'black'}
+              color={showStroke && fairway !== fairways.On ? 'black' : 'white'}
             />
           </TouchableOpacity>
           <TouchableOpacity
             style={
               fairway === fairways.Right
                 ? styles.roundButtonPressed
-                : styles.roundButton
+                : !showStroke
+                ? styles.roundButtonDisabled
+                : styles.roundButtonActive
             }
             onPress={() => {
-              setFairway(fairways.Right);
+              if (showStroke) {
+                setFairway(fairways.Right);
+              }
             }}
           >
-            <Icon name="arrow-top-right" size={15} color="white" />
+            <Icon
+              name="arrow-top-right"
+              size={15}
+              color={
+                showStroke && fairway !== fairways.Right ? 'black' : 'white'
+              }
+            />
           </TouchableOpacity>
           <TouchableOpacity
             style={
               fairway === fairways.Hazard
                 ? styles.roundButtonPressed
-                : styles.roundButton
+                : !showStroke
+                ? styles.roundButtonDisabled
+                : styles.roundButtonActive
             }
             onPress={() => {
-              setFairway(fairways.Hazard);
+              if (showStroke) {
+                setFairway(fairways.Hazard);
+              }
             }}
           >
-            <Icon name="arrow-down" size={15} color="white" />
+            <Icon
+              name="arrow-down"
+              size={15}
+              color={
+                showStroke && fairway !== fairways.Hazard ? 'black' : 'white'
+              }
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -566,23 +604,37 @@ const InfoScreen = () => {
       >
         Submit
       </Button>
-      <Portal>
-        <Dialog visible={visible} onDismiss={() => setVisible(false)}>
-          <Dialog.Title>Submit Your Score</Dialog.Title>
-          <Dialog.Content>
-            <Paragraph>
-              Your score will be used for ranking calculation. Make sure you
-              have entered the right informations.
-            </Paragraph>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={() => setVisible(false)}>Back</Button>
-            <Button onPress={() => navigation.navigate('HomeScreen')}>
-              Proceed
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
+      {showStroke ? (
+        <Portal>
+          <Dialog visible={visible} onDismiss={() => setVisible(false)}>
+            <Dialog.Title>Submit Your Score</Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>
+                Your score will be used for ranking calculation. Make sure you
+                have entered the right informations.
+              </Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={() => setVisible(false)}>Back</Button>
+              <Button onPress={() => navigation.navigate('HomeScreen')}>
+                Proceed
+              </Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
+      ) : (
+        <Portal>
+          <Dialog visible={visible} onDismiss={() => setVisible(false)}>
+            {/* <Dialog.Title>Submit Your Score</Dialog.Title> */}
+            <Dialog.Content>
+              <Paragraph>There is no input for stroke</Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={() => setVisible(false)}>Back</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
+      )}
     </View>
   );
 };
