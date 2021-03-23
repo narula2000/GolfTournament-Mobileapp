@@ -24,7 +24,7 @@ const Home = () => {
       '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424'
     );
     console.log('holenumber ---> ', holenum);
-    console.log('data ->', mockdata.stroke);
+    console.log('data ->', mockdata);
     console.log('score ->', fullscore);
     setTimeout(() => {
       navigation.navigate('Info', {

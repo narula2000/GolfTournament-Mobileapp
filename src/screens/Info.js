@@ -344,7 +344,7 @@ const InfoScreen = () => {
 
   const pushHoleInfo = async () => {
     const holeInfo = {
-      createDatem: holeData.createDate,
+      createDate: holeData.createDate,
       gir: isGIRActive,
       par: holePar,
       penalty: penalties,
