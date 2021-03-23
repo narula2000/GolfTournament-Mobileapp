@@ -10,9 +10,6 @@ const Home = () => {
   const navigation = useNavigation();
   const username = 'Chakeera Wansoh'; // get name from DB
   const currentScore = '100pts'; // get from DB
-  const adminId = '';
-  const tournamentId = '';
-  const userId = '';
   const holePressed = async (num) => {
     const mockdata = await firebaseFunctions.fetchSpecificHole(
       '-MW-uAZGeJP37DQawr0i',
@@ -30,9 +27,6 @@ const Home = () => {
     setTimeout(() => {
       navigation.navigate('InfoScreen', {
         hole: num,
-        adminId,
-        tournamentId,
-        userId,
       });
     }, 0);
   };
