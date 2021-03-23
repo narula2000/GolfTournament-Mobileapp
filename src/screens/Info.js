@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import {
@@ -52,31 +52,70 @@ const InfoScreen = () => {
   const holePar = holeData.par;
 
   const GIR = holePar - 2;
+  const SI = holeData.strokeIndex;
 
   const [visible, setVisible] = React.useState(false);
 
-  const [stroke, setStroke] = React.useState(holePar);
-  const [score, setScore] = React.useState(stroke - holePar);
+  const [stroke, setStroke] = React.useState(holeData.stroke);
+  const [score, setScore] = React.useState(holeData.score);
 
-  const [putts, setPutts] = React.useState(0);
-  const [sandShots, setSandShots] = React.useState(0);
-  const [penalties, setPenalties] = React.useState(0);
+  const [putts, setPutts] = React.useState(holeData.putt);
+  const [sandShots, setSandShots] = React.useState(holeData.sandShot);
+  const [penalties, setPenalties] = React.useState(holeData.penalty);
 
   const [fairway, setFairway] = React.useState('');
   const [scoreState, setScoreState] = React.useState('');
 
-  const [showStroke, setShowStroke] = React.useState(false);
-  const [showPutt, setShowPutt] = React.useState(false);
-  const [showSandShots, setShowSandShots] = React.useState(false);
-  const [showPenalty, setShowPenalty] = React.useState(false);
+  const [showStroke, setShowStroke] = React.useState(!holeData.stroke <= 0);
+  const [showPutt, setShowPutt] = React.useState(!holeData.putt <= 0);
+  const [showSandShots, setShowSandShots] = React.useState(
+    !holeData.sandShot <= 0
+  );
+  const [showPenalty, setShowPenalty] = React.useState(!holeData.penalty <= 0);
 
-  const [enableGIR, setEnabledGIR] = React.useState(false);
-  const [enableSandSave, setEnabledSS] = React.useState(false);
-  const [enableUD, setEnabledUD] = React.useState(false);
-
+  const [enableGIR, setEnabledGIR] = React.useState(holeData.gir);
+  const [enableSandSave, setEnabledSS] = React.useState(holeData.sandSave);
+  const [enableUD, setEnabledUD] = React.useState(holeData.upDown);
   const [isGIRActive, setGIR] = React.useState(false);
   const [isSandSaveActive, setSandSaves] = React.useState(false);
   const [isUDActive, setUpDown] = React.useState(false);
+
+  const updateScoreState = (input) => {
+    if (input >= scoreOfNames.BogeyUp) {
+      setScoreState(scoreNames.BogeyUp);
+    } else if (input === scoreOfNames.Bogey) {
+      setScoreState(scoreNames.Bogey);
+    } else if (input === scoreOfNames.Par) {
+      setScoreState(scoreNames.Par);
+    } else if (input === scoreOfNames.Birdie) {
+      setScoreState(scoreNames.Birdie);
+    } else if (input === scoreOfNames.Eagle) {
+      if (input === 1) setScoreState(scoreNames.HoleInOne);
+      else setScoreState(scoreNames.Eagle);
+    } else if (input === scoreOfNames.Albatross) {
+      if (input === 1) setScoreState(scoreNames.HoleInOne);
+      else setScoreState(scoreNames.Albatross);
+    } else if (input <= scoreOfNames.HoleInOne) {
+      setScoreState(scoreNames.HoleInOne);
+    }
+  };
+
+  const updateStates = (a, b, c) => {
+    if (stroke - putts <= GIR) {
+      setGIR(true);
+    }
+    if (putts === 1 && sandShots > 0) {
+      setSandSaves(true);
+    }
+    if (putts >= 1) {
+      setUpDown(true);
+    }
+  };
+
+  useEffect(() => {
+    updateScoreState(score);
+    updateStates(holeData.gir, holeData.sandSave, holeData.putt);
+  }, [score, holeData.gir, holeData.sandSave, holeData.putt]);
 
   const styleCardScoreName = () => {
     switch (scoreState) {
@@ -186,7 +225,6 @@ const InfoScreen = () => {
     setStroke(holePar);
     setScore(0);
     setScoreState(scoreNames.Par);
-    console.log(holeData);
   };
 
   const increaseStroke = () => {
@@ -242,23 +280,7 @@ const InfoScreen = () => {
       setFairway('');
     }
 
-    if (currentScore >= scoreOfNames.BogeyUp) {
-      setScoreState(scoreNames.BogeyUp);
-    } else if (currentScore === scoreOfNames.Bogey) {
-      setScoreState(scoreNames.Bogey);
-    } else if (currentScore === scoreOfNames.Par) {
-      setScoreState(scoreNames.Par);
-    } else if (currentScore === scoreOfNames.Birdie) {
-      setScoreState(scoreNames.Birdie);
-    } else if (currentScore === scoreOfNames.Eagle) {
-      if (currentStroke === 1) setScoreState(scoreNames.HoleInOne);
-      else setScoreState(scoreNames.Eagle);
-    } else if (currentScore === scoreOfNames.Albatross) {
-      if (currentStroke === 1) setScoreState(scoreNames.HoleInOne);
-      else setScoreState(scoreNames.Albatross);
-    } else if (currentScore <= scoreOfNames.HoleInOne) {
-      setScoreState(scoreNames.HoleInOne);
-    }
+    updateScoreState(currentScore);
     setGIR(currentStroke - putts <= GIR);
   };
 
@@ -342,17 +364,36 @@ const InfoScreen = () => {
   };
 
   const pushHoleInfo = async () => {
+    // let updateGIR = false;
+    // let updateSS = false;
+    // let updateUD = false;
+    // if (!isGIRActive && enableGIR) {
+    //   updateGIR = enableGIR;
+    // } else {
+    //   updateGIR = isGIRActive;
+    // }
+    // if (!isSandSaveActive && enableSandSave) {
+    //   updateSS = enableSandSave;
+    // } else {
+    //   updateSS = isSandSaveActive;
+    // }
+    // if (!isUDActive && enableUD) {
+    //   updateUD = enableUD;
+    // } else {
+    //   updateUD = isUDActive;
+    // }
     const holeInfo = {
       createDate: holeData.createDate,
-      gir: isGIRActive,
+      gir: enableGIR,
       par: holePar,
       penalty: penalties,
       putt: putts,
-      sandSave: isSandSaveActive,
+      sandSave: enableSandSave,
       sandShot: sandShots,
       score: score,
       stroke: stroke,
       strokeIndex: holeData.strokeIndex,
+      upDown: enableUD,
       updateDate: new Date().toISOString(),
     };
     console.log('Push ->', holeInfo);
@@ -360,7 +401,7 @@ const InfoScreen = () => {
     await firebaseFunctions.updateHoleInfo(
       'itSxMneyR9ePHawMWLiuqUoSJP92',
       'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-      '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424',
+      '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed',
       hole,
       holeInfo
     );
@@ -378,7 +419,7 @@ const InfoScreen = () => {
         <View>
           <Text> Hole {hole} </Text>
           <Text> Par {holePar} </Text>
-          <Text> S.I 9</Text>
+          <Text> S.I {SI} </Text>
         </View>
         <Card style={styles.appbar_card}>
           <Card.Content>

@@ -15,13 +15,13 @@ const Home = () => {
     const mockdata = await firebaseFunctions.fetchSpecificHole(
       'itSxMneyR9ePHawMWLiuqUoSJP92',
       'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-      '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424',
+      '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed',
       `${holenum}`
     );
     const fullscore = await firebaseFunctions.fetchValidUserScore(
       'itSxMneyR9ePHawMWLiuqUoSJP92',
       'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-      '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424'
+      '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
     );
     console.log('holenumber ---> ', holenum);
     console.log('data ->', mockdata);
@@ -36,13 +36,13 @@ const Home = () => {
   const onButtonPressed = async () => {
     const users = await firebaseFunctions.fetchValidUserInfo(
       'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-      '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424'
+      '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
     );
     const { name } = users.itSxMneyR9ePHawMWLiuqUoSJP92;
     const currentUserScore = await firebaseFunctions.fetchValidUserScore(
       'itSxMneyR9ePHawMWLiuqUoSJP92',
       'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-      '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424'
+      '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
     );
     const currentUserData = {
       name: name,
@@ -66,7 +66,7 @@ const Home = () => {
           const score = await firebaseFunctions.fetchValidUserScore(
             userId,
             'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-            '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424'
+            '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
           );
           const userData = {
             name: name,
