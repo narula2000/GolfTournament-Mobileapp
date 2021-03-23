@@ -42,6 +42,14 @@ const fetchHoles = async (userId, _adminId, _tournamentId) => {
   return holesSnap.val();
 };
 
+const fetchUserName = async (userId, _adminId, _tournamentId) => {
+  const path = `admin/${_adminId}/${_tournamentId}/${userId}/`;
+  const database = firebase.database();
+  const holesSnap = await database.ref(path).once('value');
+  const user = holesSnap.val();
+  return user.name;
+};
+
 const fetchSpecificHole = async (
   userId,
   _adminId,
@@ -127,6 +135,7 @@ const updateHoleInfo = async (
 export default {
   renameUserId,
   fetchHoles,
+  fetchUserName,
   fetchSpecificHole,
   fetchValidUserScore,
   fetchValidUserStroke,
