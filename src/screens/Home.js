@@ -25,12 +25,27 @@ const Home = () => {
     console.log('data ->', mockdata);
     console.log('score ->', fullscore);
     setTimeout(() => {
-      navigation.navigate('InfoScreen', {
+      navigation.navigate('Info', {
         hole: num,
       });
     }, 0);
   };
   const onButtonPressed = async () => {
+    const users = await firebaseFunctions.fetchValidUserInfo(
+      '-MW-uAZGeJP37DQawr0g',
+      '-MW-uAZGeJP37DQawr0h'
+    );
+    const { name } = users.user1;
+    const currentUserScore = await firebaseFunctions.fetchValidUserScore(
+      'user1',
+      '-MW-uAZGeJP37DQawr0g',
+      '-MW-uAZGeJP37DQawr0h'
+    );
+    const currentUserData = {
+      name: name,
+      score: currentUserScore,
+      id: 0,
+    };
     const allUsers = async () => {
       const table = [];
       const compare = (a, b) => {
@@ -42,10 +57,6 @@ const Home = () => {
         }
         return 0;
       };
-      const users = await firebaseFunctions.fetchValidUserInfo(
-        '-MW-uAZGeJP37DQawr0g',
-        '-MW-uAZGeJP37DQawr0h'
-      );
       await Promise.all(
         Object.keys(users).map(async (userId) => {
           const { name } = users[userId];
@@ -57,16 +68,30 @@ const Home = () => {
           const userData = {
             name: name,
             score: score,
+            id: 0,
           };
           table.push(userData);
         })
       );
+      let i = 1;
       table.sort(compare);
+      table.forEach((obj) => {
+        // eslint-disable-next-line no-param-reassign
+        obj.id = i;
+        i += 1;
+        if (obj.name === currentUserData.name) {
+          currentUserData.id = obj.id;
+        }
+      });
+      // console.log(table);
+      console.log(currentUserData);
       return table;
     };
-
     const table = await allUsers();
-    navigation.navigate('RankingScreen', { table: table });
+    navigation.navigate('RankingMock', {
+      table: table,
+      currentUser: currentUserData,
+    });
   };
   return (
     <View style={styles.maincontainer}>

@@ -1,22 +1,56 @@
-import React from 'react';
-import { View, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Button, Appbar, DataTable } from 'react-native-paper';
+import {
+  Button,
+  Appbar,
+  DataTable,
+  Text,
+  TextInput,
+  Dialog,
+  Portal,
+} from 'react-native-paper';
 import styles from '../styles/RankingScreenStyle';
 
 const RankingScreen = () => {
-  let ranking = 0;
   const route = useRoute();
-  const { table } = route.params;
+  const { table, currentUser } = route.params;
   const navigation = useNavigation();
-  const onBackPressed = () => {
-    console.log('button pressed');
-    navigation.navigate('HomeScreen');
+
+  const [visible, setVisible] = React.useState(false);
+  const [q, setQ] = React.useState('');
+
+  const rankingTable = [];
+  const search = (rows) => {
+    rows.forEach((obj) => {
+      console.log('printing each obj', obj);
+      console.log('obj name', obj.name);
+      console.log('obj name to Lowercase', obj.name.toLowerCase());
+      console.log('obj name to Lowercase[0]', obj.name.toLowerCase[0]);
+      console.log('q', q);
+      if (obj.name.toLowerCase === q.toLowerCase) {
+        console.log('printing each obj', obj);
+        console.log('obj name', obj.name);
+        console.log('obj name to Lowercase', obj.name.toLowerCase());
+        // console.log('obj name to Lowercase[0]', obj.name.toLowerCase[0]);
+        console.log('q', q);
+        const searchedUserData = {
+          name: obj.name,
+          score: obj.score,
+          id: obj.id,
+        };
+      }
+    });
   };
-  const itemsPerPage = 8;
-  const [pageNumber, setPage] = React.useState(0);
-  const from = pageNumber * itemsPerPage;
-  const to = (pageNumber + 1) * itemsPerPage;
+
+  const onBackPressed = () => {
+    // console.log('button pressed');
+    navigation.navigate('HomeScreen');
+    // console.log(table);
+    // console.log(currentUser);
+    console.log('ranking table ->', rankingTable);
+    setVisible(true);
+  };
 
   return (
     <View>
@@ -27,34 +61,56 @@ const RankingScreen = () => {
           style={styles.image}
         />
       </Appbar.Header>
+      <TouchableOpacity
+        style={{ marginLeft: 330 }}
+        onPress={() => setVisible(true)}
+      >
+        <Text> Search </Text>
+      </TouchableOpacity>
       <DataTable style={styles.table}>
         <DataTable.Header>
-          <DataTable.Title numeric style={styles.ranking}>
+          <DataTable.Title numeric style={styles.column1}>
             {' '}
-            Ranking{' '}
+            #{' '}
           </DataTable.Title>
-          <DataTable.Title>Username</DataTable.Title>
-          <DataTable.Title numeric>Stroke</DataTable.Title>
-          <DataTable.Title numeric>Score</DataTable.Title>
+          <DataTable.Title style={{ marginLeft: -30 }}>
+            Username
+          </DataTable.Title>
+          <DataTable.Title numeric style={{ marginLeft: 40 }}>
+            Stroke
+          </DataTable.Title>
+          <DataTable.Title numeric style={{ marginLeft: -30 }}>
+            Score
+          </DataTable.Title>
         </DataTable.Header>
-        {table.map((userInfo) => {
-          ranking += 1;
-          return (
+        <ScrollView>
+          <DataTable.Row style={{ backgroundColor: '#9ed98a' }}>
+            <DataTable.Cell style={{ flex: 1 }}>
+              {currentUser.id}
+            </DataTable.Cell>
+            <DataTable.Cell style={{ flex: 3 }}>
+              {currentUser.name}
+            </DataTable.Cell>
+            <DataTable.Cell>{currentUser.score}</DataTable.Cell>
+            <DataTable.Cell style={{ flex: 'auto' }}>
+              {currentUser.score}
+            </DataTable.Cell>
+          </DataTable.Row>
+          {table.map((userInfo) => (
             <DataTable.Row key={userInfo.name}>
-              <DataTable.Cell>{ranking}</DataTable.Cell>
-              <DataTable.Cell>{userInfo.name}</DataTable.Cell>
+              <DataTable.Cell style={{ flex: 1 }}>{userInfo.id}</DataTable.Cell>
+              <DataTable.Cell style={{ flex: 3 }}>
+                {userInfo.name}
+              </DataTable.Cell>
               <DataTable.Cell>{userInfo.score}</DataTable.Cell>
-              <DataTable.Cell>{userInfo.score}</DataTable.Cell>
+              <DataTable.Cell style={{ flex: 'auto' }}>
+                {userInfo.score}
+              </DataTable.Cell>
             </DataTable.Row>
-          );
-        })}
-        <DataTable.Pagination
-          page={pageNumber}
-          numberOfPages={Math.floor(table.length / itemsPerPage)}
-          onPageChange={(page) => setPage(page)}
-          label={`${from + 1}-${to} of ${table.length}`}
-        />
+          ))}
+        </ScrollView>
       </DataTable>
+
       <Button
         style={styles.button}
         labelStyle={styles.buttontext}
@@ -63,6 +119,29 @@ const RankingScreen = () => {
       >
         Back to Home Page
       </Button>
+      <Portal>
+        <Dialog visible={visible} onDismiss={() => setVisible(false)}>
+          <Dialog.Title>Enter your Full Name</Dialog.Title>
+          <Dialog.Content>
+            <TextInput
+              label="name"
+              mode="outlined"
+              value={q}
+              onChangeText={(q) => setQ(q)}
+            />
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button
+              onPress={() => {
+                search(table);
+                setVisible(false);
+              }}
+            >
+              Search
+            </Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </View>
   );
 };
