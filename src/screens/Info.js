@@ -12,9 +12,11 @@ import {
   Paragraph,
   Dialog,
   Portal,
+  DataTable,
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from '../styles/InfoScreenStyle';
+import firebaseFunctions from '../firebase/functions';
 
 const InfoScreen = () => {
   const navigation = useNavigation();
@@ -47,8 +49,8 @@ const InfoScreen = () => {
     Hazard: 'Hazard',
   });
 
-  const holePar = 4;
-  const { hole } = route.params;
+  const { hole, holeData } = route.params;
+  const holePar = holeData.par;
 
   const GIR = holePar - 2;
 
@@ -185,6 +187,7 @@ const InfoScreen = () => {
     setStroke(holePar);
     setScore(0);
     setScoreState(scoreNames.Par);
+    console.log(holeData);
   };
 
   const increaseStroke = () => {
@@ -337,6 +340,32 @@ const InfoScreen = () => {
     if (currentPenalties < 1) {
       setShowPenalty(false);
     }
+  };
+
+  const pushHoleInfo = async () => {
+    const holeInfo = {
+      createDatem: holeData.createDate,
+      gir: isGIRActive,
+      par: holePar,
+      penalty: penalties,
+      putt: putts,
+      sandSave: isSandSaveActive,
+      sandShot: sandShots,
+      score: score,
+      stroke: stroke,
+      strokeIndex: holeData.strokeIndex,
+      updateDate: new Date().toISOString(),
+    };
+    console.log('Push ->', holeInfo);
+    console.log('holenumber -->', hole);
+    await firebaseFunctions.updateHoleInfo(
+      'itSxMneyR9ePHawMWLiuqUoSJP92',
+      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
+      '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424',
+      hole,
+      holeInfo
+    );
+    navigation.navigate('Home');
   };
 
   return (
@@ -616,9 +645,7 @@ const InfoScreen = () => {
             </Dialog.Content>
             <Dialog.Actions>
               <Button onPress={() => setVisible(false)}>Back</Button>
-              <Button onPress={() => navigation.navigate('Home')}>
-                Proceed
-              </Button>
+              <Button onPress={pushHoleInfo}>Proceed</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>

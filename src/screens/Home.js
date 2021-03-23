@@ -11,22 +11,25 @@ const Home = () => {
   const username = 'Chakeera Wansoh'; // get name from DB
   const currentScore = '100pts'; // get from DB
   const holePressed = async (num) => {
+    const holenum = String(num).padStart(2, '0');
     const mockdata = await firebaseFunctions.fetchSpecificHole(
       'itSxMneyR9ePHawMWLiuqUoSJP92',
       'G6WINzX2fLY73zrVUfIp3UQJzYC2',
       '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424',
-      `hole${num}`
+      `${holenum}`
     );
     const fullscore = await firebaseFunctions.fetchValidUserScore(
       'itSxMneyR9ePHawMWLiuqUoSJP92',
       'G6WINzX2fLY73zrVUfIp3UQJzYC2',
       '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424'
     );
-    console.log('data ->', mockdata);
+    console.log('holenumber ---> ', holenum);
+    console.log('data ->', mockdata.stroke);
     console.log('score ->', fullscore);
     setTimeout(() => {
       navigation.navigate('Info', {
         hole: num,
+        holeData: mockdata,
       });
     }, 0);
   };
@@ -35,12 +38,6 @@ const Home = () => {
       'G6WINzX2fLY73zrVUfIp3UQJzYC2',
       '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424'
     );
-    console.log(users);
-    const userIds = await firebaseFunctions.fetchValidUserId(
-      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-      '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424'
-    );
-    console.log(userIds);
     const { name } = users.itSxMneyR9ePHawMWLiuqUoSJP92;
     const currentUserScore = await firebaseFunctions.fetchValidUserScore(
       'itSxMneyR9ePHawMWLiuqUoSJP92',
@@ -65,7 +62,6 @@ const Home = () => {
       };
       await Promise.all(
         Object.keys(users).map(async (userId) => {
-          console.log(userId);
           const { name } = users[userId];
           const score = await firebaseFunctions.fetchValidUserScore(
             userId,
@@ -90,8 +86,6 @@ const Home = () => {
           currentUserData.id = obj.id;
         }
       });
-      // console.log(table);
-      console.log(currentUserData);
       return table;
     };
     const table = await allUsers();
