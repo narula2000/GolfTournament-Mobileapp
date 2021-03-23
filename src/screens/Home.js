@@ -1,13 +1,15 @@
 import React from 'react';
 import { View, Image, TouchableOpacity, Text } from 'react-native';
 import { Appbar, Divider, Card, Title, Button } from 'react-native-paper';
+import { useRoute } from '@react-navigation/native';
+import firebase from 'firebase/app';
 import styles from '../styles/HomeScreenStyle';
 import 'firebase/auth';
+import firebasefunction from '../firebase/functions';
 
 const Home = () => {
-  const username = 'Chakeera Wansoh'; // get name from DB
-  const currentScore = '100pts'; // get from DB
-  const onEnterPressed = () => {};
+  const route = useRoute();
+  const { tournamentId, adminId, username, currentScore } = route.params;
   return (
     <View style={styles.maincontainer}>
       <Appbar.Header style={styles.appbar}>
@@ -25,12 +27,7 @@ const Home = () => {
       </Appbar.Header>
       <Divider style={styles.divider} />
       <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.roundButton}
-          onPress={() => {
-            onEnterPressed();
-          }}
-        >
+        <TouchableOpacity style={styles.roundButton}>
           <Text>1</Text>
         </TouchableOpacity>
 
@@ -90,7 +87,6 @@ const Home = () => {
         style={styles.button}
         labelStyle={styles.buttontext}
         mode="contained"
-        onPress={onEnterPressed}
       >
         Tournament Ranking
       </Button>

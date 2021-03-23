@@ -71,7 +71,23 @@ const SignIn = () => {
                     adminId,
                     tournamentId
                   );
-                  navigation.navigate('Home');
+                  const currentScore = await firebasefunction.fetchValidUserScore(
+                    newUID,
+                    adminId,
+                    tournamentId
+                  );
+                  const username = await firebasefunction.fetchUserName(
+                    newUID,
+                    adminId,
+                    tournamentId
+                  );
+                  console.log(username);
+                  navigation.navigate('Home', {
+                    tournamentId: tournamentId,
+                    adminId: adminId,
+                    username: username,
+                    currentscore: currentScore,
+                  });
                 } catch (err) {
                   Alert.alert(`Error: ${err.message}`);
                 }

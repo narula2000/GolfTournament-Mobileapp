@@ -8,7 +8,6 @@ import QRcodeScreen from './screens/QRcode';
 import CameraScreen from './screens/Camera';
 import firebaseConfig from './firebase';
 import 'firebase/auth';
-import firebasefunction from './firebase/functions';
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -17,13 +16,6 @@ if (!firebase.apps.length) {
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     console.log('we have user');
-    user.updateProfile({
-      displayName: firebasefunction.fetchUserName();
-    }).then(function() {
-      console.log("update username fail")
-    }).catch(function(error) {
-      console.log("update username fail")
-    });
   } else {
     // User is signed out
     // ...
