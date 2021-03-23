@@ -63,7 +63,6 @@ const SignIn = () => {
                     verificationCode
                   );
                   await firebase.auth().signInWithCredential(credential);
-                  navigation.navigate('Home');
                   const newUID = String(auth.currentUser.uid);
                   const num = String(auth.currentUser.phoneNumber);
                   await firebasefunction.renameUserId(
@@ -72,6 +71,7 @@ const SignIn = () => {
                     adminId,
                     tournamentId
                   );
+                  navigation.navigate('Home');
                 } catch (err) {
                   Alert.alert(`Error: ${err.message}`);
                 }
