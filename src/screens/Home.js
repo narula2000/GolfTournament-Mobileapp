@@ -12,9 +12,9 @@ const Home = () => {
   const currentScore = '100pts'; // get from DB
   const holePressed = async (num) => {
     const mockdata = await firebaseFunctions.fetchSpecificHole(
-      '-MW-uAZGeJP37DQawr0i',
-      '-MW-uAZGeJP37DQawr0g',
-      '-MW-uAZGeJP37DQawr0h',
+      'itSxMneyR9ePHawMWLiuqUoSJP92',
+      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
+      '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424',
       `hole${num}`
     );
     const fullscore = await firebaseFunctions.fetchValidUserScore(
@@ -36,6 +36,11 @@ const Home = () => {
       '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424'
     );
     console.log(users);
+    const userIds = await firebaseFunctions.fetchValidUserId(
+      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
+      '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424'
+    );
+    console.log(userIds);
     const { name } = users.itSxMneyR9ePHawMWLiuqUoSJP92;
     const currentUserScore = await firebaseFunctions.fetchValidUserScore(
       'itSxMneyR9ePHawMWLiuqUoSJP92',
