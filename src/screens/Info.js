@@ -12,7 +12,6 @@ import {
   Paragraph,
   Dialog,
   Portal,
-  DataTable,
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from '../styles/InfoScreenStyle';

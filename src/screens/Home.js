@@ -28,7 +28,7 @@ const Home = () => {
     console.log('score ->', fullscore);
     setTimeout(() => {
       navigation.navigate('Info', {
-        hole: num,
+        hole: holenum,
         holeData: mockdata,
       });
     }, 0);
