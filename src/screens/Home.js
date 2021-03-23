@@ -18,9 +18,9 @@ const Home = () => {
       `hole${num}`
     );
     const fullscore = await firebaseFunctions.fetchValidUserScore(
-      '-MW-uAZGeJP37DQawr0i',
-      '-MW-uAZGeJP37DQawr0g',
-      '-MW-uAZGeJP37DQawr0h'
+      'itSxMneyR9ePHawMWLiuqUoSJP92',
+      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
+      '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424'
     );
     console.log('data ->', mockdata);
     console.log('score ->', fullscore);
@@ -32,14 +32,15 @@ const Home = () => {
   };
   const onButtonPressed = async () => {
     const users = await firebaseFunctions.fetchValidUserInfo(
-      '-MW-uAZGeJP37DQawr0g',
-      '-MW-uAZGeJP37DQawr0h'
+      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
+      '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424'
     );
-    const { name } = users.user1;
+    console.log(users);
+    const { name } = users.itSxMneyR9ePHawMWLiuqUoSJP92;
     const currentUserScore = await firebaseFunctions.fetchValidUserScore(
-      'user1',
-      '-MW-uAZGeJP37DQawr0g',
-      '-MW-uAZGeJP37DQawr0h'
+      'itSxMneyR9ePHawMWLiuqUoSJP92',
+      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
+      '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424'
     );
     const currentUserData = {
       name: name,
@@ -59,11 +60,12 @@ const Home = () => {
       };
       await Promise.all(
         Object.keys(users).map(async (userId) => {
+          console.log(userId);
           const { name } = users[userId];
           const score = await firebaseFunctions.fetchValidUserScore(
             userId,
-            '-MW-uAZGeJP37DQawr0g',
-            '-MW-uAZGeJP37DQawr0h'
+            'G6WINzX2fLY73zrVUfIp3UQJzYC2',
+            '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424'
           );
           const userData = {
             name: name,
