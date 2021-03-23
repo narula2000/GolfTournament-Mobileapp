@@ -25,7 +25,7 @@ const Home = () => {
     console.log('data ->', mockdata);
     console.log('score ->', fullscore);
     setTimeout(() => {
-      navigation.navigate('InfoScreen', {
+      navigation.navigate('Info', {
         hole: num,
       });
     }, 0);

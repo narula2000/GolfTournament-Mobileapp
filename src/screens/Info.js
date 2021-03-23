@@ -616,7 +616,7 @@ const InfoScreen = () => {
             </Dialog.Content>
             <Dialog.Actions>
               <Button onPress={() => setVisible(false)}>Back</Button>
-              <Button onPress={() => navigation.navigate('HomeScreen')}>
+              <Button onPress={() => navigation.navigate('Home')}>
                 Proceed
               </Button>
             </Dialog.Actions>
