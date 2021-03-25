@@ -70,7 +70,7 @@ const RankingMock = () => {
               </DataTable.Cell>
               <DataTable.Cell>
                 {' '}
-                <Text style={styles.text}>{currentUser.score}</Text>
+                <Text style={styles.text}>{currentUser.stroke}</Text>
               </DataTable.Cell>
               <DataTable.Cell style={{ flex: 'auto' }}>
                 <Text style={styles.text}>{currentUser.score}</Text>
@@ -88,7 +88,7 @@ const RankingMock = () => {
                   <Text style={styles.text}>{userInfo.name}</Text>
                 </DataTable.Cell>
                 <DataTable.Cell>
-                  <Text style={styles.text}>{userInfo.score}</Text>
+                  <Text style={styles.text}>{userInfo.stroke}</Text>
                 </DataTable.Cell>
                 <DataTable.Cell style={{ flex: 'auto' }}>
                   <Text style={styles.text}>{userInfo.score}</Text>

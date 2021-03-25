@@ -73,12 +73,12 @@ const InfoScreen = () => {
   );
   const [showPenalty, setShowPenalty] = React.useState(!holeData.penalty <= 0);
 
-  const [enableGIR, setEnabledGIR] = React.useState(holeData.gir);
-  const [enableSandSave, setEnabledSS] = React.useState(holeData.sandSave);
-  const [enableUD, setEnabledUD] = React.useState(holeData.upDown);
-  const [isGIRActive, setGIR] = React.useState(false);
-  const [isSandSaveActive, setSandSaves] = React.useState(false);
-  const [isUDActive, setUpDown] = React.useState(false);
+  const [enableGIR, setEnabledGIR] = React.useState(putts > 0);
+  const [enableSandSave, setEnabledSS] = React.useState(sandShots >= 1);
+  const [enableUD, setEnabledUD] = React.useState(putts >= 1);
+  const [isGIRActive, setGIR] = React.useState(holeData.gir);
+  const [isSandSaveActive, setSandSaves] = React.useState(holeData.sandSave);
+  const [isUDActive, setUpDown] = React.useState(holeData.upDown);
 
   const updateScoreState = (input) => {
     if (input >= scoreOfNames.BogeyUp) {
@@ -100,22 +100,12 @@ const InfoScreen = () => {
     }
   };
 
-  const updateStates = (a, b, c) => {
-    if (stroke - putts <= GIR) {
-      setGIR(true);
-    }
-    if (putts === 1 && sandShots > 0) {
-      setSandSaves(true);
-    }
-    if (putts >= 1) {
-      setUpDown(true);
-    }
-  };
-
   useEffect(() => {
     updateScoreState(score);
-    updateStates(holeData.gir, holeData.sandSave, holeData.putt);
-  }, [score, holeData.gir, holeData.sandSave, holeData.putt]);
+    if (holeData.fairway !== undefined) {
+      setFairway(holeData.fairway);
+    }
+  }, [score, holeData.fairway]);
 
   const styleCardScoreName = () => {
     switch (scoreState) {
@@ -266,6 +256,13 @@ const InfoScreen = () => {
     }
 
     if (currentStroke < 1) {
+      setPutts(0);
+      setSandShots(0);
+      setPenalties(0);
+      setFairway('');
+      setGIR(false);
+      setSandSaves(false);
+      setUpDown(false);
       setShowPutt(false);
       setShowSandShots(false);
       setShowPenalty(false);
@@ -364,38 +361,26 @@ const InfoScreen = () => {
   };
 
   const pushHoleInfo = async () => {
-    // let updateGIR = false;
-    // let updateSS = false;
-    // let updateUD = false;
-    // if (!isGIRActive && enableGIR) {
-    //   updateGIR = enableGIR;
-    // } else {
-    //   updateGIR = isGIRActive;
-    // }
-    // if (!isSandSaveActive && enableSandSave) {
-    //   updateSS = enableSandSave;
-    // } else {
-    //   updateSS = isSandSaveActive;
-    // }
-    // if (!isUDActive && enableUD) {
-    //   updateUD = enableUD;
-    // } else {
-    //   updateUD = isUDActive;
-    // }
     const holeInfo = {
       createDate: holeData.createDate,
-      gir: enableGIR,
+      gir: isGIRActive,
+      fairway: fairway,
       par: holePar,
       penalty: penalties,
       putt: putts,
-      sandSave: enableSandSave,
+      sandSave: isSandSaveActive,
       sandShot: sandShots,
       score: score,
       stroke: stroke,
       strokeIndex: holeData.strokeIndex,
-      upDown: enableUD,
+      upDown: isUDActive,
       updateDate: new Date().toISOString(),
     };
+    // if (fairway !== '') {
+    //   holeInfo.fairway = fairway;
+    // } // else {
+    //   holeInfo.fairway = null;
+    // }
     console.log('Push ->', holeInfo);
     console.log('holenumber -->', hole);
     await firebaseFunctions.updateHoleInfo(
@@ -617,17 +602,10 @@ const InfoScreen = () => {
             GIR
           </Button>
         ) : (
-          <Button
-            mode="contained"
-            onPress={() => {
-              setGIR(!isGIRActive);
-            }}
-            style={styles.disabledButton}
-          >
+          <Button mode="contained" style={styles.disabledButton}>
             GIR
           </Button>
         )}
-
         {enableSandSave ? (
           <Button
             mode="contained"

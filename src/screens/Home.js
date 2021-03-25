@@ -4,7 +4,6 @@ import { Appbar, Divider, Card, Title, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles/HomeScreenStyle';
 import firebaseFunctions from '../firebase/functions';
-// import 'firebase/auth';
 
 const Home = () => {
   const navigation = useNavigation();
@@ -38,8 +37,18 @@ const Home = () => {
       'G6WINzX2fLY73zrVUfIp3UQJzYC2',
       '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
     );
-    const { name } = users.itSxMneyR9ePHawMWLiuqUoSJP92;
+    const name = await firebaseFunctions.fetchUserName(
+      'itSxMneyR9ePHawMWLiuqUoSJP92',
+      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
+      '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
+    );
+    // const { name } = users.itSxMneyR9ePHawMWLiuqUoSJP92;
     const currentUserScore = await firebaseFunctions.fetchValidUserScore(
+      'itSxMneyR9ePHawMWLiuqUoSJP92',
+      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
+      '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
+    );
+    const currentUserStroke = await firebaseFunctions.fetchValidUserStroke(
       'itSxMneyR9ePHawMWLiuqUoSJP92',
       'G6WINzX2fLY73zrVUfIp3UQJzYC2',
       '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
@@ -47,6 +56,7 @@ const Home = () => {
     const currentUserData = {
       name: name,
       score: currentUserScore,
+      stroke: currentUserStroke,
       id: 0,
     };
     const allUsers = async () => {
@@ -68,9 +78,15 @@ const Home = () => {
             'G6WINzX2fLY73zrVUfIp3UQJzYC2',
             '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
           );
+          const stroke = await firebaseFunctions.fetchValidUserStroke(
+            userId,
+            'G6WINzX2fLY73zrVUfIp3UQJzYC2',
+            '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
+          );
           const userData = {
             name: name,
             score: score,
+            stroke: stroke,
             id: 0,
           };
           table.push(userData);
