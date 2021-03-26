@@ -2,14 +2,13 @@ import React from 'react';
 import { View, Image, TouchableOpacity, Text } from 'react-native';
 import { Appbar, Divider, Card, Title, Button } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
-import firebase from 'firebase/app';
 import styles from '../styles/HomeScreenStyle';
 import 'firebase/auth';
-import firebasefunction from '../firebase/functions';
 
 const Home = () => {
   const route = useRoute();
   const { tournamentId, adminId, username, currentScore } = route.params;
+
   return (
     <View style={styles.maincontainer}>
       <Appbar.Header style={styles.appbar}>
@@ -21,7 +20,7 @@ const Home = () => {
         <Card style={styles.card}>
           <Card.Content style={styles.card}>
             <Title style={styles.title}>{username}</Title>
-            <Text>{currentScore}</Text>
+            <Text style={styles.text}>Score: {currentScore}</Text>
           </Card.Content>
         </Card>
       </Appbar.Header>

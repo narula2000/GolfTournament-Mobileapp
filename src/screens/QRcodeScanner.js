@@ -7,7 +7,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import firebasefunction from '../firebase/functions';
 import styles from '../styles/CameraScreenStyle';
 
-const Camera = () => {
+const QRcodeScanner = () => {
   const [hasPermission, setHasPermission] = React.useState(null);
   const [scanned, setScanned] = React.useState(false);
   const [tournamentId, setTournamentId] = React.useState('');
@@ -20,21 +20,22 @@ const Camera = () => {
       setHasPermission(status === 'granted');
     })();
   }, []);
+
   const handleBarCodeScanned = async ({ data }) => {
     try {
       const scannedData = JSON.parse({ data }.data);
       setAdminId(String(scannedData.adminId));
       setTournamentId(String(scannedData.tournamentId));
-      await firebasefunction
-        .checkTournament(adminId, tournamentId)
-        .then((result) => {
-          if (result) {
-            navigation.navigate('SignIn', {
-              tournamentId: tournamentId,
-              adminId: adminId,
-            });
-          }
+      const validTournament = await firebasefunction.checkTournament(
+        adminId,
+        tournamentId
+      );
+      if (validTournament) {
+        navigation.navigate('SignIn', {
+          tournamentId: tournamentId,
+          adminId: adminId,
         });
+      }
     } catch (err) {
       setScanned(true);
       Alert.alert(`Tournament Not Found`);
@@ -42,10 +43,18 @@ const Camera = () => {
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return (
+      <View style={styles.container}>
+        <Text>Requesting for camera permission</Text>
+      </View>
+    );
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return (
+      <View style={styles.container}>
+        <Text>No access to camera</Text>
+      </View>
+    );
   }
   return (
     <View style={styles.container}>
@@ -55,11 +64,11 @@ const Camera = () => {
       />
       {scanned && (
         <Button style={styles.button} onPress={() => setScanned(false)}>
-          Wrong QR code Scan Again
+          Tap to scan again
         </Button>
       )}
     </View>
   );
 };
 
-export default Camera;
+export default QRcodeScanner;
