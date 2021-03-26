@@ -14,6 +14,8 @@ import {
   Portal,
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import styles from '../styles/InfoScreenStyle';
 import firebaseFunctions from '../firebase/functions';
 
@@ -48,7 +50,10 @@ const InfoScreen = () => {
     Hazard: 'Hazard',
   });
 
-  const { hole, holeData } = route.params;
+  const auth = firebase.auth();
+  const userID = String(auth.currentUser.uid);
+
+  const { adminId, tournamentId, hole, holeData } = route.params;
   const holePar = holeData.par;
 
   const GIR = holePar - 2;
@@ -376,16 +381,14 @@ const InfoScreen = () => {
       upDown: isUDActive,
       updateDate: new Date().toISOString(),
     };
-    console.log('Push ->', holeInfo);
-    console.log('holenumber -->', hole);
     await firebaseFunctions.updateHoleInfo(
-      'itSxMneyR9ePHawMWLiuqUoSJP92',
-      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-      '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed',
+      userID,
+      adminId,
+      tournamentId,
       hole,
       holeInfo
     );
-    navigation.navigate('Home');
+    navigation.navigate('Home', { updatedCurrentScore: score });
   };
 
   return (
@@ -665,7 +668,6 @@ const InfoScreen = () => {
       ) : (
         <Portal>
           <Dialog visible={visible} onDismiss={() => setVisible(false)}>
-            {/* <Dialog.Title>Submit Your Score</Dialog.Title> */}
             <Dialog.Content>
               <Paragraph>There is no input for stroke</Paragraph>
             </Dialog.Content>

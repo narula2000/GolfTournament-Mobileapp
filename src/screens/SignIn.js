@@ -24,22 +24,6 @@ const SignIn = () => {
   const { tournamentId, adminId } = route.params;
   const attemptInvisibleVerification = true;
   const auth = firebase.auth();
-  const newUID = String(auth.currentUser.uid);
-  const num = String(auth.currentUser.phoneNumber);
-
-  const getUserInfo = async () => {
-    const currentScore = await firebasefunction.fetchValidUserScore(
-      newUID,
-      adminId,
-      tournamentId
-    );
-    const username = await firebasefunction.fetchUserName(
-      newUID,
-      adminId,
-      tournamentId
-    );
-    return [username, currentScore];
-  };
 
   const signIn = async () => {
     try {
@@ -47,16 +31,28 @@ const SignIn = () => {
         verificationId,
         verificationCode
       );
-      await firebase.auth().signInWithCredential(credential);
+      await auth.signInWithCredential(credential);
+      const newUID = String(auth.currentUser.uid);
+      const num = String(auth.currentUser.phoneNumber);
       await firebasefunction.renameUserId(newUID, num, adminId, tournamentId);
 
-      const userInfo = getUserInfo();
+      const currentScore = await firebasefunction.fetchValidUserScore(
+        newUID,
+        adminId,
+        tournamentId
+      );
+
+      const username = await firebasefunction.fetchUserName(
+        newUID,
+        adminId,
+        tournamentId
+      );
 
       navigation.navigate('Home', {
         tournamentId: tournamentId,
         adminId: adminId,
-        username: userInfo.username,
-        currentScore: userInfo.currentScore,
+        username: username,
+        currentScore: currentScore,
       });
     } catch (err) {
       Alert.alert(`Error: ${err.message}`);
@@ -124,7 +120,7 @@ const SignIn = () => {
               style={styles.button}
               labelStyle={styles.buttontext}
               disabled={!verificationId}
-              onPress={signIn()}
+              onPress={() => signIn()}
             >
               Confirm Verification Code
             </Button>
@@ -133,7 +129,7 @@ const SignIn = () => {
               labelStyle={styles.buttontext}
               mode="contained"
               disabled={!phoneNumber}
-              onPress={verifyOTP()}
+              onPress={() => verifyOTP()}
             >
               {' '}
               Resend Verification Code
@@ -168,7 +164,7 @@ const SignIn = () => {
               labelStyle={styles.buttontext}
               mode="contained"
               disabled={!phoneNumber}
-              onPress={sendOTP()}
+              onPress={() => sendOTP()}
             >
               Send Verification Code
             </Button>

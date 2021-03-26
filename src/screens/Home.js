@@ -2,62 +2,61 @@ import React from 'react';
 import { View, Image, TouchableOpacity, Text } from 'react-native';
 import { Appbar, Divider, Card, Title, Button } from 'react-native-paper';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import styles from '../styles/HomeScreenStyle';
 import firebaseFunctions from '../firebase/functions';
 
 const Home = () => {
   const route = useRoute();
   const navigation = useNavigation();
-  const username = 'Chakeera Wansoh'; // get name from DB
-  const currentScore = '100pts'; // get from DB
+  const {
+    tournamentId,
+    adminId,
+    username,
+    currentScore,
+    updatedCurrentScore,
+  } = route.params;
+  const auth = firebase.auth();
+  const userID = String(auth.currentUser.uid);
+
   const holePressed = async (num) => {
     const holenum = String(num).padStart(2, '0');
     const holeinfo = await firebaseFunctions.fetchSpecificHole(
-      'itSxMneyR9ePHawMWLiuqUoSJP92',
-      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-      '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed',
+      userID,
+      adminId,
+      tournamentId,
       `${holenum}`
     );
-    const fullscore = await firebaseFunctions.fetchValidUserScore(
-      'itSxMneyR9ePHawMWLiuqUoSJP92',
-      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-      '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
-    );
-    console.log('holenumber ---> ', holenum);
-    console.log('data ->', holeinfo);
-    console.log('score ->', fullscore);
     setTimeout(() => {
       navigation.navigate('Info', {
+        adminId: adminId,
+        tournamentId: tournamentId,
         hole: holenum,
         holeData: holeinfo,
       });
     }, 0);
   };
+
   const onButtonPressed = async () => {
     const users = await firebaseFunctions.fetchValidUserInfo(
-      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-      '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
+      adminId,
+      tournamentId
     );
-    const currentUsername = await firebaseFunctions.fetchUserName(
-      'itSxMneyR9ePHawMWLiuqUoSJP92',
-      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-      '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
+    const updatedScore = await firebaseFunctions.fetchValidUserScore(
+      userID,
+      adminId,
+      tournamentId
     );
-    // const { name } = users.itSxMneyR9ePHawMWLiuqUoSJP92;
-    const currentUserScore = await firebaseFunctions.fetchValidUserScore(
-      'itSxMneyR9ePHawMWLiuqUoSJP92',
-      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-      '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
-    );
-    const currentUserStroke = await firebaseFunctions.fetchValidUserStroke(
-      'itSxMneyR9ePHawMWLiuqUoSJP92',
-      'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-      '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
+    const currentStroke = await firebaseFunctions.fetchValidUserStroke(
+      userID,
+      adminId,
+      tournamentId
     );
     const currentUserData = {
-      name: currentUsername,
-      score: currentUserScore,
-      stroke: currentUserStroke,
+      name: username,
+      score: updatedScore,
+      stroke: currentStroke,
       id: 0,
     };
     const allUsers = async () => {
@@ -76,13 +75,13 @@ const Home = () => {
           const { name } = users[userId];
           const score = await firebaseFunctions.fetchValidUserScore(
             userId,
-            'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-            '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
+            adminId,
+            tournamentId
           );
           const stroke = await firebaseFunctions.fetchValidUserStroke(
             userId,
-            'G6WINzX2fLY73zrVUfIp3UQJzYC2',
-            '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
+            adminId,
+            tournamentId
           );
           const userData = {
             name: name,
@@ -106,12 +105,11 @@ const Home = () => {
       return table;
     };
     const table = await allUsers();
-    navigation.navigate('RankingMock', {
+    navigation.navigate('Ranking', {
       table: table,
       currentUser: currentUserData,
     });
   };
-  const { tournamentId, adminId, username, currentScore } = route.params;
 
   return (
     <View style={styles.maincontainer}>
@@ -124,7 +122,11 @@ const Home = () => {
         <Card style={styles.card}>
           <Card.Content style={styles.card}>
             <Title style={styles.title}>{username}</Title>
-            <Text style={styles.text}>Score: {currentScore}</Text>
+            <Text style={styles.text}>
+              {updatedCurrentScore > currentScore
+                ? updatedCurrentScore
+                : currentScore}
+            </Text>
           </Card.Content>
         </Card>
       </Appbar.Header>
