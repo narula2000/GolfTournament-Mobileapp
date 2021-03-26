@@ -24,7 +24,6 @@ const QRcodeScanner = () => {
   }, []);
 
   const handleBarCodeScanned = async ({ data }) => {
-    console.log('i am here with no data');
     try {
       const scannedData = JSON.parse({ data }.data);
       setAdminId(String(scannedData.adminId));
@@ -40,9 +39,11 @@ const QRcodeScanner = () => {
           adminId: adminId,
         });
       }
+      setLoading(false);
     } catch (err) {
-      setScanned(true);
       Alert.alert(`Tournament Not Found`);
+      setScanned(true);
+      setLoading(false);
     }
   };
 
