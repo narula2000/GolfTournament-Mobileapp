@@ -24,6 +24,74 @@ const SignIn = () => {
   const { tournamentId, adminId } = route.params;
   const attemptInvisibleVerification = true;
   const auth = firebase.auth();
+  const newUID = String(auth.currentUser.uid);
+  const num = String(auth.currentUser.phoneNumber);
+
+  const getUserInfo = async () => {
+    const currentScore = await firebasefunction.fetchValidUserScore(
+      newUID,
+      adminId,
+      tournamentId
+    );
+    const username = await firebasefunction.fetchUserName(
+      newUID,
+      adminId,
+      tournamentId
+    );
+    return [username, currentScore];
+  };
+
+  const signIn = async () => {
+    try {
+      const credential = firebase.auth.PhoneAuthProvider.credential(
+        verificationId,
+        verificationCode
+      );
+      await firebase.auth().signInWithCredential(credential);
+      await firebasefunction.renameUserId(newUID, num, adminId, tournamentId);
+
+      const userInfo = getUserInfo();
+
+      navigation.navigate('Home', {
+        tournamentId: tournamentId,
+        adminId: adminId,
+        username: userInfo.username,
+        currentScore: userInfo.currentScore,
+      });
+    } catch (err) {
+      Alert.alert(`Error: ${err.message}`);
+    }
+  };
+
+  const verifyOTP = async () => {
+    try {
+      const phoneProvider = new firebase.auth.PhoneAuthProvider();
+      const verificationid = await phoneProvider.verifyPhoneNumber(
+        phoneNumber,
+        recaptchaVerifier.current
+      );
+      setVerificationId(verificationid);
+      setShowOTP(true);
+      Alert.alert('Verification code has been sent to your phone.');
+    } catch (err) {
+      Alert.alert(`Error: ${err.message}`);
+    }
+  };
+
+  const sendOTP = async () => {
+    try {
+      const phoneProvider = new firebase.auth.PhoneAuthProvider();
+      const verificationid = await phoneProvider.verifyPhoneNumber(
+        phoneNumber,
+        recaptchaVerifier.current
+      );
+      setVerificationId(verificationid);
+      setShowOTP(true);
+      Alert.alert('Verification code has been sent to your phone.');
+    } catch (err) {
+      Alert.alert(`Error: ${err.message}`);
+    }
+  };
 
   return (
     <View style={styles.maincontainer}>
@@ -56,26 +124,7 @@ const SignIn = () => {
               style={styles.button}
               labelStyle={styles.buttontext}
               disabled={!verificationId}
-              onPress={async () => {
-                try {
-                  const credential = firebase.auth.PhoneAuthProvider.credential(
-                    verificationId,
-                    verificationCode
-                  );
-                  await firebase.auth().signInWithCredential(credential);
-                  navigation.navigate('Home');
-                  const newUID = String(auth.currentUser.uid);
-                  const num = String(auth.currentUser.phoneNumber);
-                  await firebasefunction.renameUserId(
-                    newUID,
-                    num,
-                    adminId,
-                    tournamentId
-                  );
-                } catch (err) {
-                  Alert.alert(`Error: ${err.message}`);
-                }
-              }}
+              onPress={signIn()}
             >
               Confirm Verification Code
             </Button>
@@ -84,20 +133,7 @@ const SignIn = () => {
               labelStyle={styles.buttontext}
               mode="contained"
               disabled={!phoneNumber}
-              onPress={async () => {
-                try {
-                  const phoneProvider = new firebase.auth.PhoneAuthProvider();
-                  const verificationid = await phoneProvider.verifyPhoneNumber(
-                    phoneNumber,
-                    recaptchaVerifier.current
-                  );
-                  setVerificationId(verificationid);
-                  setShowOTP(true);
-                  Alert.alert('Verification code has been sent to your phone.');
-                } catch (err) {
-                  Alert.alert(`Error: ${err.message}`);
-                }
-              }}
+              onPress={verifyOTP()}
             >
               {' '}
               Resend Verification Code
@@ -132,20 +168,7 @@ const SignIn = () => {
               labelStyle={styles.buttontext}
               mode="contained"
               disabled={!phoneNumber}
-              onPress={async () => {
-                try {
-                  const phoneProvider = new firebase.auth.PhoneAuthProvider();
-                  const verificationid = await phoneProvider.verifyPhoneNumber(
-                    phoneNumber,
-                    recaptchaVerifier.current
-                  );
-                  setVerificationId(verificationid);
-                  setShowOTP(true);
-                  Alert.alert('Verification code has been sent to your phone.');
-                } catch (err) {
-                  Alert.alert(`Error: ${err.message}`);
-                }
-              }}
+              onPress={sendOTP()}
             >
               Send Verification Code
             </Button>
