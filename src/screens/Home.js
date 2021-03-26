@@ -1,17 +1,18 @@
 import React from 'react';
 import { View, Image, TouchableOpacity, Text } from 'react-native';
 import { Appbar, Divider, Card, Title, Button } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import styles from '../styles/HomeScreenStyle';
 import firebaseFunctions from '../firebase/functions';
 
 const Home = () => {
+  const route = useRoute();
   const navigation = useNavigation();
   const username = 'Chakeera Wansoh'; // get name from DB
   const currentScore = '100pts'; // get from DB
   const holePressed = async (num) => {
     const holenum = String(num).padStart(2, '0');
-    const mockdata = await firebaseFunctions.fetchSpecificHole(
+    const holeinfo = await firebaseFunctions.fetchSpecificHole(
       'itSxMneyR9ePHawMWLiuqUoSJP92',
       'G6WINzX2fLY73zrVUfIp3UQJzYC2',
       '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed',
@@ -23,12 +24,12 @@ const Home = () => {
       '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
     );
     console.log('holenumber ---> ', holenum);
-    console.log('data ->', mockdata);
+    console.log('data ->', holeinfo);
     console.log('score ->', fullscore);
     setTimeout(() => {
       navigation.navigate('Info', {
         hole: holenum,
-        holeData: mockdata,
+        holeData: holeinfo,
       });
     }, 0);
   };
@@ -37,7 +38,7 @@ const Home = () => {
       'G6WINzX2fLY73zrVUfIp3UQJzYC2',
       '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
     );
-    const name = await firebaseFunctions.fetchUserName(
+    const currentUsername = await firebaseFunctions.fetchUserName(
       'itSxMneyR9ePHawMWLiuqUoSJP92',
       'G6WINzX2fLY73zrVUfIp3UQJzYC2',
       '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
@@ -54,7 +55,7 @@ const Home = () => {
       '31dc2b121dbbb838ca4e220ea86b0ea7855610e5d417e2b8471b67bf11a474ed'
     );
     const currentUserData = {
-      name: name,
+      name: currentUsername,
       score: currentUserScore,
       stroke: currentUserStroke,
       id: 0,

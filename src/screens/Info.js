@@ -376,11 +376,6 @@ const InfoScreen = () => {
       upDown: isUDActive,
       updateDate: new Date().toISOString(),
     };
-    // if (fairway !== '') {
-    //   holeInfo.fairway = fairway;
-    // } // else {
-    //   holeInfo.fairway = null;
-    // }
     console.log('Push ->', holeInfo);
     console.log('holenumber -->', hole);
     await firebaseFunctions.updateHoleInfo(

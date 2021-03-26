@@ -200,12 +200,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.button_border,
     borderRadius: 10,
   },
-  enabledText: {
-    color: 'black',
-  },
-  disabledText: {
-    color: 'white',
-  },
   enabledButton: {
     backgroundColor: theme.colors.white,
     borderRadius: 10,
