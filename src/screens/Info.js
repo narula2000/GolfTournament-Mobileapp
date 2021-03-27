@@ -388,7 +388,7 @@ const InfoScreen = () => {
       hole,
       holeInfo
     );
-    navigation.navigate('Home', { updatedCurrentScore: score });
+    navigation.navigate('Home');
   };
 
   return (
@@ -499,92 +499,89 @@ const InfoScreen = () => {
             </View>
           )}
           <Text style={styles.leftheadertext}>Fairways</Text>
-          <TouchableOpacity
-            style={
-              fairway === fairways.Left
-                ? styles.roundButtonPressed
-                : !showStroke
-                ? styles.roundButtonDisabled
-                : styles.roundButtonActive
-            }
-            onPress={() => {
-              if (showStroke) {
-                setFairway(fairways.Left);
-              }
-            }}
-          >
-            <Icon
-              name="arrow-top-left"
-              size={15}
-              color={
-                showStroke && fairway !== fairways.Left ? 'black' : 'white'
-              }
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={
-              fairway === fairways.On
-                ? styles.roundButtonPressed
-                : !showStroke
-                ? styles.roundButtonDisabled
-                : styles.roundButtonActive
-            }
-            onPress={() => {
-              if (showStroke) {
-                setFairway(fairways.On);
-              }
-            }}
-          >
-            <Icon
-              name="circle-outline"
-              size={15}
-              color={showStroke && fairway !== fairways.On ? 'black' : 'white'}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={
-              fairway === fairways.Right
-                ? styles.roundButtonPressed
-                : !showStroke
-                ? styles.roundButtonDisabled
-                : styles.roundButtonActive
-            }
-            onPress={() => {
-              if (showStroke) {
-                setFairway(fairways.Right);
-              }
-            }}
-          >
-            <Icon
-              name="arrow-top-right"
-              size={15}
-              color={
-                showStroke && fairway !== fairways.Right ? 'black' : 'white'
-              }
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={
-              fairway === fairways.Hazard
-                ? styles.roundButtonPressed
-                : !showStroke
-                ? styles.roundButtonDisabled
-                : styles.roundButtonActive
-            }
-            onPress={() => {
-              if (showStroke) {
-                setFairway(fairways.Hazard);
-              }
-            }}
-          >
-            <Icon
-              name="arrow-down"
-              size={15}
-              color={
-                showStroke && fairway !== fairways.Hazard ? 'black' : 'white'
-              }
-            />
-          </TouchableOpacity>
+          {showStroke ? (
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity
+                style={
+                  fairway === fairways.Left
+                    ? styles.roundButtonPressed
+                    : styles.roundButtonActive
+                }
+                onPress={() => {
+                  setFairway(fairways.Left);
+                }}
+              >
+                <Icon
+                  name="arrow-top-left"
+                  size={15}
+                  color={fairway !== fairways.Left ? 'black' : 'white'}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  fairway === fairways.On
+                    ? styles.roundButtonPressed
+                    : styles.roundButtonActive
+                }
+                onPress={() => {
+                  setFairway(fairways.On);
+                }}
+              >
+                <Icon
+                  name="circle-outline"
+                  size={15}
+                  color={fairway !== fairways.On ? 'black' : 'white'}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  fairway === fairways.Right
+                    ? styles.roundButtonPressed
+                    : styles.roundButtonActive
+                }
+                onPress={() => {
+                  setFairway(fairways.Right);
+                }}
+              >
+                <Icon
+                  name="arrow-top-right"
+                  size={15}
+                  color={fairway !== fairways.Right ? 'black' : 'white'}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  fairway === fairways.Hazard
+                    ? styles.roundButtonPressed
+                    : styles.roundButtonActive
+                }
+                onPress={() => {
+                  setFairway(fairways.Hazard);
+                }}
+              >
+                <Icon
+                  name="arrow-down"
+                  size={15}
+                  color={fairway !== fairways.Hazard ? 'black' : 'white'}
+                />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity style={styles.roundButtonDisabled}>
+                <Icon name="arrow-top-left" size={15} color="white" />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.roundButtonDisabled}>
+                <Icon name="circle-outline" size={15} color="white" />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.roundButtonDisabled}>
+                <Icon name="arrow-top-right" size={15} color="white" />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.roundButtonDisabled}>
+                <Icon name="arrow-down" size={15} color="white" />
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </View>
       <View style={styles.btn_view_info}>
@@ -645,6 +642,7 @@ const InfoScreen = () => {
         mode="contained"
         onPress={() => {
           setVisible(true);
+          console.log('stroke ---> ', stroke);
         }}
       >
         Submit
