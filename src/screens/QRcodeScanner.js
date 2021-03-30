@@ -25,10 +25,10 @@ const QRcodeScanner = () => {
 
   const handleBarCodeScanned = async ({ data }) => {
     try {
+      setLoading(true);
       const scannedData = JSON.parse({ data }.data);
       setAdminId(String(scannedData.adminId));
       setTournamentId(String(scannedData.tournamentId));
-      setLoading(true);
       const validTournament = await firebasefunction.checkTournament(
         adminId,
         tournamentId
@@ -38,10 +38,13 @@ const QRcodeScanner = () => {
           tournamentId: tournamentId,
           adminId: adminId,
         });
+        setLoading(false);
+      } else {
+        setScanned(true);
+        setLoading(false);
       }
-      setLoading(false);
     } catch (err) {
-      Alert.alert(`Tournament Not Found`);
+      Alert.alert(`Contact any staff for tournament QR`);
       setScanned(true);
       setLoading(false);
     }
@@ -62,29 +65,46 @@ const QRcodeScanner = () => {
     );
   }
   return (
+    // <View style={styles.container}>
+    //   {scanned ? (
+    //     <View style={styles.container}>
+    //       <BarCodeScanner
+    //         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+    //         style={StyleSheet.absoluteFillObject}
+    //       />
+    //       <Button style={styles.button} onPress={() => setScanned(false)}>
+    //         Tap to scan again
+    //       </Button>
+    //     </View>
+    //   ) : (
+    //     <View style={styles.container}>
+    //       <BarCodeScanner
+    //         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+    //         style={StyleSheet.absoluteFillObject}
+    //       />
+    //       <ActivityIndicator
+    //         animating={isLoading}
+    //         size="500"
+    //         color={theme.colors.secondary}
+    //       />
+    //     </View>
+    //   )}
+    // </View>
+
     <View style={styles.container}>
-      {scanned ? (
-        <View style={styles.container}>
-          <BarCodeScanner
-            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-            style={StyleSheet.absoluteFillObject}
-          />
-          <Button style={styles.button} onPress={() => setScanned(false)}>
-            Tap to scan again
-          </Button>
-        </View>
-      ) : (
-        <View style={styles.container}>
-          <BarCodeScanner
-            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-            style={StyleSheet.absoluteFillObject}
-          />
-          <ActivityIndicator
-            animating={isLoading}
-            size="500"
-            color={theme.colors.secondary}
-          />
-        </View>
+      <BarCodeScanner
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        style={StyleSheet.absoluteFillObject}
+      />
+      <ActivityIndicator
+        animating={isLoading}
+        size="500"
+        color={theme.colors.secondary}
+      />
+      {scanned && (
+        <Button style={styles.button} onPress={() => setScanned(false)}>
+          Tap to Scan Again
+        </Button>
       )}
     </View>
   );
