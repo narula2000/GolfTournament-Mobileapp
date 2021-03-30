@@ -6,25 +6,30 @@ import {
   Text,
   AsyncStorage,
 } from 'react-native';
-import { Appbar, Divider, Card, Title, Button } from 'react-native-paper';
+import {
+  Appbar,
+  Divider,
+  Card,
+  Title,
+  Button,
+  ActivityIndicator,
+} from 'react-native-paper';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import styles from '../styles/HomeScreenStyle';
 import firebaseFunctions from '../firebase/functions';
+import theme from '../core/theme';
 
 const Home = () => {
   const route = useRoute();
   const navigation = useNavigation();
-  const {
-    tournamentId,
-    adminId,
-    username,
-    currentScore,
-    updatedCurrentScore,
-  } = route.params;
+  const { tournamentId, adminId, username, currentScore } = route.params;
+  // const { updatedCurrentScore } = route.params;
   const auth = firebase.auth();
   const userID = String(auth.currentUser.uid);
+  const [isLoading, setLoading] = React.useState(false);
+  const [pressed, setPressed] = React.useState(false);
 
   const holePressed = async (num) => {
     try {
@@ -54,6 +59,8 @@ const Home = () => {
   };
 
   const onButtonPressed = async () => {
+    setPressed(true);
+    setLoading(true);
     const users = await firebaseFunctions.fetchValidUserInfo(
       adminId,
       tournamentId
@@ -124,6 +131,8 @@ const Home = () => {
       table: table,
       currentUser: currentUserData,
     });
+    setLoading(false);
+    setPressed(false);
   };
 
   return (
@@ -137,11 +146,7 @@ const Home = () => {
         <Card style={styles.card}>
           <Card.Content style={styles.card}>
             <Title style={styles.title}>{username}</Title>
-            <Text style={styles.text}>
-              {updatedCurrentScore > currentScore
-                ? updatedCurrentScore
-                : currentScore}
-            </Text>
+            <Text style={styles.text}>Score: {currentScore}</Text>
           </Card.Content>
         </Card>
       </Appbar.Header>
@@ -292,14 +297,22 @@ const Home = () => {
           <Text>Hole 18</Text>
         </TouchableOpacity>
       </View>
-      <Button
-        style={styles.button}
-        labelStyle={styles.buttontext}
-        mode="contained"
-        onPress={onButtonPressed}
-      >
-        Tournament Ranking
-      </Button>
+      {pressed ? (
+        <ActivityIndicator
+          animating={isLoading}
+          size="500"
+          color={theme.colors.secondary}
+        />
+      ) : (
+        <Button
+          style={styles.button}
+          labelStyle={styles.buttontext}
+          mode="contained"
+          onPress={onButtonPressed}
+        >
+          Tournament Ranking
+        </Button>
+      )}
     </View>
   );
 };
