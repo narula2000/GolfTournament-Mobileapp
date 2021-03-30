@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Image, TouchableOpacity, Text } from 'react-native';
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  Text,
+  AsyncStorage,
+} from 'react-native';
 import { Appbar, Divider, Card, Title, Button } from 'react-native-paper';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import firebase from 'firebase/app';
@@ -21,6 +27,15 @@ const Home = () => {
   const userID = String(auth.currentUser.uid);
 
   const holePressed = async (num) => {
+    try {
+      const value = await AsyncStorage.getItem('tournamentId');
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+      }
+    } catch (error) {
+      console.log(error);
+    }
     const holenum = String(num).padStart(2, '0');
     const holeinfo = await firebaseFunctions.fetchSpecificHole(
       userID,

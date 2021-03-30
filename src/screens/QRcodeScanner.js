@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Alert, StyleSheet } from 'react-native';
+import { View, Alert, StyleSheet, AsyncStorage } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ActivityIndicator, Button, Text } from 'react-native-paper';
 import 'firebase/auth';
@@ -34,10 +34,14 @@ const QRcodeScanner = () => {
         tournamentId
       );
       if (validTournament) {
-        navigation.navigate('SignIn', {
-          tournamentId: tournamentId,
-          adminId: adminId,
-        });
+        navigation.navigate('SignIn');
+        try {
+          await AsyncStorage.setItem('tournamentId', tournamentId);
+          await AsyncStorage.setItem('adminId', adminId);
+          console.log('tournament and admin id set');
+        } catch (error) {
+          console.log(error);
+        }
         setLoading(false);
       } else {
         setScanned(true);
