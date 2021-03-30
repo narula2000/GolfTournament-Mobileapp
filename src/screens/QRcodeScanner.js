@@ -65,32 +65,6 @@ const QRcodeScanner = () => {
     );
   }
   return (
-    // <View style={styles.container}>
-    //   {scanned ? (
-    //     <View style={styles.container}>
-    //       <BarCodeScanner
-    //         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-    //         style={StyleSheet.absoluteFillObject}
-    //       />
-    //       <Button style={styles.button} onPress={() => setScanned(false)}>
-    //         Tap to scan again
-    //       </Button>
-    //     </View>
-    //   ) : (
-    //     <View style={styles.container}>
-    //       <BarCodeScanner
-    //         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-    //         style={StyleSheet.absoluteFillObject}
-    //       />
-    //       <ActivityIndicator
-    //         animating={isLoading}
-    //         size="500"
-    //         color={theme.colors.secondary}
-    //       />
-    //     </View>
-    //   )}
-    // </View>
-
     <View style={styles.container}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
