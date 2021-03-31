@@ -16,7 +16,6 @@ const RankingMock = () => {
     rows.filter((row) => row.name.toLowerCase().search(q.toLowerCase()) > -1);
 
   const onBackPressed = () => {
-    console.log('button pressed');
     navigation.navigate('Home');
     console.log('ranking table ->', searchPlayer(table));
   };
@@ -30,7 +29,7 @@ const RankingMock = () => {
               name="less-than"
               size={20}
               color="black"
-              style={{ marginLeft: 10 }}
+              style={{ marginLeft: 10, backgroundColor: 'blue' }}
             />
           </TouchableOpacity>
           <Image
