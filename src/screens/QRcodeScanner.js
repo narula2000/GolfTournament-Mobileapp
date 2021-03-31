@@ -1,14 +1,17 @@
 import React from 'react';
 import { View, Alert, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Button, Text } from 'react-native-paper';
+import { ActivityIndicator, Button, Text } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import 'firebase/auth';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import firebasefunction from '../firebase/functions';
 import styles from '../styles/CameraScreenStyle';
+import theme from '../core/theme';
 
 const QRcodeScanner = () => {
   const [hasPermission, setHasPermission] = React.useState(null);
+  const [isLoading, setLoading] = React.useState(false);
   const [scanned, setScanned] = React.useState(false);
   const [tournamentId, setTournamentId] = React.useState('');
   const [adminId, setAdminId] = React.useState('');
@@ -23,6 +26,7 @@ const QRcodeScanner = () => {
 
   const handleBarCodeScanned = async ({ data }) => {
     try {
+      setLoading(true);
       const scannedData = JSON.parse({ data }.data);
       setAdminId(String(scannedData.adminId));
       setTournamentId(String(scannedData.tournamentId));
@@ -31,14 +35,23 @@ const QRcodeScanner = () => {
         tournamentId
       );
       if (validTournament) {
-        navigation.navigate('SignIn', {
-          tournamentId: tournamentId,
-          adminId: adminId,
-        });
+        navigation.navigate('SignIn');
+        try {
+          await AsyncStorage.setItem('tournamentId', tournamentId);
+          await AsyncStorage.setItem('adminId', adminId);
+          // console.log('tournament and admin id set');
+        } catch (error) {
+          console.log(error);
+        }
+        setLoading(false);
+      } else {
+        setScanned(true);
+        setLoading(false);
       }
     } catch (err) {
+      Alert.alert(`Invalid QR code. Please contact any staff`);
       setScanned(true);
-      Alert.alert(`Tournament Not Found`);
+      setLoading(false);
     }
   };
 
@@ -62,9 +75,14 @@ const QRcodeScanner = () => {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
+      <ActivityIndicator
+        animating={isLoading}
+        size="500"
+        color={theme.colors.secondary}
+      />
       {scanned && (
         <Button style={styles.button} onPress={() => setScanned(false)}>
-          Tap to scan again
+          Tap to Scan Again
         </Button>
       )}
     </View>

@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Image, Alert } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import {
   FirebaseRecaptchaVerifierModal,
   FirebaseRecaptchaBanner,
 } from 'expo-firebase-recaptcha';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -20,12 +21,22 @@ const SignIn = () => {
   const [verificationCode, setVerificationCode] = React.useState('');
   const [showOTP, setShowOTP] = React.useState(false);
   const navigation = useNavigation();
-  const route = useRoute();
-  const { tournamentId, adminId } = route.params;
+  const [tournamentId, setTournamentId] = React.useState(null);
+  const [adminId, setAdminId] = React.useState(null);
   const attemptInvisibleVerification = true;
   const auth = firebase.auth();
 
   const signIn = async () => {
+    try {
+      const storageTournamentId = await AsyncStorage.getItem('tournamentId');
+      const storageAdminId = await AsyncStorage.getItem('adminId');
+      if (storageTournamentId !== null && storageAdminId !== null) {
+        setTournamentId(storageTournamentId);
+        setAdminId(storageAdminId);
+      }
+    } catch (error) {
+      console.log(error);
+    }
     try {
       const credential = firebase.auth.PhoneAuthProvider.credential(
         verificationId,
@@ -35,6 +46,8 @@ const SignIn = () => {
       const newUID = String(auth.currentUser.uid);
       console.log(newUID);
       const num = String(auth.currentUser.phoneNumber);
+      console.log(newUID);
+      console.log(num);
       await firebasefunction.renameUserId(newUID, num, adminId, tournamentId);
 
       const username = await firebasefunction.fetchUserName(
@@ -52,13 +65,11 @@ const SignIn = () => {
       console.log(currentScore);
 
       navigation.navigate('Home', {
-        tournamentId: tournamentId,
-        adminId: adminId,
         username: username,
         currentScore: currentScore,
       });
     } catch (err) {
-      Alert.alert(`Error: ${err.message}`);
+      Alert.alert(`Error here: ${err.message}`);
     }
   };
 

@@ -28,7 +28,7 @@ const QRcode = () => {
             navigation.navigate('QRcodeScanner');
           }}
         >
-          Scan Tournament QR code
+          Scan QR code
         </Button>
         <Text style={styles.text}>Where can I get QR code? : </Text>
         <Text>Contact any staff for Tournament QR code</Text>

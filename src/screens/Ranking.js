@@ -17,7 +17,6 @@ const RankingMock = () => {
 
   const onBackPressed = () => {
     navigation.navigate('Home');
-    console.log('ranking table ->', searchPlayer(table));
   };
 
   return (
