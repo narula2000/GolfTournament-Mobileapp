@@ -22,44 +22,26 @@ import theme from '../core/theme';
 const Home = () => {
   const route = useRoute();
   const navigation = useNavigation();
-  // const { tournamentId, adminId, username, currentScore } = route.params;
-  const [tournamentId, setTournamentId] = React.useState('');
-  const [adminId, setAdminId] = React.useState('');
-  const [username, setUsername] = React.useState('');
+  const { tournamentId, adminId, username, currentScore } = route.params;
   const [updateScore, setUpdatedScore] = React.useState(0);
   const auth = firebase.auth();
   const userID = String(auth.currentUser.uid);
   const [visible, setVisible] = React.useState(false);
 
-  const getUpdatedScore = () => {
+  const getScore = () => {
     firebaseFunctions
       .fetchValidUserScore(userID, adminId, tournamentId)
       .then((result) => {
         setUpdatedScore(result);
       });
-    firebaseFunctions
-      .fetchUserName(userID, adminId, tournamentId)
-      .then((result) => {
-        setUsername(result);
-      });
+    return <Text style={styles.text}>Score: {updateScore}</Text>;
   };
 
-  // useEffect(() => {
-  //   getUpdatedScore();
-  //   console.log('setting score ---> ', updateScore);
-  // });
+  useEffect = () => {
+    getScore();
+  };
 
   const holePressed = async (num) => {
-    try {
-      const storageTournamentId = await AsyncStorage.getItem('tournamentId');
-      const storageAdminId = await AsyncStorage.getItem('adminId');
-      if (storageTournamentId !== null && storageAdminId !== null) {
-        setTournamentId(storageTournamentId);
-        setAdminId(storageAdminId);
-      }
-    } catch (error) {
-      console.log(error);
-    }
     const holenum = String(num).padStart(2, '0');
     const holeinfo = await firebaseFunctions.fetchSpecificHole(
       userID,
@@ -161,9 +143,9 @@ const Home = () => {
         />
         <Card style={styles.card}>
           <Card.Content style={styles.card}>
-            {getUpdatedScore()}
             <Title style={styles.title}>{username}</Title>
-            <Text style={styles.text}>Score: {updateScore}</Text>
+            {/* <Text style={styles.text}>Score: {updateScore}</Text> */}
+            {getScore()}
           </Card.Content>
         </Card>
       </Appbar.Header>
