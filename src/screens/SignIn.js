@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Image, Alert, AsyncStorage } from 'react-native';
+import { View, Image, Alert } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import {
   FirebaseRecaptchaVerifierModal,
   FirebaseRecaptchaBanner,
 } from 'expo-firebase-recaptcha';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -44,6 +45,8 @@ const SignIn = () => {
       await auth.signInWithCredential(credential);
       const newUID = String(auth.currentUser.uid);
       const num = String(auth.currentUser.phoneNumber);
+      console.log(newUID);
+      console.log(num);
       await firebasefunction.renameUserId(newUID, num, adminId, tournamentId);
 
       const currentScore = await firebasefunction.fetchValidUserScore(
@@ -59,13 +62,11 @@ const SignIn = () => {
       );
 
       navigation.navigate('Home', {
-        tournamentId: tournamentId,
-        adminId: adminId,
         username: username,
         currentScore: currentScore,
       });
     } catch (err) {
-      Alert.alert(`Error: ${err.message}`);
+      Alert.alert(`Error here: ${err.message}`);
     }
   };
 

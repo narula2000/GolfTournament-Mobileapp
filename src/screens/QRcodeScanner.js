@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Alert, StyleSheet, AsyncStorage } from 'react-native';
+import { View, Alert, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ActivityIndicator, Button, Text } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import 'firebase/auth';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import firebasefunction from '../firebase/functions';
@@ -38,7 +39,7 @@ const QRcodeScanner = () => {
         try {
           await AsyncStorage.setItem('tournamentId', tournamentId);
           await AsyncStorage.setItem('adminId', adminId);
-          console.log('tournament and admin id set');
+          // console.log('tournament and admin id set');
         } catch (error) {
           console.log(error);
         }
@@ -48,7 +49,7 @@ const QRcodeScanner = () => {
         setLoading(false);
       }
     } catch (err) {
-      Alert.alert(`Contact any staff for tournament QR`);
+      Alert.alert(`Invalid QR code. Please contact any staff`);
       setScanned(true);
       setLoading(false);
     }
