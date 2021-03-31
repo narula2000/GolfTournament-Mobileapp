@@ -7,6 +7,9 @@ import {
   Card,
   Title,
   Button,
+  Paragraph,
+  Dialog,
+  Portal,
 } from 'react-native-paper';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import firebase from 'firebase/app';
@@ -22,6 +25,7 @@ const Home = () => {
   const [updateScore, setUpdatedScore] = React.useState(currentScore);
   const auth = firebase.auth();
   const userID = String(auth.currentUser.uid);
+  const [visible, setVisible] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
   const [pressed, setPressed] = React.useState(false);
 
@@ -294,7 +298,7 @@ const Home = () => {
           <Text>Hole 18</Text>
         </TouchableOpacity>
       </View>
-      {pressed ? (
+      {/* {pressed ? (
         <ActivityIndicator
           animating={isLoading}
           size="500"
@@ -309,7 +313,26 @@ const Home = () => {
         >
           Tournament Ranking
         </Button>
-      )}
+      )} */}
+      <Button
+        style={styles.button}
+        labelStyle={styles.buttontext}
+        mode="contained"
+        onPress={onButtonPressed}
+      >
+        Tournament Ranking
+      </Button>
+      <Portal>
+        <Dialog visible={visible} onDismiss={() => setVisible(false)}>
+          <Dialog.Title>Submit Your Score</Dialog.Title>
+          <Dialog.Content>
+            <Paragraph>
+              Your score will be used for ranking calculation. Make sure you
+              have entered the right informations.
+            </Paragraph>
+          </Dialog.Content>
+        </Dialog>
+      </Portal>
     </View>
   );
 };

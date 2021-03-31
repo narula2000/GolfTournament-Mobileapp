@@ -642,7 +642,6 @@ const InfoScreen = () => {
         mode="contained"
         onPress={() => {
           setVisible(true);
-          console.log('stroke ---> ', stroke);
         }}
       >
         Submit
@@ -667,7 +666,7 @@ const InfoScreen = () => {
         <Portal>
           <Dialog visible={visible} onDismiss={() => setVisible(false)}>
             <Dialog.Content>
-              <Paragraph>There is no input for stroke</Paragraph>
+              <Dialog.Title>Ohh No! Invalid input for Stroke</Dialog.Title>
             </Dialog.Content>
             <Dialog.Actions>
               <Button onPress={() => setVisible(false)}>Back</Button>

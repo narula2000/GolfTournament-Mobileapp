@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { Appbar, DataTable, Text, Searchbar } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import styles from '../styles/RankingMockStyle';
+import styles from '../styles/RankingStyle';
 
 const RankingMock = () => {
   const route = useRoute();
@@ -24,13 +24,9 @@ const RankingMock = () => {
     <View>
       <KeyboardAwareScrollView resetScrollToCoords={{ x: 0, y: 0 }}>
         <Appbar.Header style={styles.appbar}>
-          <TouchableOpacity onPress={onBackPressed} style={styles.container}>
-            <Icon
-              name="less-than"
-              size={20}
-              color="black"
-              style={{ marginLeft: 10, backgroundColor: 'blue' }}
-            />
+          <TouchableOpacity onPress={onBackPressed} style={styles.backBtn}>
+            <Icon name="less-than" size={20} color="black" />
+            <Text> BACK </Text>
           </TouchableOpacity>
           <Image
             // eslint-disable-next-line global-require
