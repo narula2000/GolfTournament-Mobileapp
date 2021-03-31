@@ -33,20 +33,23 @@ const SignIn = () => {
       );
       await auth.signInWithCredential(credential);
       const newUID = String(auth.currentUser.uid);
+      console.log(newUID);
       const num = String(auth.currentUser.phoneNumber);
       await firebasefunction.renameUserId(newUID, num, adminId, tournamentId);
-
-      const currentScore = await firebasefunction.fetchValidUserScore(
-        newUID,
-        adminId,
-        tournamentId
-      );
 
       const username = await firebasefunction.fetchUserName(
         newUID,
         adminId,
         tournamentId
       );
+      console.log(username);
+
+      const currentScore = await firebasefunction.fetchValidUserScore(
+        newUID,
+        adminId,
+        tournamentId
+      );
+      console.log(currentScore);
 
       navigation.navigate('Home', {
         tournamentId: tournamentId,

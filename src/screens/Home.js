@@ -26,8 +26,6 @@ const Home = () => {
   const auth = firebase.auth();
   const userID = String(auth.currentUser.uid);
   const [visible, setVisible] = React.useState(false);
-  const [isLoading, setLoading] = React.useState(false);
-  const [pressed, setPressed] = React.useState(false);
 
   const getUpdatedScore = async () => {
     setUpdatedScore(
@@ -60,8 +58,7 @@ const Home = () => {
   };
 
   const onButtonPressed = async () => {
-    setPressed(true);
-    setLoading(true);
+    setVisible(true);
     const users = await firebaseFunctions.fetchValidUserInfo(
       adminId,
       tournamentId
@@ -132,8 +129,6 @@ const Home = () => {
       table: table,
       currentUser: currentUserData,
     });
-    setLoading(false);
-    setPressed(false);
   };
 
   return (
