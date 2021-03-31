@@ -35,13 +35,10 @@ const QRcodeScanner = () => {
         tournamentId
       );
       if (validTournament) {
-        navigation.navigate('SignIn');
-        try {
-          await AsyncStorage.setItem('tournamentId', tournamentId);
-          await AsyncStorage.setItem('adminId', adminId);
-        } catch (error) {
-          console.log(error);
-        }
+        navigation.navigate('SignIn', {
+          tournamentId: tournamentId,
+          adminId: adminId,
+        });
         setLoading(false);
       } else {
         setScanned(true);

@@ -1,12 +1,11 @@
 import React from 'react';
 import { View, Image, Alert } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   FirebaseRecaptchaVerifierModal,
   FirebaseRecaptchaBanner,
 } from 'expo-firebase-recaptcha';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -21,8 +20,8 @@ const SignIn = () => {
   const [verificationCode, setVerificationCode] = React.useState('');
   const [showOTP, setShowOTP] = React.useState(false);
   const navigation = useNavigation();
-  const [tournamentId, setTournamentId] = React.useState('');
-  const [adminId, setAdminId] = React.useState('');
+  const route = useRoute();
+  const { tournamentId, adminId } = route.params;
   const attemptInvisibleVerification = true;
   const auth = firebase.auth();
 

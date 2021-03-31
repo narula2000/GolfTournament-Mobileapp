@@ -12,7 +12,6 @@ import {
   ActivityIndicator,
 } from 'react-native-paper';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import styles from '../styles/HomeScreenStyle';
