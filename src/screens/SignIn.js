@@ -1,12 +1,11 @@
 import React from 'react';
 import { View, Image, Alert } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import {
   FirebaseRecaptchaVerifierModal,
   FirebaseRecaptchaBanner,
 } from 'expo-firebase-recaptcha';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -21,24 +20,12 @@ const SignIn = () => {
   const [verificationCode, setVerificationCode] = React.useState('');
   const [showOTP, setShowOTP] = React.useState(false);
   const navigation = useNavigation();
-  const [tournamentId, setTournamentId] = React.useState('');
-  const [adminId, setAdminId] = React.useState('');
+  const route = useRoute();
+  const { tournamentId, adminId } = route.params;
   const attemptInvisibleVerification = true;
   const auth = firebase.auth();
 
   const signIn = async () => {
-    try {
-      const storageTournamentId = await AsyncStorage.getItem('tournamentId');
-      const storageAdminId = await AsyncStorage.getItem('adminId');
-      if (storageTournamentId !== null && storageAdminId !== null) {
-        setTournamentId(storageTournamentId);
-        setAdminId(storageAdminId);
-        console.log(storageAdminId);
-        console.log(storageTournamentId);
-      }
-    } catch (error) {
-      console.log(error);
-    }
     try {
       const credential = firebase.auth.PhoneAuthProvider.credential(
         verificationId,
@@ -47,25 +34,25 @@ const SignIn = () => {
       await auth.signInWithCredential(credential);
       const newUID = String(auth.currentUser.uid);
       const num = String(auth.currentUser.phoneNumber);
-      console.log(newUID);
-      console.log(num);
       await firebasefunction.renameUserId(newUID, num, adminId, tournamentId);
 
-      // const currentScore = await firebasefunction.fetchValidUserScore(
-      //   newUID,
-      //   adminId,
-      //   tournamentId
-      // );
+      const currentScore = await firebasefunction.fetchValidUserScore(
+        newUID,
+        adminId,
+        tournamentId
+      );
 
-      // const username = await firebasefunction.fetchUserName(
-      //   newUID,
-      //   adminId,
-      //   tournamentId
-      // );
+      const username = await firebasefunction.fetchUserName(
+        newUID,
+        adminId,
+        tournamentId
+      );
 
       navigation.navigate('Home', {
-        // username: username,
-        // currentScore: currentScore,
+        tournamentId: tournamentId,
+        adminId: adminId,
+        username: username,
+        currentScore: currentScore,
       });
     } catch (err) {
       Alert.alert(`Error here: ${err.message}`);

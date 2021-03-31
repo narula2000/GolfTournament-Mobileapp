@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
 } from 'react-native-paper';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import styles from '../styles/HomeScreenStyle';
@@ -19,26 +18,13 @@ import theme from '../core/theme';
 const Home = () => {
   const route = useRoute();
   const navigation = useNavigation();
-  const { username, currentScore } = route.params;
-  // const { updatedCurrentScore } = route.params;
+  const { tournamentId, adminId, username, currentScore } = route.params;
   const auth = firebase.auth();
   const userID = String(auth.currentUser.uid);
   const [isLoading, setLoading] = React.useState(false);
   const [pressed, setPressed] = React.useState(false);
-  const [tournamentId, setTournamentId] = React.useState(null);
-  const [adminId, setAdminId] = React.useState(null);
 
   const holePressed = async (num) => {
-    try {
-      const storageTournamentId = await AsyncStorage.getItem('tournamentId');
-      const storageAdminId = await AsyncStorage.getItem('adminId');
-      if (storageTournamentId !== null && storageAdminId !== null) {
-        setTournamentId(storageTournamentId);
-        setAdminId(storageAdminId);
-      }
-    } catch (error) {
-      console.log(error);
-    }
     const holenum = String(num).padStart(2, '0');
     const holeinfo = await firebaseFunctions.fetchSpecificHole(
       userID,
