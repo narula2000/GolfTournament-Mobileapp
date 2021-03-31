@@ -23,8 +23,8 @@ const Home = () => {
   const route = useRoute();
   const navigation = useNavigation();
   // const { tournamentId, adminId, username, currentScore } = route.params;
-  const [tournamentId, setTournamentId] = React.useState(null);
-  const [adminId, setAdminId] = React.useState(null);
+  const [tournamentId, setTournamentId] = React.useState('');
+  const [adminId, setAdminId] = React.useState('');
   const [username, setUsername] = React.useState('');
   const [updateScore, setUpdatedScore] = React.useState(0);
   const auth = firebase.auth();
@@ -75,7 +75,6 @@ const Home = () => {
         holeData: holeinfo,
       });
     }, 0);
-    getUpdatedScore();
   };
 
   const onButtonPressed = async () => {
@@ -162,6 +161,7 @@ const Home = () => {
         />
         <Card style={styles.card}>
           <Card.Content style={styles.card}>
+            {getUpdatedScore()}
             <Title style={styles.title}>{username}</Title>
             <Text style={styles.text}>Score: {updateScore}</Text>
           </Card.Content>
