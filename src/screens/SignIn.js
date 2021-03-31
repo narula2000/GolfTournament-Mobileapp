@@ -21,8 +21,8 @@ const SignIn = () => {
   const [verificationCode, setVerificationCode] = React.useState('');
   const [showOTP, setShowOTP] = React.useState(false);
   const navigation = useNavigation();
-  const [tournamentId, setTournamentId] = React.useState(null);
-  const [adminId, setAdminId] = React.useState(null);
+  const [tournamentId, setTournamentId] = React.useState('');
+  const [adminId, setAdminId] = React.useState('');
   const attemptInvisibleVerification = true;
   const auth = firebase.auth();
 
@@ -33,6 +33,8 @@ const SignIn = () => {
       if (storageTournamentId !== null && storageAdminId !== null) {
         setTournamentId(storageTournamentId);
         setAdminId(storageAdminId);
+        console.log(storageAdminId);
+        console.log(storageTournamentId);
       }
     } catch (error) {
       console.log(error);
@@ -49,21 +51,21 @@ const SignIn = () => {
       console.log(num);
       await firebasefunction.renameUserId(newUID, num, adminId, tournamentId);
 
-      const currentScore = await firebasefunction.fetchValidUserScore(
-        newUID,
-        adminId,
-        tournamentId
-      );
+      // const currentScore = await firebasefunction.fetchValidUserScore(
+      //   newUID,
+      //   adminId,
+      //   tournamentId
+      // );
 
-      const username = await firebasefunction.fetchUserName(
-        newUID,
-        adminId,
-        tournamentId
-      );
+      // const username = await firebasefunction.fetchUserName(
+      //   newUID,
+      //   adminId,
+      //   tournamentId
+      // );
 
       navigation.navigate('Home', {
-        username: username,
-        currentScore: currentScore,
+        // username: username,
+        // currentScore: currentScore,
       });
     } catch (err) {
       Alert.alert(`Error here: ${err.message}`);
