@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Image, TouchableOpacity, Text } from 'react-native';
 import {
   ActivityIndicator,
@@ -19,11 +19,22 @@ const Home = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { tournamentId, adminId, username, currentScore } = route.params;
-  // const { updatedCurrentScore } = route.params;
+  const [updateScore, setUpdatedScore] = React.useState(currentScore);
   const auth = firebase.auth();
   const userID = String(auth.currentUser.uid);
   const [isLoading, setLoading] = React.useState(false);
   const [pressed, setPressed] = React.useState(false);
+
+  const getUpdatedScore = async () => {
+    setUpdatedScore(
+      await firebaseFunctions.fetchValidUserScore(userID, adminId, tournamentId)
+    );
+  };
+
+  useEffect(() => {
+    getUpdatedScore();
+    console.log('setting score ---> ', updateScore);
+  });
 
   const holePressed = async (num) => {
     const holenum = String(num).padStart(2, '0');
@@ -41,6 +52,7 @@ const Home = () => {
         holeData: holeinfo,
       });
     }, 0);
+    getUpdatedScore();
   };
 
   const onButtonPressed = async () => {
@@ -131,7 +143,7 @@ const Home = () => {
         <Card style={styles.card}>
           <Card.Content style={styles.card}>
             <Title style={styles.title}>{username}</Title>
-            <Text style={styles.text}>Score: {currentScore}</Text>
+            <Text style={styles.text}>Score: {updateScore}</Text>
           </Card.Content>
         </Card>
       </Appbar.Header>

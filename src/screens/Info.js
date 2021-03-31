@@ -107,10 +107,13 @@ const InfoScreen = () => {
 
   useEffect(() => {
     updateScoreState(score);
+  }, [score]);
+
+  useEffect(() => {
     if (holeData.fairway !== undefined) {
       setFairway(holeData.fairway);
     }
-  }, [score, holeData.fairway]);
+  }, [holeData.fairway]);
 
   const styleCardScoreName = () => {
     switch (scoreState) {
@@ -220,6 +223,7 @@ const InfoScreen = () => {
     setStroke(holePar);
     setScore(0);
     setScoreState(scoreNames.Par);
+    setFairway('');
   };
 
   const increaseStroke = () => {
@@ -260,7 +264,7 @@ const InfoScreen = () => {
       setStroke(holePar);
     }
 
-    if (currentStroke < 1) {
+    if (currentStroke <= 0) {
       setPutts(0);
       setSandShots(0);
       setPenalties(0);
@@ -277,10 +281,6 @@ const InfoScreen = () => {
     }
 
     setShowStroke(!currentStroke <= 0);
-
-    if (currentStroke <= 0) {
-      setFairway('');
-    }
 
     updateScoreState(currentScore);
     setGIR(currentStroke - putts <= GIR);
