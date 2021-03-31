@@ -39,7 +39,6 @@ const QRcodeScanner = () => {
         try {
           await AsyncStorage.setItem('tournamentId', tournamentId);
           await AsyncStorage.setItem('adminId', adminId);
-          // console.log('tournament and admin id set');
         } catch (error) {
           console.log(error);
         }

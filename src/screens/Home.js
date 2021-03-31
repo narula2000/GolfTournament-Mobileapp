@@ -25,21 +25,29 @@ const Home = () => {
   // const { tournamentId, adminId, username, currentScore } = route.params;
   const [tournamentId, setTournamentId] = React.useState(null);
   const [adminId, setAdminId] = React.useState(null);
-  const [updateScore, setUpdatedScore] = React.useState(currentScore);
+  const [username, setUsername] = React.useState('');
+  const [updateScore, setUpdatedScore] = React.useState(0);
   const auth = firebase.auth();
   const userID = String(auth.currentUser.uid);
   const [visible, setVisible] = React.useState(false);
 
-  const getUpdatedScore = async () => {
-    setUpdatedScore(
-      await firebaseFunctions.fetchValidUserScore(userID, adminId, tournamentId)
-    );
+  const getUpdatedScore = () => {
+    firebaseFunctions
+      .fetchValidUserScore(userID, adminId, tournamentId)
+      .then((result) => {
+        setUpdatedScore(result);
+      });
+    firebaseFunctions
+      .fetchUserName(userID, adminId, tournamentId)
+      .then((result) => {
+        setUsername(result);
+      });
   };
 
-  useEffect(() => {
-    getUpdatedScore();
-    console.log('setting score ---> ', updateScore);
-  });
+  // useEffect(() => {
+  //   getUpdatedScore();
+  //   console.log('setting score ---> ', updateScore);
+  // });
 
   const holePressed = async (num) => {
     try {
