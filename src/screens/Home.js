@@ -6,7 +6,6 @@ import {
   Card,
   Title,
   Button,
-  Paragraph,
   Dialog,
   Portal,
   ActivityIndicator,
@@ -33,11 +32,6 @@ const Home = () => {
       .then((result) => {
         setUpdatedScore(result);
       });
-    return <Text style={styles.text}>Score: {updateScore}</Text>;
-  };
-
-  useEffect = () => {
-    getScore();
   };
 
   const holePressed = async (num) => {
@@ -48,14 +42,21 @@ const Home = () => {
       tournamentId,
       `${holenum}`
     );
+    const currentUsername = await firebaseFunctions.fetchUserName(
+      userID,
+      adminId,
+      tournamentId
+    );
     setTimeout(() => {
       navigation.navigate('Info', {
         adminId: adminId,
         tournamentId: tournamentId,
         hole: holenum,
         holeData: holeinfo,
+        username: currentUsername,
       });
     }, 0);
+    getScore();
   };
 
   const onButtonPressed = async () => {
@@ -130,6 +131,8 @@ const Home = () => {
       table: table,
       currentUser: currentUserData,
     });
+    console.log(table);
+    setVisible(false);
   };
 
   return (
@@ -143,8 +146,7 @@ const Home = () => {
         <Card style={styles.card}>
           <Card.Content style={styles.card}>
             <Title style={styles.title}>{username}</Title>
-            {/* <Text style={styles.text}>Score: {updateScore}</Text> */}
-            {getScore()}
+            <Text style={styles.text}>Score: {updateScore}</Text>
           </Card.Content>
         </Card>
       </Appbar.Header>
@@ -295,22 +297,6 @@ const Home = () => {
           <Text>Hole 18</Text>
         </TouchableOpacity>
       </View>
-      {/* {pressed ? (
-        <ActivityIndicator
-          animating={isLoading}
-          size="500"
-          color={theme.colors.secondary}
-        />
-      ) : (
-        <Button
-          style={styles.button}
-          labelStyle={styles.buttontext}
-          mode="contained"
-          onPress={onButtonPressed}
-        >
-          Tournament Ranking
-        </Button>
-      )} */}
       <Button
         style={styles.button}
         labelStyle={styles.buttontext}
@@ -320,14 +306,23 @@ const Home = () => {
         Tournament Ranking
       </Button>
       <Portal>
-        <Dialog visible={visible} onDismiss={() => setVisible(false)}>
-          <Dialog.Title>Submit Your Score</Dialog.Title>
-          <Dialog.Content>
-            <Paragraph>
-              Your score will be used for ranking calculation. Make sure you
-              have entered the right informations.
-            </Paragraph>
-          </Dialog.Content>
+        <Dialog
+          visible={visible}
+          onDismiss={() => setVisible(false)}
+          style={{
+            alignItems: 'center',
+            height: 155,
+            width: 200,
+            position: 'relative',
+            marginLeft: 120,
+          }}
+        >
+          <Dialog.Title> Loading</Dialog.Title>
+          <ActivityIndicator
+            animating
+            size="400"
+            color={theme.colors.secondary}
+          />
         </Dialog>
       </Portal>
     </View>

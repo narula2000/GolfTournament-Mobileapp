@@ -53,7 +53,7 @@ const InfoScreen = () => {
   const auth = firebase.auth();
   const userID = String(auth.currentUser.uid);
 
-  const { adminId, tournamentId, hole, holeData } = route.params;
+  const { adminId, tournamentId, hole, holeData, username } = route.params;
   const holePar = holeData.par;
 
   const GIR = holePar - 2;
@@ -406,7 +406,7 @@ const InfoScreen = () => {
         </View>
         <Card style={styles.appbar_card}>
           <Card.Content>
-            <Title style={styles.appbar_card_text}> Chakeera </Title>
+            <Title style={styles.appbar_card_text}> {username} </Title>
             {scoreEvaluator()}
           </Card.Content>
         </Card>
