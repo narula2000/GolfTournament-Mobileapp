@@ -31,7 +31,6 @@ const QRcodeScanner = () => {
       setAdminId(String(scannedData.adminId));
       setTournamentId(String(scannedData.tournamentId));
       const validTournament = await firebasefunction.checkTournament(
-        adminId,
         tournamentId
       );
       if (validTournament) {
