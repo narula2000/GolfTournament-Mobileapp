@@ -31,7 +31,6 @@ const renameUserId = async (userId, _phonenumber, _adminId, _tournamentId) => {
       delete users[dummyId];
     }
   });
-  console.log(users);
   await database.ref(path).set(users);
 };
 
@@ -40,6 +39,14 @@ const fetchHoles = async (userId, _adminId, _tournamentId) => {
   const database = firebase.database();
   const holesSnap = await database.ref(path).once('value');
   return holesSnap.val();
+};
+
+const fetchUserName = async (userId, _adminId, _tournamentId) => {
+  const path = `admin/${_adminId}/${_tournamentId}/${userId}/`;
+  const database = firebase.database();
+  const holesSnap = await database.ref(path).once('value');
+  const user = holesSnap.val();
+  return user.name;
 };
 
 const fetchSpecificHole = async (
@@ -58,8 +65,9 @@ const fetchValidUserScore = async (userId, _adminId, _tournamentId) => {
   let userScore = 0;
   const holes = await fetchHoles(userId, _adminId, _tournamentId);
   Object.keys(holes).forEach((hole) => {
-    if (holes[hole].updateDate !== holes[hole].createDate)
+    if (holes[hole].updateDate !== holes[hole].createDate) {
       userScore += holes[hole].score;
+    }
   });
   return userScore;
 };
@@ -81,13 +89,14 @@ const fetchAllUserIds = async (_adminId, _tournamentId) => {
   return Object.keys(usersSnap.val());
 };
 
-const fetchValidUserIds = async (_adminId, _tournamentId) => {
+const fetchValidUserId = async (_adminId, _tournamentId) => {
   const validUsers = [];
   const path = `admin/${_adminId}/${_tournamentId}/`;
   const database = firebase.database();
   const usersSnap = await database.ref(path).once('value');
   Object.keys(usersSnap.val()).forEach((userId) => {
-    if (userId.length > 3) validUsers.push(userId);
+    if (userId.length > 3 && userId !== 'name' && userId !== 'isComplete')
+      validUsers.push(userId);
   });
   return validUsers;
 };
@@ -100,7 +109,7 @@ const fetchTournament = async (_adminId, _tournamentId) => {
 };
 
 const fetchValidUserInfo = async (_adminId, _tournamentId) => {
-  const validIds = await fetchValidUserIds(_adminId, _tournamentId);
+  const validIds = await fetchValidUserId(_adminId, _tournamentId);
   const tournamentInfo = await fetchTournament(_adminId, _tournamentId);
   const validUsers = {};
 
@@ -126,11 +135,12 @@ const updateHoleInfo = async (
 export default {
   renameUserId,
   fetchHoles,
+  fetchUserName,
   fetchSpecificHole,
   fetchValidUserScore,
   fetchValidUserStroke,
   fetchAllUserIds,
-  fetchValidUserIds,
+  fetchValidUserId,
   checkTournament,
   fetchTournament,
   fetchValidUserInfo,

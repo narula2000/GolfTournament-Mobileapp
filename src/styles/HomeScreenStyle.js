@@ -56,10 +56,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  text: {
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
   roundButton: {
     marginVertical: 5,
-    width: 80,
-    height: 80,
+    width: 70,
+    height: 70,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,

@@ -10,6 +10,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    width: screenWidth,
+    height: screenHeight,
   },
   button: {
     backgroundColor: theme.colors.secondary,

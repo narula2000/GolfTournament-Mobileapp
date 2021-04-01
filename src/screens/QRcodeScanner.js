@@ -1,14 +1,17 @@
 import React from 'react';
 import { View, Alert, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Button, Text } from 'react-native-paper';
+import { ActivityIndicator, Button, Text } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import 'firebase/auth';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import firebasefunction from '../firebase/functions';
 import styles from '../styles/CameraScreenStyle';
+import theme from '../core/theme';
 
-const Camera = () => {
+const QRcodeScanner = () => {
   const [hasPermission, setHasPermission] = React.useState(null);
+  const [isLoading, setLoading] = React.useState(false);
   const [scanned, setScanned] = React.useState(false);
   const [tournamentId, setTournamentId] = React.useState('');
   const [adminId, setAdminId] = React.useState('');
@@ -20,32 +23,47 @@ const Camera = () => {
       setHasPermission(status === 'granted');
     })();
   }, []);
+
   const handleBarCodeScanned = async ({ data }) => {
     try {
+      setLoading(true);
       const scannedData = JSON.parse({ data }.data);
       setAdminId(String(scannedData.adminId));
       setTournamentId(String(scannedData.tournamentId));
-      await firebasefunction
-        .checkTournament(adminId, tournamentId)
-        .then((result) => {
-          if (result) {
-            navigation.navigate('SignIn', {
-              tournamentId: tournamentId,
-              adminId: adminId,
-            });
-          }
+      const validTournament = await firebasefunction.checkTournament(
+        adminId,
+        tournamentId
+      );
+      if (validTournament) {
+        navigation.navigate('SignIn', {
+          tournamentId: tournamentId,
+          adminId: adminId,
         });
+        setLoading(false);
+      } else {
+        setScanned(true);
+        setLoading(false);
+      }
     } catch (err) {
+      Alert.alert(`Invalid QR code. Please contact any staff`);
       setScanned(true);
-      Alert.alert(`Tournament Not Found`);
+      setLoading(false);
     }
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return (
+      <View style={styles.container}>
+        <Text>Requesting for camera permission</Text>
+      </View>
+    );
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return (
+      <View style={styles.container}>
+        <Text>No access to camera</Text>
+      </View>
+    );
   }
   return (
     <View style={styles.container}>
@@ -53,13 +71,18 @@ const Camera = () => {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
+      <ActivityIndicator
+        animating={isLoading}
+        size="500"
+        color={theme.colors.secondary}
+      />
       {scanned && (
         <Button style={styles.button} onPress={() => setScanned(false)}>
-          Wrong QR code Scan Again
+          Tap to Scan Again
         </Button>
       )}
     </View>
   );
 };
 
-export default Camera;
+export default QRcodeScanner;
