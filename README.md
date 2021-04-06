@@ -2,6 +2,10 @@
 
 This is a mobile app for ICCS485 final project.
 
+# Goal of the App
+
+Real time ranking for the ongoing tournament.
+
 ## Installation
 
 Use Yarn or expo to install all the modules and start the project
