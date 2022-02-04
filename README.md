@@ -30,3 +30,5 @@ Tasfia Ahsan 6280692
 Sirin Chankao 5980753
 
 Phairat Lin Lin 6080678
+
+Chakeera Wansoh 6080566
